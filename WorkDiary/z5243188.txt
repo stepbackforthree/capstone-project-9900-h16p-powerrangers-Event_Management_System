@@ -1,0 +1,6 @@
+Week 1
+Group formed. I created the Jira & GitHub accounts. 
+Discuss with group members which topic to choose and contact mentor
+
+Week 2
+Created the front-end react scaffolding
