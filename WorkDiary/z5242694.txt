@@ -1,8 +1,11 @@
 Week 1
-
+Recruit classmates to form a team and start to discuss the topic of project.
+Besides, I create our project repository and build up back-end folder for further development preparation.
 
 Week 2
-
+After determination of topic of project, I start to discuss with teammates about the user story and project objectives.
+Also, I am in charge of the back-end development, hence I start to write the one of the part of proposal (i.e., back-end structure)
+and build up database. I finally finish it at the end of the week.
 
 Week 3
 
