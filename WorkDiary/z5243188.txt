@@ -7,7 +7,8 @@ Created the front-end react scaffolding
 Organizing group meetings and arranging the division of labor for writing proposals
 
 Week3
-
+Latex writing and submission of proposals.
+Compilation and drawing of proposal flow chart
 
 Week4
 
