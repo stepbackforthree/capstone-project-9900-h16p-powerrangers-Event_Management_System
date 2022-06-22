@@ -7,5 +7,9 @@ spring:
     url: jdbc://mysql://localhost:3306/powerrangers_event_management_system?serverTimezone=GMT%2b10
     username: root
     password:
+    data: classpath:powerrangers_event_management_system.sql
+    initialization-mode: always
+
+
 
 
