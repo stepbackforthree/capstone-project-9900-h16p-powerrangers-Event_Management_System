@@ -9,3 +9,6 @@ spring:
     password:
     data: classpath:powerrangers_event_management_system.sql
     initialization-mode: always
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

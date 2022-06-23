@@ -1,4 +1,4 @@
-package com.powerrangers.system.modules.system.domain;
+package com.powerrangers.system.modules.userAccess.domain;
 
 import lombok.Data;
 

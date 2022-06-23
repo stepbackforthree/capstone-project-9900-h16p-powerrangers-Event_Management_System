@@ -1,4 +1,4 @@
-package com.powerrangers.system.modules.system.domain;
+package com.powerrangers.system.modules.userAccess.domain;
 
 import com.powerrangers.common.base.BaseEntity;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 public class User extends BaseEntity {
-    private Integer roleId;
+    private String role;
 
     private String username;
 
