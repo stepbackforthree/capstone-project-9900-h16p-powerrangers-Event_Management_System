@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import { useForm, Form } from './useForm';
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -24,6 +27,11 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+const initalFValues = {
+  userName: '',
+  password: '',
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -38,10 +46,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     // backgroundColor: theme.palette.primary.main,
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -49,8 +53,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SignIn() {
+export default function LoginForm(props) {
   const classes = useStyles();
+
+  const { values, setValues, handleInputChange } = useForm(initalFValues);
+
+  const handleSubmit = () => {
+    console.log('submit success');
+    props.submit(values);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,19 +71,21 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log in
+          Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <Form>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="userName"
+            label="User Name"
+            name="userName"
+            autoComplete="userName"
             autoFocus
+            value = {values.userName}
+            onChange = {handleInputChange}
           />
           <TextField
             variant="outlined"
@@ -84,19 +97,22 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value = {values.password}
+            onChange = {handleInputChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
-            Sign In
+            Log In
           </Button>
           <Grid container>
             <Grid item xs>
@@ -106,11 +122,11 @@ export default function SignIn() {
             </Grid>
             <Grid item>
               <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Don't have an account? Sign Up here."}
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </Form>
       </div>
       <Box mt={8}>
         <Copyright />
