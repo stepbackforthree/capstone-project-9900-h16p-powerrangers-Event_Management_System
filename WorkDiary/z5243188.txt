@@ -11,6 +11,7 @@ Latex writing and submission of proposals.
 Compilation and drawing of proposal flow chart
 
 Week4
+Build the front-end page structure and create branches to distribute to teammates
 
 
 Week5
