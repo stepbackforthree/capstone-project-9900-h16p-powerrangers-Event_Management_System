@@ -11,7 +11,7 @@
  Target Server Version : 80025
  File Encoding         : 65001
 
- Date: 22/06/2022 13:20:48
+ Date: 26/06/2022 02:47:17
 */
 
 SET NAMES utf8mb4;
@@ -509,11 +509,12 @@ CREATE TABLE `sys_user_customer` (
   `pref_tag` json DEFAULT NULL COMMENT 'tag for further recommendation',
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT 'balance to book events',
   `is_verified` tinyint NOT NULL DEFAULT '0' COMMENT 'whether user is verified by email or not',
+  `is_received` tinyint NOT NULL DEFAULT '0' COMMENT 'whether to receive promotion info',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'log for manipulation',
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`customer_id`),
+  PRIMARY KEY (`customer_id`) USING BTREE,
   UNIQUE KEY `customer_id_index` (`customer_id`) USING BTREE,
   KEY `role_id_index` (`role_id`) USING BTREE,
   KEY `time_index` (`create_time`,`update_time`) USING BTREE,
@@ -524,9 +525,9 @@ CREATE TABLE `sys_user_customer` (
 -- Records of sys_user_customer
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (2, 1, 'doom slayer', 's1mple', NULL, 'ds123', 'a nerd', 'dsds@gmail.com', 13883699123, NULL, 100.00, 1, '', '', '2022-06-22 13:15:42', '2022-06-22 13:15:48');
-INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (3, 1, 'niko', 's1mple', NULL, 'nk123', 'a nerd', 'nikonikoni@gmai.com', 13883688123, NULL, 0.00, 1, '', '', '2022-06-22 13:16:41', '2022-06-22 13:16:43');
-INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (4, 1, 'harden', 's1mple', NULL, 'hd123', 'a nerd', 'james@gmail.com', 13883677123, NULL, 20.00, 1, '', '', '2022-06-22 13:17:22', '2022-06-22 13:17:24');
+INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `is_received`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (2, 1, 'doom slayer', 's1mple', NULL, 'ds123', 'a nerd', 'dsds@gmail.com', 13883699123, NULL, 100.00, 1, 0, '', '', '2022-06-22 13:15:42', '2022-06-22 13:15:48');
+INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `is_received`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (3, 1, 'niko', 's1mple', NULL, 'nk123', 'a nerd', 'nikonikoni@gmai.com', 13883688123, NULL, 0.00, 1, 0, '', '', '2022-06-22 13:16:41', '2022-06-22 13:16:43');
+INSERT INTO `sys_user_customer` (`customer_id`, `role_id`, `username`, `nickname`, `avatar`, `password`, `description`, `email`, `phone_number`, `pref_tag`, `balance`, `is_verified`, `is_received`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (4, 1, 'harden', 's1mple', NULL, 'hd123', 'a nerd', 'james@gmail.com', 13883677123, NULL, 20.00, 1, 0, '', '', '2022-06-22 13:17:22', '2022-06-22 13:17:24');
 COMMIT;
 
 -- ----------------------------
@@ -547,6 +548,7 @@ CREATE TABLE `sys_user_host` (
   `qualification` blob COMMENT 'host qualification for futher event creating',
   `is_auth` tinyint NOT NULL DEFAULT '0' COMMENT 'whether qualification is authorized or not',
   `is_verified` tinyint NOT NULL DEFAULT '0' COMMENT 'whether user is verified by email or not',
+  `is_received` tinyint NOT NULL DEFAULT '0' COMMENT 'whether to receive promotion info',
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'log for manipulation',
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '',
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -562,8 +564,8 @@ CREATE TABLE `sys_user_host` (
 -- Records of sys_user_host
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user_host` (`host_id`, `role_id`, `username`, `password`, `nickname`, `avatar`, `description`, `email`, `phone_number`, `balance`, `qualification`, `is_auth`, `is_verified`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (1, 2, 'music top', 'mt123', 's1mple', NULL, 'a nerd', 'musictop@mt.com', 13883633123, 10000.00, NULL, 1, 1, '', '', '2022-06-22 13:02:55', '2022-06-22 13:02:57');
-INSERT INTO `sys_user_host` (`host_id`, `role_id`, `username`, `password`, `nickname`, `avatar`, `description`, `email`, `phone_number`, `balance`, `qualification`, `is_auth`, `is_verified`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (2, 2, 'mystery campper', 'cp123', 's1mple', NULL, 'a nerd', 'mysterycampper@cp.com', 13883622123, 5000.00, NULL, 1, 1, '', '', '2022-06-22 13:05:12', '2022-06-22 13:05:15');
+INSERT INTO `sys_user_host` (`host_id`, `role_id`, `username`, `password`, `nickname`, `avatar`, `description`, `email`, `phone_number`, `balance`, `qualification`, `is_auth`, `is_verified`, `is_received`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (1, 2, 'music top', 'mt123', 's1mple', NULL, 'a nerd', 'musictop@mt.com', 13883633123, 10000.00, NULL, 1, 1, 0, '', '', '2022-06-22 13:02:55', '2022-06-22 13:02:57');
+INSERT INTO `sys_user_host` (`host_id`, `role_id`, `username`, `password`, `nickname`, `avatar`, `description`, `email`, `phone_number`, `balance`, `qualification`, `is_auth`, `is_verified`, `is_received`, `create_by`, `update_by`, `create_time`, `update_time`) VALUES (2, 2, 'mystery campper', 'cp123', 's1mple', NULL, 'a nerd', 'mysterycampper@cp.com', 13883622123, 5000.00, NULL, 1, 1, 0, '', '', '2022-06-22 13:05:12', '2022-06-22 13:05:15');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
