@@ -15,6 +15,8 @@ import DashBoard from './pages/host/DashBoard'
 import Login from './pages/loginRegister/Login'
 import Register from './pages/loginRegister/Register'
 import ProfilePage from './pages/profile/ProfilePage'
+import EventManagement from './pages/event_management/EventManagement';
+
 
 // import Components
 import AppBar from './components/AppBar'
@@ -33,8 +35,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {/* <Route path="/quiz/edit" element={<QuizEdit />} />
-        <Route path="/quiz/question/edit" element={<QuizQuestion />} /> */}
+        <Route path="/host/eventEdit" element={<EventManagement />} />
+        {/* <Route path="/quiz/question/edit" element={<QuizQuestion />} /> */}
       </Routes>
     </AppContainer>
   );
