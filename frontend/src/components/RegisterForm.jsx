@@ -63,7 +63,7 @@ export default function RegisterForm(props) {
 
   const { values, setValues, handleInputChange } = useForm(initalFValues);
 
-  const [error, setError] = useState(initalFError)  
+  const [error, setError] = useState(initalFError);
 
   const handleSubmit = () => {
     console.log(values);

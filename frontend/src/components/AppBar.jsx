@@ -98,12 +98,15 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/profile">profile</Link>
           </Typography>
+          <Typography className={classes.title} variant="h6" noWrap>
+            <Link to="/host/eventEdit">eventEdit</Link>
+          </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search event…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
