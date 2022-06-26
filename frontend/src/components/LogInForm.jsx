@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: theme.palette.primary.main,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 2),
   },
 }));
 
@@ -60,8 +60,20 @@ export default function LoginForm(props) {
 
   const handleSubmit = () => {
     console.log('submit success');
-    props.submit(values);
+    props.submit({
+      ...values,
+      role: 'customer'
+    });
   }
+
+  const handleSubmitHost = () => {
+    console.log('submit success');
+    props.submit({
+      ...values,
+      role: 'host'
+    });
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -112,7 +124,17 @@ export default function LoginForm(props) {
             className={classes.submit}
             onClick={handleSubmit}
           >
-            Log In
+            Log In as Customer
+          </Button>
+          <Button
+            // type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            onClick={handleSubmitHost}
+          >
+            Log In as Host
           </Button>
           <Grid container>
             <Grid item xs>
