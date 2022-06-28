@@ -69,6 +69,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<Object> logout(String token) {
+        redisTemplate.delete("token_" + token);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("msg", "logout succeed!");
+
+        return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
+    }
+
+    @Override
     public User findCurrentUserByToken(String token) {
         if (token.isBlank()) {
             return null;
@@ -85,8 +95,6 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        User user = JSON.parseObject(userJSON, User.class);
-
-        return user;
+        return JSON.parseObject(userJSON, User.class);
     }
 }

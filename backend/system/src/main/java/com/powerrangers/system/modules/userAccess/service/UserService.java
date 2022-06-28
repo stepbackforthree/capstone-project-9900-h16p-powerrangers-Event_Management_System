@@ -8,7 +8,9 @@ public interface UserService {
 
     Boolean createUser(SmallUserDTO smallUserDTO);
 
-    ResponseEntity login(SmallUserDTO smallUserDTO);
+    ResponseEntity<Object> login(SmallUserDTO smallUserDTO);
+
+    ResponseEntity<Object> logout(String token);
 
     public Object findCurrentUserByToken(String token);
 }

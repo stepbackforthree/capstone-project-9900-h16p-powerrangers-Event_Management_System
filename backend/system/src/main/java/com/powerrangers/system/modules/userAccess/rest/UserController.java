@@ -26,4 +26,9 @@ public class UserController {
             return new ResponseEntity<>("user already existed!", HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "logout")
+    public ResponseEntity<Object> logout(@RequestHeader("Authorization") String token) {
+        return userService.logout(token);
+    }
 }
