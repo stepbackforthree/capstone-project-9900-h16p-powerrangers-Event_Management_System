@@ -18,4 +18,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 JWT:
-  expiration: 172800000
+  expiration: 2

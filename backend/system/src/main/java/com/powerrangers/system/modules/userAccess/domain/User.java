@@ -7,15 +7,17 @@ import java.math.BigDecimal;
 
 @Data
 public class User extends BaseEntity {
-    private String role;
+    private Integer id;
+
+    private Integer roleId;
 
     private String username;
+
+    private String password;
 
     private String nickname;
 
     private Byte[] avatar;
-
-    private String password;
 
     private String description;
 
@@ -23,5 +25,17 @@ public class User extends BaseEntity {
 
     private String phoneNumber;
 
+    private String prefTag;
+
     private BigDecimal balance;
+
+    private byte[] qualification;
+
+    private Boolean isAuth;
+
+    private Boolean isVerified;
+
+    private Boolean isReceived;
+
+    private String bankDetails;
 }

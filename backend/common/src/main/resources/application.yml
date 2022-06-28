@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: system
+
+JWT:
+  expiration: 2

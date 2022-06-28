@@ -1,7 +1,7 @@
 package com.powerrangers.system.modules.userAccess.rest;
 
-import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.UserService;
+import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +14,16 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "/login")
-    public ResponseEntity<Object> checkUser(@RequestBody User user) {
-        if (userService.check(user)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("user not exists!", HttpStatus.OK);
-        }
+    public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {
+        return userService.login(smallUserDTO);
     }
 
     @PostMapping(value = "signup")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
-        if (userService.create(user)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> signUp(@RequestBody SmallUserDTO smallUserDTO) {
+        if (userService.createUser(smallUserDTO)) {
+            return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("existed user!", HttpStatus.OK);
+            return new ResponseEntity<>("user already existed!", HttpStatus.OK);
         }
     }
 }
