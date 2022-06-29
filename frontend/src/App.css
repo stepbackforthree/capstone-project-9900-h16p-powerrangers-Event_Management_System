@@ -2,6 +2,20 @@
   text-align: center;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

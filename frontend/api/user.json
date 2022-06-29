@@ -1,0 +1,10 @@
+{
+  "users": {
+    "kyle": {
+      "password": "123456"
+    },
+    "klee": {
+      "password": "123123"
+    }
+  }
+}
