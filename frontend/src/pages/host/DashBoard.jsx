@@ -1,9 +1,91 @@
-import React from 'react'
+import React, { useState } from 'react';
+import SearchBar from '../../components/Home/SearchBar';
+import FilterPanel from '../../components/Home/FilterPanel';
+import List from '../../components/Home/List';
+// import EmptyView from '../../components/Home/EmptyView';
+import { dataList } from '../../constants/index';
+import './style.css';
+
 
 export default function DashBoard() {
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState([100,1000]);
+  const [list, setList] = useState(dataList);
+
+  
+  
+  const [cities, setCities] = useState([
+    {
+      id:1,
+      checked:false,
+      label:'Sydney',
+    },
+    {
+      id:2,
+      checked:false,
+      label:'Melbourne',
+    },
+    {
+      id:3,
+      checked:false,
+      label:'Queensland',
+    },
+  ]);
+
+
+
+  const handleSelectCategory = (event, value) => {
+    console.log(event, value);
+    if (!value) {
+      // console.log(event, value);
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(value);
+    }
+  };
+
+  const handleSelectRating = (event, value) => !value ? null : setSelectedRating(value);
+
+  const handleChangeChecked = id => {
+    const citiesStateList = cities;
+    const changeCheckedCities = citiesStateList.map((item)=>
+      item.id === id ? {...item, checked:!item.checked} : item
+    );
+
+    setCities(changeCheckedCities);
+  };
+  
+  const handleChangePrice = (event, value) => {
+    // console.log(event, value);
+    setSelectedPrice(value);
+  }
+
   return (
-    <div>
-      dashboard
+    <div className='home'>
+      {/* slide */}
+      <SearchBar />
+
+      <div className="home_panelList-wrap">
+        <div className="home_panel-wrap">
+          {/* filter */}
+          <FilterPanel 
+            selectToggle={handleSelectCategory} 
+            selectedCategory={selectedCategory}
+            selectRating={handleSelectRating}
+            selectedRating={selectedRating}
+            cities={cities}
+            changeChecked={handleChangeChecked}
+            selectedPrice={selectedPrice}
+            changePrice={handleChangePrice}
+          />
+        </div>
+        <div className="home_list-wrap">
+          {/* list */}
+          <List list={list}  />
+        </div>
+      </div>
     </div>
   )
 }
