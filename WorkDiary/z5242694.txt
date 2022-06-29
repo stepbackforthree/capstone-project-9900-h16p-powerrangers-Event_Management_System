@@ -8,13 +8,15 @@ Also, I am in charge of the back-end development, hence I start to write the one
 and build up database. I finally finish it at the end of the week.
 
 Week 3
-
+Finish the project structure and backend stack in proposal and help scrum master to optimize the format.
+Besides, consult with teammates to determine workloads in each sprints.
 
 Week 4
-
+Start to develop the backend part of project. Build up database and deploy on cloud server for easier access.
+What's more, implement MVC design pattern in backend code structure and help teammates to configure the environment of development.
 
 Week 5
-
+Start to develop the process of sign up, login and profile edit in backend part and finish. Then start to develop event management process.
 
 Week 6
 

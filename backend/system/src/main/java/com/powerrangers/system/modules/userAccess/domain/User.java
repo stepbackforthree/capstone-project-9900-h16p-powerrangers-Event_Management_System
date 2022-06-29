@@ -29,7 +29,7 @@ public class User extends BaseEntity {
 
     private BigDecimal balance;
 
-    private byte[] qualification;
+    private Byte[] qualification;
 
     private Boolean isAuth;
 

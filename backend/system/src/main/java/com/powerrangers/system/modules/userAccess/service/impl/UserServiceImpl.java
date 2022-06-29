@@ -97,4 +97,15 @@ public class UserServiceImpl implements UserService {
 
         return JSON.parseObject(userJSON, User.class);
     }
+
+    @Override
+    public Boolean checkPassword(String token, String password) {
+        User user = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        if (user == null) {
+            return false;
+        }
+
+        return user.getPassword().equals(password);
+    }
 }

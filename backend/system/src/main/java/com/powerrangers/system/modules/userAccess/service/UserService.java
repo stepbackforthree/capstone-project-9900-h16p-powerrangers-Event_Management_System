@@ -1,5 +1,6 @@
 package com.powerrangers.system.modules.userAccess.service;
 
+import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -12,5 +13,7 @@ public interface UserService {
 
     ResponseEntity<Object> logout(String token);
 
-    public Object findCurrentUserByToken(String token);
+    Object findCurrentUserByToken(String token);
+
+    Boolean checkPassword(String token, String password);
 }
