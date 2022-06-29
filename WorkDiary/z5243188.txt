@@ -15,7 +15,8 @@ Week4
 Build the front-end page structure and create branches to distribute to teammates
 6.25
 Complete the registration and login interface of the front-end part
-
+6.29
+Complete the basic dashboard
 
 Week5
 
