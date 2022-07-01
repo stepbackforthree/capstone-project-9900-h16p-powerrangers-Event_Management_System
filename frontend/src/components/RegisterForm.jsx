@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import EmailIcon from '@material-ui/icons/Email';
 
 import { useForm, Form } from './useForm';
 
@@ -31,6 +32,7 @@ function Copyright() {
 const initalFValues = {
   userName: '',
   email: '',
+  verifyCode: '',
   password: '',
   confirmPassword: ''
 }
@@ -38,6 +40,7 @@ const initalFValues = {
 const initalFError = {
   userName: '',
   email: '',
+  verifyCode: '',
   password: '',
   confirmPassword: ''
 }
@@ -75,6 +78,14 @@ export default function RegisterForm(props) {
     }
   }
 
+  const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
   const validateInput = e => {
     let { name, value } = e.target;
     setError(prev => {
@@ -90,6 +101,18 @@ export default function RegisterForm(props) {
         case "email":
           if (!value) {
             stateObj[name] = "Please enter email.";
+          }
+          if (!validateEmail(value)) {
+            stateObj[name] = "Please enter email in correct format.";
+          }
+          break;
+
+        case "verifyCode":
+          if (!value) {
+            stateObj[name] = "Please enter verifyCode.";
+          }
+          else if (value.length !== 4) {
+            stateObj[name] = "Please enter the verification code for the correct digits.";
           }
           break;
  
@@ -147,7 +170,7 @@ export default function RegisterForm(props) {
               />
               {error.userName && <span className='err'>{error.userName}</span>}
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <TextField
                 variant="outlined"
                 required
@@ -161,6 +184,30 @@ export default function RegisterForm(props) {
                 onBlur={validateInput}
               />
               {error.email && <span className='err'>{error.email}</span>}
+            </Grid>
+            <Grid item xs={4}>
+              {!error.email && <Button 
+                variant="outlined"
+                fullWidth
+                color="primary"
+                endIcon={<EmailIcon/>}
+                style={{textTransform: "none", fontSize: "7px"}}
+                >Verify Code</Button>}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="verifyCode"
+                label="Verify Code"
+                name="verifyCode"
+                autoComplete="verifyCode"
+                value = {values.verifyCode}
+                onChange = {handleInputChange}
+                onBlur={validateInput}
+              />
+              {error.verifyCode && <span className='err'>{error.verifyCode}</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField

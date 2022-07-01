@@ -5,7 +5,21 @@ import CheckboxProton from '../../CheckboxProton';
 import FilterListToggle from '../../FilterListToggle';
 import SliderProton from '../../SliderProton';
 import './styles.css';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { grey } from '@material-ui/core/colors';
 
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    // color: theme.palette.getContrastText(grey[100]),
+    color: '#fff',
+    backgroundColor: grey[900],
+    '&:hover': {
+      backgroundColor: grey[700],
+    },
+  },
+}))(Button);
 
 
 export default function FilterPanel({
@@ -16,7 +30,8 @@ export default function FilterPanel({
   cities,
   changeChecked,
   selectedPrice,
-  changePrice
+  changePrice,
+  handleSearchContent
 }) {
   return (
     <div>
@@ -56,7 +71,10 @@ export default function FilterPanel({
           selectToggle={selectRating} 
         />
       </div>
-
+      <div className="search-box">
+        <ColorButton variant="contained" onClick={handleSearchContent}>Search</ColorButton>
+      </div>
+      
     </div>
   )
 }
