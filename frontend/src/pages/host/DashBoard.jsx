@@ -12,10 +12,6 @@ export default function DashBoard() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([100,1000]);
-  const [list, setList] = useState(dataList);
-
-  
-  
   const [cities, setCities] = useState([
     {
       id:1,
@@ -34,6 +30,9 @@ export default function DashBoard() {
     },
   ]);
 
+  
+
+  const [list, setList] = useState(dataList);
 
 
   const handleSelectCategory = (event, value) => {
@@ -62,6 +61,13 @@ export default function DashBoard() {
     setSelectedPrice(value);
   }
 
+  const handleSearchContent = () => {
+    console.log(selectedCategory);
+    console.log(selectedRating);
+    console.log(selectedPrice);
+    console.log(cities);
+  }
+
   return (
     <div className='home'>
       {/* slide */}
@@ -79,6 +85,7 @@ export default function DashBoard() {
             changeChecked={handleChangeChecked}
             selectedPrice={selectedPrice}
             changePrice={handleChangePrice}
+            handleSearchContent={handleSearchContent}
           />
         </div>
         <div className="home_list-wrap">
