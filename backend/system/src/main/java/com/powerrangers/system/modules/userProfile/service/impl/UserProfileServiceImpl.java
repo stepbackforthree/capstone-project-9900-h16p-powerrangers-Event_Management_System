@@ -6,6 +6,7 @@ import com.powerrangers.system.modules.userProfile.dao.UserProfileMapper;
 import com.powerrangers.system.modules.userProfile.service.UserProfileService;
 import com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +14,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserProfileServiceImpl implements UserProfileService {
 
-    private final RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
+    @Autowired
     private final UserProfileMapper userProfileMapper;
 
     @Override
     public String updateNickname(String token, String nickname) {
 
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getNickname().equals(nickname)) {
             return "duplicated nickname!";
@@ -37,7 +40,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updateEmail(String token, String email) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getEmail().equals(email)) {
             return "duplicated email!";
@@ -54,7 +57,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updateAvatar(String token, Byte[] avatar) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getAvatar() != null && currUser.getAvatar() == avatar) {
             return "duplicated avatar!";
@@ -71,7 +74,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updateDescription(String token, String description) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getDescription() != null || !currUser.getDescription().isEmpty() && currUser.getDescription().equals(description)) {
             return "duplicated description!";
@@ -88,7 +91,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updatePrefTag(String token, String prefTag) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getPrefTag() != null || !currUser.getPrefTag().isEmpty() && currUser.getPrefTag().equals(prefTag)) {
             return "duplicated prefTag!";
@@ -105,7 +108,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updateQualification(String token, Byte[] qualification) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getQualification() != null && currUser.getQualification() == qualification) {
             return "duplicated qualification!";
@@ -122,7 +125,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String updateBankDetails(String token, String bankDetails) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject((String) redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getBankDetails() != null || !currUser.getBankDetails().isEmpty() && currUser.getBankDetails().equals(bankDetails)) {
             return "duplicated bankDetails!";

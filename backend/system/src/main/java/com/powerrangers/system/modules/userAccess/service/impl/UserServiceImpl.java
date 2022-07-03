@@ -8,6 +8,7 @@ import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,8 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
-    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Value("${JWT.expiration}")
     private String expiration;
@@ -90,7 +92,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        String userJSON = redisTemplate.opsForValue().get("token_" + token);
+        String userJSON = (String) redisTemplate.opsForValue().get("token_" + token);
         if (userJSON == null || userJSON.isBlank()) {
             return null;
         }
@@ -100,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean checkPassword(String token, String password) {
-        User user = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+        User user = JSON.parseObject((String) redisTemplate.opsForValue().get("token_" + token), User.class);
 
         if (user == null) {
             return false;

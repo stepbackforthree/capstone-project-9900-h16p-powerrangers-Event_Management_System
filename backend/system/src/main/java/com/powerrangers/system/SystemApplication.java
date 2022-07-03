@@ -5,14 +5,12 @@ import com.powerrangers.system.modules.userAccess.dao.UserMapper;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SystemApplication {
     @Autowired
     private final UserMapper userMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     public static void main(String[] args) {
         SpringApplication.run(SystemApplication.class, args);
@@ -64,6 +65,9 @@ public class SystemApplication {
         System.out.println(JSON.toJSONString(user5));
         System.out.println(JSON.toJSONString(user6));
         System.out.println(JSON.toJSONString(user7));
+
+        redisTemplate.opsForValue().set("conn test", "redis success");
+        System.out.println(redisTemplate.opsForValue().get("conn test"));
 
         return "Hang on! We almost there!";
     }
