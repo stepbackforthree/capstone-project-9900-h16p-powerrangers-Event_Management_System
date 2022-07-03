@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
             map.put("expiration", expiration);
             map.put("msg", "login succeed!");
 
-            redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.DAYS);
+            redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
 
         } else {
             map.put("msg", "user not exists!");
