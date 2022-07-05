@@ -3,6 +3,7 @@ package com.powerrangers.system.modules.userAccess.rest;
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
+
+    @Autowired
     private final UserService userService;
 
     @GetMapping(value = "/login")

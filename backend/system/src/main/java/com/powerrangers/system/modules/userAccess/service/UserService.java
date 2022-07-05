@@ -1,6 +1,5 @@
 package com.powerrangers.system.modules.userAccess.service;
 
-import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import org.springframework.http.ResponseEntity;
 

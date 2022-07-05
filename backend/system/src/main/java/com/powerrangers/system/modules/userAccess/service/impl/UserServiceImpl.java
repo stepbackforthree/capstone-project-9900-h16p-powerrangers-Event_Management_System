@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    @Autowired
     private final UserMapper userMapper;
 
     @Autowired
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
         Map<String, String> map = new HashMap<>();
 
-        if (!checkExist(smallUserDTO)) {
+        if (checkExist(smallUserDTO)) {
 
             UserDTO userDTO = userMapper.queryUser(smallUserDTO);
 

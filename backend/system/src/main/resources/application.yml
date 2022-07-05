@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://1.15.115.148:3306/powerrangers_event_management_system?serverTimezone=GMT%2b10
     username: root
-    password: 123456
+    password: RedBlack1129Hash
     #data: classpath:powerrangers_event_management_system.sql
     #initialization-mode: always
 
@@ -20,7 +20,7 @@ spring:
         max-idle: 10
         max-wait: -1
         max-active: 200
-    password:
+    password: RedBlack1129Hash
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
