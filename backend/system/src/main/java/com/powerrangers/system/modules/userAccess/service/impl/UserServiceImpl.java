@@ -10,7 +10,7 @@ import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
     @Value("${JWT.expiration}")
     private String expiration;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             map.put("expiration", expiration);
             map.put("msg", "login succeed!");
 
-            redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
 
         } else {
             map.put("msg", "user not exists!");

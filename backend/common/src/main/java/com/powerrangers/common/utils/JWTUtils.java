@@ -4,7 +4,6 @@ import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 public class JWTUtils {
 
-    private static final String jwtToken = "123456Mszlu!@#$$";
+    private static final String jwtToken = "InOrderToRememberYourSmileIPressedHardOnTheShutterInMyHeart";
 
     public static String createToken(Integer userId) {
         Map<String, Object> claims = new HashMap<>();

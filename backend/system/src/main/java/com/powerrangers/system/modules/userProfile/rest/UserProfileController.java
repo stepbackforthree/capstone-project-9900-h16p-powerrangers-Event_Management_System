@@ -14,7 +14,7 @@ public class UserProfileController {
     private final UserProfileService userProfileService;
 
     @PostMapping(value = "updateNickname")
-    public ResponseEntity<Object> updateNickname(@RequestHeader String token, @RequestParam String nickname) {
+    public ResponseEntity<Object> updateNickname(@RequestHeader("Authorization") String token, @RequestParam String nickname) {
         return new ResponseEntity<>(userProfileService.updateNickname(token, nickname), HttpStatus.OK);
     }
 
