@@ -19,7 +19,7 @@ Week 5
 Start to develop the process of sign up, login and profile edit in backend part and finish. Then start to develop event management process.
 
 Week 6
-
+Fix redis bugs.
 
 Week 7
 
