@@ -19,32 +19,32 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "updateEmail")
-    public ResponseEntity<Object> updateEmail(@RequestHeader String token, @RequestParam String email) {
+    public ResponseEntity<Object> updateEmail(@RequestHeader("Authorization") String token, @RequestParam String email) {
         return new ResponseEntity<>(userProfileService.updateEmail(token, email), HttpStatus.OK);
     }
 
     @PostMapping(value = "updateAvatar")
-    public ResponseEntity<Object> updateAvatar(@RequestHeader String token, @RequestParam Byte[] avatar) {
+    public ResponseEntity<Object> updateAvatar(@RequestHeader("Authorization") String token, @RequestParam Byte[] avatar) {
         return new ResponseEntity<>(userProfileService.updateAvatar(token, avatar), HttpStatus.OK);
     }
 
     @PostMapping(value = "updateDescription")
-    public ResponseEntity<Object> updateDescription(@RequestHeader String token, @RequestParam String description) {
+    public ResponseEntity<Object> updateDescription(@RequestHeader("Authorization") String token, @RequestParam String description) {
         return new ResponseEntity<>(userProfileService.updateDescription(token, description), HttpStatus.OK);
     }
 
     @PostMapping(value = "updatePrefTag")
-    public ResponseEntity<Object> updatePrefTag(@RequestHeader String token, @RequestParam String prefTag) {
+    public ResponseEntity<Object> updatePrefTag(@RequestHeader("Authorization") String token, @RequestParam String prefTag) {
         return new ResponseEntity<>(userProfileService.updatePrefTag(token, prefTag), HttpStatus.OK);
     }
 
     @PostMapping(value = "updateQualification")
-    public ResponseEntity<Object> updateQualification(@RequestHeader String token, @RequestParam Byte[] qualification) {
+    public ResponseEntity<Object> updateQualification(@RequestHeader("Authorization") String token, @RequestParam Byte[] qualification) {
         return new ResponseEntity<>(userProfileService.updateQualification(token, qualification), HttpStatus.OK);
     }
 
     @PostMapping(value = "updateBankDetails")
-    public ResponseEntity<Object> updateBankDetails(@RequestHeader String token, @RequestParam String bankDetails) {
+    public ResponseEntity<Object> updateBankDetails(@RequestHeader("Authorization") String token, @RequestParam String bankDetails) {
         return new ResponseEntity<>(userProfileService.updateBankDetails(token, bankDetails), HttpStatus.OK);
     }
 }

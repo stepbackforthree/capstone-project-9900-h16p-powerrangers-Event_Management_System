@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {
         return userService.login(smallUserDTO);
     }
