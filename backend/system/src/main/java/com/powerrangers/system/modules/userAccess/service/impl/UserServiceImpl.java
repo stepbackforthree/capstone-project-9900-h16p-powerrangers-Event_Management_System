@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
 
         Map<String, String> map = new HashMap<>();
         map.put("msg", "logout succeed!");
+        redisTemplate.delete("token_" + token);
 
         return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
     }
