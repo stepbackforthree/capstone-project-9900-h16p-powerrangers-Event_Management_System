@@ -47,4 +47,9 @@ public class UserProfileController {
     public ResponseEntity<Object> updateBankDetails(@RequestHeader("Authorization") String token, @RequestParam String bankDetails) {
         return new ResponseEntity<>(userProfileService.updateBankDetails(token, bankDetails), HttpStatus.OK);
     }
+
+    @PostMapping(value = "updatePassword")
+    public ResponseEntity<Object> updatePassword(@RequestHeader("Authorization") String token, @RequestParam String password) {
+        return new ResponseEntity<>(userProfileService.updatePassword(token, password), HttpStatus.OK);
+    }
 }

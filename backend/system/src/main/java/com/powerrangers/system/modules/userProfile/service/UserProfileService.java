@@ -14,4 +14,6 @@ public interface UserProfileService {
     String updateQualification(String token, Byte[] qualification);
 
     String updateBankDetails(String token, String bankDetails);
+
+    String updatePassword(String token, String password);
 }

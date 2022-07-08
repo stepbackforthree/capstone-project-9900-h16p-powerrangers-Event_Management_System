@@ -45,4 +45,10 @@
         update sys_user set bank_details = #{bankDetails}
         <include refid="username"/>
     </select>
+
+    <select id="updatePassword" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+        update sys_user set password = #{password}
+        <include refid="username"/>
+    </select>
+
 </mapper>

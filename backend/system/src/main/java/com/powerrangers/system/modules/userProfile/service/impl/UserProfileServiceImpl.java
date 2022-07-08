@@ -169,4 +169,24 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         return "update bankDetails success!";
     }
+
+    @Override
+    public String updatePassword(String token, String password) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        if (currUser.getPassword() != null && currUser.getPassword().equals(password)) {
+            return "duplicated bankDetails!";
+        }
+
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setPassword(password);
+
+        userProfileMapper.updatePassword(userProfileDTO);
+
+        currUser.setPassword(password);
+        redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
+                redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
+
+        return "update password success!";
+    }
 }
