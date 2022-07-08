@@ -11,11 +11,11 @@ public class User extends BaseEntity {
 
     private Integer roleId;
 
-    private String username;
+    private String userName;
 
     private String password;
 
-    private String nickname;
+    private String nickName;
 
     private Byte[] avatar;
 
