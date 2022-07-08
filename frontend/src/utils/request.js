@@ -13,11 +13,11 @@ export default async function apiCall (url, opt = {}) {
   const init = {
     method: method,
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       // Accept: 'application/json',
       Authorization: `Bearer ${token || localStorage.getItem('token')}`,
     },
-    cache: 'no-cache',
+    // cache: 'no-cache',
     body: method !== 'GET' ? JSON.stringify(data) : undefined,
   }
 

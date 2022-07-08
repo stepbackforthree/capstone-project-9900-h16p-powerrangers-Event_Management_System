@@ -10,7 +10,7 @@ export default function Login() {
   return (
     <div>
       <LogInForm submit={(values) => {
-        console.log('get values', values);
+        console.log('get values:', values);
         request('/users/login', {
           method: 'POST',
           data: values
