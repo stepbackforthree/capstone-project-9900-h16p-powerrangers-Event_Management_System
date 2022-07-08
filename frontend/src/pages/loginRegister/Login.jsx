@@ -11,6 +11,7 @@ export default function Login() {
       <LogInForm submit={(values) => {
         console.log('get values', values);
         message.success({content: ('log in successfully!'),  duration: 2500})
+        localStorage.setItem('token', 'abc')
         navigate('/dashboard');
       }}/>
     </div>
