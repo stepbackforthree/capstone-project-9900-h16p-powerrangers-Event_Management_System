@@ -27,17 +27,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
-        if (currUser.getNickname().equals(nickname)) {
+        if (currUser.getNickName().equals(nickname)) {
             return "duplicated nickname!";
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
-        userProfileDTO.setNickname(nickname);
+        userProfileDTO.setUserName(currUser.getUserName());
+        userProfileDTO.setNickName(nickname);
 
         userProfileMapper.updateNickname(userProfileDTO);
 
-        currUser.setNickname(nickname);
+        currUser.setNickName(nickname);
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
@@ -53,7 +53,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setEmail(email);
 
         userProfileMapper.updateEmail(userProfileDTO);
@@ -74,7 +74,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setAvatar(avatar);
 
         userProfileMapper.updateAvatar(userProfileDTO);
@@ -95,7 +95,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setDescription(description);
 
         userProfileMapper.updateDescription(userProfileDTO);
@@ -116,7 +116,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setPreTag(prefTag);
 
         userProfileMapper.updatePrefTag(userProfileDTO);
@@ -137,7 +137,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setQualification(qualification);
 
         userProfileMapper.updateQualification(userProfileDTO);
@@ -158,7 +158,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setBankDetails(bankDetails);
 
         userProfileMapper.updateBankDetails(userProfileDTO);

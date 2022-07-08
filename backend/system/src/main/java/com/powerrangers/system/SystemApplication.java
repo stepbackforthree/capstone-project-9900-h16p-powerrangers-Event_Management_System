@@ -31,31 +31,31 @@ public class SystemApplication {
     @GetMapping("/")
     public String index() {
         SmallUserDTO smallUserDTO1 = new SmallUserDTO();
-        smallUserDTO1.setUsername("doom slayer");
+        smallUserDTO1.setUserName("doom slayer");
         UserDTO user1 = userMapper.queryUser(smallUserDTO1);
 
         SmallUserDTO smallUserDTO2 = new SmallUserDTO();
-        smallUserDTO2.setUsername("NIKO");
+        smallUserDTO2.setUserName("NIKO");
         UserDTO user2 = userMapper.queryUser(smallUserDTO2);
 
         SmallUserDTO smallUserDTO3 = new SmallUserDTO();
-        smallUserDTO3.setUsername("harden");
+        smallUserDTO3.setUserName("harden");
         UserDTO user3 = userMapper.queryUser(smallUserDTO3);
 
         SmallUserDTO smallUserDTO4 = new SmallUserDTO();
-        smallUserDTO4.setUsername("james");
+        smallUserDTO4.setUserName("james");
         UserDTO user4 = userMapper.queryUser(smallUserDTO4);
 
         SmallUserDTO smallUserDTO5 = new SmallUserDTO();
-        smallUserDTO5.setUsername("music top");
+        smallUserDTO5.setUserName("music top");
         UserDTO user5 = userMapper.queryUser(smallUserDTO5);
 
         SmallUserDTO smallUserDTO6 = new SmallUserDTO();
-        smallUserDTO6.setUsername("mystery campper");
+        smallUserDTO6.setUserName("mystery campper");
         UserDTO user6 = userMapper.queryUser(smallUserDTO6);
 
         SmallUserDTO smallUserDTO7 = new SmallUserDTO();
-        smallUserDTO7.setUsername("hades");
+        smallUserDTO7.setUserName("hades");
         UserDTO user7 = userMapper.queryUser(smallUserDTO7);
 
         System.out.println(JSON.toJSONString(user1));

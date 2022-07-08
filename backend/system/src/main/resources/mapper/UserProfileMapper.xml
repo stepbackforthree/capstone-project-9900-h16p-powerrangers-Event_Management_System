@@ -12,7 +12,7 @@
     </sql>
 
     <select id="updateNickname" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
-        update sys_user set nickname = #{nickname}
+        update sys_user set nickname = #{nickName}
         <include refid="username"/>;
     </select>
 
