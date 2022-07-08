@@ -13,21 +13,22 @@ export default async function apiCall (url, opt = {}) {
   const init = {
     method: method,
     headers: {
-      // 'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       // Accept: 'application/json',
       Authorization: `Bearer ${token || localStorage.getItem('token')}`,
     },
     // cache: 'no-cache',
-    // body: method !== 'GET' ? JSON.stringify(data) : undefined,
-    body: method !== 'GET' ? data : undefined,
+    body: method !== 'GET' ? JSON.stringify(data) : undefined,
+    // body: method !== 'GET' ? data : undefined,
   }
 
   // console.log(init);
   // console.log(`${API_HOST}${url}`);
 
-  // const res = await fetch(`${API_HOST}${url}`, init);
-  // const dataJson = await res.json();
-  const dataJson = await fetch(`${API_HOST}${url}`, init);
+  const res = await fetch(`${API_HOST}${url}`, init);
+  const dataJson = await res.json();
+  // const dataJson = await fetch(`${API_HOST}${url}`, init);
+  // console.log(dataJson);
 
   if (dataJson.error) {
     if (dataJson.error.includes('invalid token')) {
@@ -39,6 +40,6 @@ export default async function apiCall (url, opt = {}) {
     }
     return;
   }
-  // console.log('dataJson:', dataJson);
+  console.log('dataJson:', dataJson);
   return dataJson;
 }
