@@ -19,10 +19,11 @@ Complete the registration and login interface of the front-end part
 Complete the basic dashboard
 
 Week5
-
+Improved some color combinations on the homepage
+call a meeting to do a retro
 
 Week6
-
+Add verification email information when registering
 
 Week7
 
