@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import message from './message.js';
 import { API_HOST } from './apiHost';
 
 /**
@@ -29,10 +29,10 @@ export default async function apiCall (url, opt = {}) {
   if (dataJson.error) {
     if (dataJson.error.includes('invalid token')) {
       message.error('token expired, please login', 3, () => {
-        location.href = '/login';
+        window.location.href = '/login';
       });
     } else {
-      message.error(dataJson.error, 'error', 3);
+      message.error({content: (dataJson.error),  duration: 2500})
     }
     return;
   }
