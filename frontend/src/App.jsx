@@ -12,6 +12,7 @@ import { AppContainer } from './style'
 
 // import Pages 
 import DashBoard from './pages/host/DashBoard'
+import EventAdd from './pages/host/EventAdd'
 import Login from './pages/loginRegister/Login'
 import Register from './pages/loginRegister/Register'
 import ProfilePage from './pages/profile/ProfilePage'
@@ -36,6 +37,7 @@ function App() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/host/eventEdit" element={<EventManagement />} />
+        <Route path="/host/eventAdd" element={<EventAdd />} />
         {/* <Route path="/quiz/question/edit" element={<QuizQuestion />} /> */}
       </Routes>
     </AppContainer>

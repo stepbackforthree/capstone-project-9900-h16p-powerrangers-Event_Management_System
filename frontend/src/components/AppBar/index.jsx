@@ -15,6 +15,7 @@ import LeftBar from '../LeftBar';
 import Button from '@material-ui/core/Button';
 // import Avatar from '@material-ui/core/Avatar';
 import Avatar from '../Avatar';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,6 +92,10 @@ export default function SearchAppBar() {
     navigate('/host/eventEdit');
   }
 
+  const naviToEventAdd = () => {
+    navigate('/host/eventAdd');
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color='inherit'>
@@ -127,6 +132,17 @@ export default function SearchAppBar() {
               EventEdit
             </Button>
           </Typography>
+          <Typography className={classes.title} variant="h6" noWrap>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={naviToEventAdd}
+              startIcon={<PostAddIcon />}
+            >
+              Event Add
+            </Button>
+          </Typography>
+          
           {!localStorage.getItem('token') && 
           <>
             <Button variant="contained" color="primary" href="/register">

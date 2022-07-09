@@ -17,9 +17,9 @@ export default function Login() {
         }).then(data => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('userName', values.userName);
-          message.success({content: ('log in successfully!'),  duration: 2500})
           // navigate('/dashboard');
           window.location.href = '/dashboard';
+          message.success({content: ('log in successfully!'),  duration: 2500})
         })
       }}/>
     </div>

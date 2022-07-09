@@ -12,7 +12,6 @@ export function useForm(initalFValues) {
       ...values,
       [name]: value
     })
-    // console.log(values);
   }
   
   return {
