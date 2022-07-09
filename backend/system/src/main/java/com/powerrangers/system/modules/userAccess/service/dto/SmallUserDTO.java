@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 public class SmallUserDTO extends BaseDTO implements Serializable {
 
-    private String username;
+    private String userName;
 
     private String email;
 

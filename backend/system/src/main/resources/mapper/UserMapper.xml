@@ -9,7 +9,7 @@
             resultType="Integer">
         select count(*)
         from sys_user
-        where username = #{username}
+        where username = #{userName}
            or email = #{email}
     </select>
 
@@ -17,12 +17,12 @@
             useGeneratedKeys="true">
         insert into sys_user
             (username, email, password, is_received)
-        values (#{username}, #{email}, #{password}, #{isReceived})
+        values (#{userName}, #{email}, #{password}, #{isReceived})
 
     </insert>
 
     <select id="queryUser" parameterType="com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO"
             resultType="com.powerrangers.system.modules.userAccess.service.dto.UserDTO">
-        select * from sys_user where username = #{username};
+        select * from sys_user where username = #{userName};
     </select>
 </mapper>

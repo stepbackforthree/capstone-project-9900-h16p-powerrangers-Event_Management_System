@@ -7,8 +7,8 @@ spring:
     url: jdbc:mysql://1.15.115.148:3306/powerrangers_event_management_system?serverTimezone=GMT%2b10
     username: root
     password: RedBlack1129Hash
-    #data: classpath:powerrangers_event_management_system.sql
-    #initialization-mode: always
+    hikari:
+      max-lifetime: 30000
 
   redis:
     host: 1.15.115.148

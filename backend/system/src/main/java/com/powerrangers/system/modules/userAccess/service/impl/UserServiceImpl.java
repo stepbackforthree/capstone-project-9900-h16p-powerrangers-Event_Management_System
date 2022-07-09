@@ -64,12 +64,13 @@ public class UserServiceImpl implements UserService {
 
             redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
 
+            return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
+
         } else {
             map.put("msg", "user not exists!");
 
+            return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class UserController {
         if (userService.createUser(smallUserDTO)) {
             return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("user already existed!", HttpStatus.OK);
+            return new ResponseEntity<>("user already existed!", HttpStatus.BAD_REQUEST);
         }
     }
 

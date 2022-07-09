@@ -30,8 +30,6 @@ export default function DashBoard() {
     },
   ]);
 
-  
-
   const [list, setList] = useState(dataList);
 
 

@@ -12,6 +12,8 @@ import {
 } from 'react-router-dom';
 import LeftBar from './LeftBar';
 import Button from '@material-ui/core/Button';
+// import Avatar from '@material-ui/core/Avatar';
+import Avatar from './Avatar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,12 +107,24 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/host/eventEdit">eventEdit</Link>
           </Typography>
-          <Button variant="contained" color="primary" href="/register">
+          {!localStorage.getItem('token') && 
+          <>
+            <Button variant="contained" color="primary" href="/register">
+              register
+            </Button>
+            <Button variant="outlined" color="primary" href="/login">
+              login
+            </Button>
+          </>
+          }
+          {/* <Button variant="contained" color="primary" href="/register">
             register
           </Button>
           <Button variant="outlined" color="primary" href="/login">
             login
-          </Button>
+          </Button> */}
+          {localStorage.getItem('token') && 
+          <Avatar />}
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
