@@ -24,6 +24,7 @@ call a meeting to do a retro
 
 Week6
 Add verification email information when registering
+Add logout&avatar&eventAddPage
 
 Week7
 
