@@ -9,11 +9,12 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 // import SearchIcon from '@material-ui/icons/Search';
 import {
   Link,
+  useNavigate
 } from 'react-router-dom';
-import LeftBar from './LeftBar';
+import LeftBar from '../LeftBar';
 import Button from '@material-ui/core/Button';
 // import Avatar from '@material-ui/core/Avatar';
-import Avatar from './Avatar';
+import Avatar from '../Avatar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
     fontWeight: 600,
+  },
+  navi: {
+    fontWeight: 'bold', 
+    textTransform: 'none',
+    fontSize: 18,
   },
   search: {
     position: 'relative',
@@ -74,6 +80,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const navigate = useNavigate();
+
+
+  const naviToDashboard = () => {
+    navigate('/dashboard');
+  }
+
+  const naviToEventEdit = () => {
+    navigate('/host/eventEdit');
+  }
 
   return (
     <div className={classes.root}>
@@ -98,14 +114,18 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/login">login</Link>
           </Typography> */}
-          <Typography className={classes.title} variant="h6" noWrap>
-            <Link to="/dashboard">DashBoard</Link>
+          <Typography className={classes.title} variant="h6" noWrap >
+            <Button size="large" onClick={naviToDashboard} className={classes.navi}>
+              DashBoard
+            </Button>
           </Typography>
-          <Typography className={classes.title} variant="h6" noWrap>
+          {/* <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/profile">profile</Link>
-          </Typography>
+          </Typography> */}
           <Typography className={classes.title} variant="h6" noWrap>
-            <Link to="/host/eventEdit">eventEdit</Link>
+            <Button size="large" onClick={naviToEventEdit} className={classes.navi}>
+              EventEdit
+            </Button>
           </Typography>
           {!localStorage.getItem('token') && 
           <>

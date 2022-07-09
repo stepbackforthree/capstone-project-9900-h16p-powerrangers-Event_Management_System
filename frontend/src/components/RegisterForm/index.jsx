@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import EmailIcon from '@material-ui/icons/Email';
 
-import { useForm, Form } from './useForm';
+import { useForm, Form } from '../useForm';
 
 function Copyright() {
   return (
