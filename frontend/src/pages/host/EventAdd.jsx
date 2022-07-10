@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     padding: theme.spacing(2),
     width: theme.spacing(100),
-    
+
     // height: theme.spacing(100),
   },
   header: {
@@ -30,11 +30,11 @@ export default function EventAdd() {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
-      <div className={classes.header}>
+    <div className={classes.root} >
+      <div className={classes.header} style={{'borderRadius': '35px'}}>
         <h1>EventAdd</h1>
       </div>
-      <Paper elevation={10} className={classes.paper}>
+      <Paper elevation={20} className={classes.paper} style={{'borderRadius': '35px'}}>
         <EventAddForm submit={(values) => { 
           console.log('get values:', values);
           window.location.href = '/dashboard';

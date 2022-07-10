@@ -31,6 +31,8 @@ function Copyright() {
 
 const initalFValues = {
   eventTitle: '',
+  eventType: '',
+  location: '',
   startTime: "2017-05-24T10:30",
   endTime: "2017-05-24T11:30",
   ifDisplay: true,
@@ -48,6 +50,46 @@ const ifDisplay = [
     label: 'offline',
   },
 ];
+
+
+const eventType = [
+  {
+    value: 'concert',
+    label: 'concert',
+  },
+  {
+    value: 'sports',
+    label: 'sports',
+  },
+  {
+    value: 'Comic and Animation',
+    label: 'Comic and Animation',
+  },
+  {
+    value: 'parents-child campaign',
+    label: 'parents-child campaign',
+  },
+  {
+    value: 'Tourism exhibition',
+    label: 'Tourism exhibition',
+  },
+];
+
+const location = [
+  {
+    value: 'Sydney',
+    label: 'Sydney',
+  },
+  {
+    value: 'Melbourne',
+    label: 'Melbourne',
+  },
+  {
+    value: 'Queensland',
+    label: 'Queensland',
+  },
+];
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -101,6 +143,50 @@ export default function EventAddForm(props) {
             value = {values.eventTitle}
             onChange = {handleInputChange}
           />
+          </div>
+          <div>
+            <h2>Event Type:</h2>
+            <TextField
+              id="eventType"
+              name="eventType"
+              select
+              // label="If Display"
+              value={values.eventType}
+              onChange={handleInputChange}
+              SelectProps={{
+                native: true,
+              }}
+              // helperText="If you want to show the event"
+              variant="outlined"
+            >
+              {eventType.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+          </div>
+          <div>
+            <h3>Location:</h3>
+            <TextField
+              id="location"
+              name="location"
+              select
+              // label="If Display"
+              value={values.location}
+              onChange={handleInputChange}
+              SelectProps={{
+                native: true,
+              }}
+              // helperText="If you want to show the event"
+              variant="outlined"
+            >
+              {location.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
           </div>
           <div>
             <h3>Start Time:</h3>
