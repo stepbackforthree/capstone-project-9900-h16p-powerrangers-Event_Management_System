@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -16,6 +18,16 @@ public class UserController {
 
     @Autowired
     private final UserService userService;
+
+    @PostMapping(value = "/sendemail")
+    public ResponseEntity<Object> sendEmail(@RequestParam String email) {
+        try {
+            return userService.sendEmail(email);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Something error, please try again!", HttpStatus.BAD_REQUEST);
+    }
 
     @PostMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {

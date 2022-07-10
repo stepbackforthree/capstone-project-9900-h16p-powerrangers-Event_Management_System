@@ -8,6 +8,14 @@ import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,7 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -113,4 +124,54 @@ public class UserServiceImpl implements UserService {
 
         return user.getPassword().equals(password);
     }
+
+    @Override
+    public ResponseEntity<Object> sendEmail(String email) throws IOException {
+        final String url = "http://api.sendcloud.net/apiv2/mail/send";
+
+        final String apiUser = "sc_bjklvn_test_dBTXGm";
+
+        final String apiKey = "826a23a47afc7cc97e721a03b35bce6b";
+        final String rcpt_to = email;
+        Boolean flag = false;
+
+        String subject = "Verification code";
+        int code = (int)((Math.random()*9+1)*1000);
+        String html = "Thanks for your registration, the verify code is: " + code;
+
+        HttpPost httpPost = new HttpPost(url);
+        HttpClient httpClient = new DefaultHttpClient();
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("apiUser", apiUser));
+        params.add(new BasicNameValuePair("apiKey", apiKey));
+        params.add(new BasicNameValuePair("to", rcpt_to));
+        params.add(new BasicNameValuePair("from", "sendcloud@sendcloud.org"));
+        params.add(new BasicNameValuePair("fromName", "SendCloud"));
+        params.add(new BasicNameValuePair("subject", subject));
+        params.add(new BasicNameValuePair("html", html));
+
+        httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+        HttpResponse response = httpClient.execute(httpPost);
+
+
+
+        if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
+            // Return correctly, parse the returned data
+            System.out.println(EntityUtils.toString(response.getEntity()));
+            flag = true;
+        } else {
+            System.err.println("error");
+        }
+        httpPost.releaseConnection();
+
+        if(flag){
+            return new ResponseEntity<>("Verification code has been sent, the code is "+code, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Failed to send the verification code, try again!", HttpStatus.OK);
+        }
+
+    }
+
 }

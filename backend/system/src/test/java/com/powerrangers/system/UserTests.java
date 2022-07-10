@@ -15,7 +15,7 @@ public class UserTests {
     @Test
     void checkExistTest() {
         SmallUserDTO userDTO = new SmallUserDTO();
-        userDTO.setUsername("niko");
+        userDTO.setUserName("niko");
         userDTO.setPassword("nk123");
         userDTO.setEmail("nikonikoni@gmail.com");
         userDTO.setRole("customer");
@@ -26,7 +26,7 @@ public class UserTests {
     @Test
     void addUserTest() {
         SmallUserDTO userDTO = new SmallUserDTO();
-        userDTO.setUsername("messi");
+        userDTO.setUserName("messi");
         userDTO.setPassword("ms123");
         userDTO.setEmail("lionel@gmail.com");
         userDTO.setRole("customer");

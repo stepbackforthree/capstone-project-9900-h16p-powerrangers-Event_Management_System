@@ -178,7 +178,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
-        userProfileDTO.setUsername(currUser.getUsername());
+        userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setPassword(password);
 
         userProfileMapper.updatePassword(userProfileDTO);
