@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-    @PostMapping(value = "/sendemail")
+    @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestParam String email) {
         try {
             return userService.sendEmail(email);
@@ -29,12 +29,12 @@ public class UserController {
         return new ResponseEntity<>("Something error, please try again!", HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/logIn")
     public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {
         return userService.login(smallUserDTO);
     }
 
-    @PostMapping(value = "signup")
+    @PostMapping(value = "/signUp")
     public ResponseEntity<Object> signUp(@RequestBody SmallUserDTO smallUserDTO) {
         if (userService.createUser(smallUserDTO)) {
             return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
@@ -43,7 +43,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "logout")
+    @GetMapping(value = "/logOut")
     public ResponseEntity<Object> logout(@RequestHeader("Authorization") String token) {
         return userService.logout(token);
     }

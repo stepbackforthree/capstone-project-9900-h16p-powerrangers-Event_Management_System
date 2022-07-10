@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
         final String apiKey = "826a23a47afc7cc97e721a03b35bce6b";
         final String rcpt_to = email;
-        Boolean flag = false;
+        boolean flag = false;
 
         String subject = "Verification code";
         int code = (int)((Math.random()*9+1)*1000);
