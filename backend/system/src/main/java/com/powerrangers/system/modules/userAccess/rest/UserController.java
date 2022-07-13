@@ -2,6 +2,9 @@ package com.powerrangers.system.modules.userAccess.rest;
 
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@Api(description = "Interface of user login and sign up")
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
+    @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String")
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestParam String email) {
         try {
@@ -29,11 +34,13 @@ public class UserController {
         return new ResponseEntity<>("Something error, please try again!", HttpStatus.BAD_REQUEST);
     }
 
+    @ApiOperation(value = "User login")
     @PostMapping(value = "/logIn")
     public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {
         return userService.login(smallUserDTO);
     }
 
+    @ApiOperation(value = "User sign up")
     @PostMapping(value = "/signUp")
     public ResponseEntity<Object> signUp(@RequestBody SmallUserDTO smallUserDTO) {
         if (userService.createUser(smallUserDTO)) {
@@ -43,6 +50,8 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "User log out")
+    @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String")
     @GetMapping(value = "/logOut")
     public ResponseEntity<Object> logout(@RequestHeader("Authorization") String token) {
         return userService.logout(token);

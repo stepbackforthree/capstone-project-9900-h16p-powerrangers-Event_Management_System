@@ -2,5 +2,9 @@ spring:
   profiles:
     active: system
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 JWT:
   expiration: 2
