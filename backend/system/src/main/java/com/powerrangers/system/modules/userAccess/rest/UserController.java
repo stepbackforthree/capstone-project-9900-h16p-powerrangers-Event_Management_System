@@ -4,6 +4,7 @@ import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "User reset password")
+    @ApiImplicitParams({@ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String"), @ApiImplicitParam(name = "password", value = "password", required = true, dataType = "String")})
     @PostMapping(value = "resetPassword")
     public ResponseEntity<Object> resetPassword(@RequestParam String email, @RequestParam String password) {
         return userService.resetPassword(email, password);
