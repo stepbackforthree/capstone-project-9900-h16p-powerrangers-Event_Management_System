@@ -56,4 +56,10 @@ public class UserController {
     public ResponseEntity<Object> logout(@RequestHeader("Authorization") String token) {
         return userService.logout(token);
     }
+
+    @ApiOperation(value = "User reset password")
+    @PostMapping(value = "resetPassword")
+    public ResponseEntity<Object> resetPassword(@RequestParam String email, @RequestParam String password) {
+        return userService.resetPassword(email, password);
+    }
 }

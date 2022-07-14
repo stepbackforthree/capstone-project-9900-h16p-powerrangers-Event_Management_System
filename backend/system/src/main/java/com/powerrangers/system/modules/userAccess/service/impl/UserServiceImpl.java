@@ -181,4 +181,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public ResponseEntity<Object> resetPassword(String email, String password) {
+        SmallUserDTO smallUserDTO = new SmallUserDTO();
+
+        smallUserDTO.setEmail(email);
+
+        if (!checkExist(smallUserDTO)) {
+            return new ResponseEntity<>("email not exists!", HttpStatus.BAD_REQUEST);
+        }
+
+        userMapper.resetPassword(email, password);
+
+        return new ResponseEntity<>("reset succeed!", HttpStatus.OK);
+    }
+
 }

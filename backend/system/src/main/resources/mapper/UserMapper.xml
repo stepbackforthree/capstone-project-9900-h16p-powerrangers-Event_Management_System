@@ -25,4 +25,9 @@
             resultType="com.powerrangers.system.modules.userAccess.service.dto.UserDTO">
         select * from sys_user where username = #{userName};
     </select>
+
+    <select id="resetPassword">
+        update sys_user set password = #{password}
+                        where email = #{email};
+    </select>
 </mapper>

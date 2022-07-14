@@ -19,4 +19,6 @@ public interface UserService {
     Boolean checkPassword(String token, String password);
 
     ResponseEntity<Object> sendEmail(String email) throws IOException;
+
+    ResponseEntity<Object> resetPassword(String email, String password);
 }
