@@ -43,6 +43,15 @@ public class UserServiceImpl implements UserService {
     @Value("${JWT.expiration}")
     private String expiration;
 
+    @Value("${EmailApi.url}")
+    private String url;
+
+    @Value("${EmailApi.apiUser}")
+    private String apiUser;
+
+    @Value("${EmailApi.apiKey}")
+    private String apiKey;
+
     @Override
     public Boolean checkExist(SmallUserDTO smallUserDTO) {
         return userMapper.checkExist(smallUserDTO) > 0;
@@ -127,11 +136,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Object> sendEmail(String email) throws IOException {
-        final String url = "http://api.sendcloud.net/apiv2/mail/send";
-
-        final String apiUser = "sc_bjklvn_test_dBTXGm";
-
-        final String apiKey = "826a23a47afc7cc97e721a03b35bce6b";
+//        final String url = "http://api.sendcloud.net/apiv2/mail/send";
+//        final String apiUser = "sc_bjklvn_test_dBTXGm";
+//        final String apiKey = "826a23a47afc7cc97e721a03b35bce6b";
         final String rcpt_to = email;
         boolean flag = false;
 

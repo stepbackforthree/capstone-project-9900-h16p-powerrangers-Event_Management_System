@@ -49,3 +49,9 @@ mybatis:
 
 JWT:
   expiration: 172800000
+
+EmailApi:
+  url: http://api.sendcloud.net/apiv2/mail/send
+  apiUser: sc_bjklvn_test_dBTXGm
+  apiKey: 826a23a47afc7cc97e721a03b35bce6b
+
