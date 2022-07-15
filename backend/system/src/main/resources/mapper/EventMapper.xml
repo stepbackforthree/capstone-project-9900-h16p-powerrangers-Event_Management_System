@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.powerrangers.system.modules.eventManagement.dao.EventMapper">
+
+    <insert id="createEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
+        insert into sys_event (host_id, event_name, event_type, site_name,
+                               start_time, end_time, is_displayed, image, description)
+        values (#{hostId}, #{eventName}, #{eventType}, #{siteName},
+                #{startTime}, #{endTime}, #{isDisplayed}, #{image}, #{description});
+    </insert>
+</mapper>
