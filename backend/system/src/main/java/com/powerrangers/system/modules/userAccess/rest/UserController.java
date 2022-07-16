@@ -37,8 +37,8 @@ public class UserController {
 
     @ApiOperation(value = "User login")
     @PostMapping(value = "/logIn")
-    public ResponseEntity<Object> login(@RequestBody SmallUserDTO smallUserDTO) {
-        return userService.login(smallUserDTO);
+    public ResponseEntity<Object> logIn(@RequestBody SmallUserDTO smallUserDTO) {
+        return userService.logIn(smallUserDTO);
     }
 
     @ApiOperation(value = "User sign up")

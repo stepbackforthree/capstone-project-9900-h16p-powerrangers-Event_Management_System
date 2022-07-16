@@ -9,8 +9,7 @@
             resultType="Integer">
         select count(*)
         from sys_user
-        where username = #{userName}
-           or email = #{email}
+        where username = #{userName} or email = #{email};
     </select>
 
     <insert id="addUser" parameterType="com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO"

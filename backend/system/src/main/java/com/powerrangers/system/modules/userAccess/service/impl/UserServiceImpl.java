@@ -7,6 +7,7 @@ import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -69,12 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Object> login(SmallUserDTO smallUserDTO) {
+    public ResponseEntity<Object> logIn(SmallUserDTO smallUserDTO) {
 
         Map<String, String> map = new HashMap<>();
 
         if (checkExist(smallUserDTO)) {
-
             UserDTO userDTO = userMapper.queryUser(smallUserDTO);
 
             String token = JWTUtils.createToken(userDTO.getId());
@@ -136,9 +136,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Object> sendEmail(String email) throws IOException {
-//        final String url = "http://api.sendcloud.net/apiv2/mail/send";
-//        final String apiUser = "sc_bjklvn_test_dBTXGm";
-//        final String apiKey = "826a23a47afc7cc97e721a03b35bce6b";
+
         final String rcpt_to = email;
         boolean flag = false;
 

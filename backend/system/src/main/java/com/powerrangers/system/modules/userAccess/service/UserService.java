@@ -10,7 +10,7 @@ public interface UserService {
 
     Boolean createUser(SmallUserDTO smallUserDTO);
 
-    ResponseEntity<Object> login(SmallUserDTO smallUserDTO);
+    ResponseEntity<Object> logIn(SmallUserDTO smallUserDTO);
 
     ResponseEntity<Object> logout(String token);
 
