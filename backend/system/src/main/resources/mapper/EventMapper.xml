@@ -11,4 +11,12 @@
         values (#{hostId}, #{eventName}, #{eventType}, #{siteName},
                 #{startTime}, #{endTime}, #{isDisplayed}, #{image}, #{description});
     </insert>
+
+    <select id="checkExist" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO"
+            resultType="Integer">
+        select count(*)
+        from sys_event
+        where event_name = #{eventName};
+    </select>
+
 </mapper>

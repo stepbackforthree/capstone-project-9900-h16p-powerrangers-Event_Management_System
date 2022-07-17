@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface EventMapper {
 
     void createEvent(SmallEventDTO smallEventDTO);
+
+    Integer checkExist(SmallEventDTO smallEventDTO);
 }

@@ -37,4 +37,9 @@ public class EventServiceImpl implements EventService {
 
         return new ResponseEntity<>("Create event succeed!", HttpStatus.OK);
     }
+
+    @Override
+    public Boolean checkExist(SmallEventDTO smallEventDTO) {
+        return eventMapper.checkExist(smallEventDTO) > 0;
+    }
 }
