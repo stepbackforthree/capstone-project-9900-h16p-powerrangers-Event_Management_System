@@ -1,5 +1,8 @@
 week1
+Team formation.
 
 week2
+Producing the user stories and the background.
 
 week3
+Producing the events details in the perspective of the hosts in Json format with pictures to help the frontend display page.
