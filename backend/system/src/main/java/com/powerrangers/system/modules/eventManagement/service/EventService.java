@@ -10,4 +10,6 @@ public interface EventService {
     ResponseEntity<Object> createEvent(String token, SmallEventDTO smallEventDTO);
 
     Boolean checkExist(SmallEventDTO smallEventDTO);
+
+    String updateEventName(String token, String eventName, String newName);
 }

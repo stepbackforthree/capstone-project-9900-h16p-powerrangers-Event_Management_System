@@ -5,12 +5,15 @@ import com.powerrangers.system.modules.eventManagement.dao.EventMapper;
 import com.powerrangers.system.modules.eventManagement.service.EventService;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import com.powerrangers.system.modules.userAccess.domain.User;
+import com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +44,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Boolean checkExist(SmallEventDTO smallEventDTO) {
         return eventMapper.checkExist(smallEventDTO) > 0;
+    }
+
+    @Override
+    public String updateEventName(String token, String eventName, String newName) {
+
+        return null;
     }
 }

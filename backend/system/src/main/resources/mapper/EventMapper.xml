@@ -16,7 +16,7 @@
             resultType="Integer">
         select count(*)
         from sys_event
-        where event_name = #{eventName};
+        where host_id = #{hostId} and event_name = #{eventName};
     </select>
 
 </mapper>
