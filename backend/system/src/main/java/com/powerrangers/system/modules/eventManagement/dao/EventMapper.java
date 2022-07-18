@@ -12,4 +12,6 @@ public interface EventMapper {
     Integer checkExist(EventModifyDTO eventModifyDTO);
 
     void updateEventName(EventModifyDTO eventModifyDTO);
+
+    void updateEventTime(EventModifyDTO eventModifyDTO);
 }

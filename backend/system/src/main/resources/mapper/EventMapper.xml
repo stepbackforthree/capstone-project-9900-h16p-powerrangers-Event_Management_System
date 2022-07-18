@@ -5,6 +5,12 @@
 
 <mapper namespace="com.powerrangers.system.modules.eventManagement.dao.EventMapper">
 
+    <sql id="event_name">
+        <if test="eventName != null and eventName.length() > 0">
+            where host_5id = #{hostId} and event_name = #{eventName};
+        </if>
+    </sql>
+
     <insert id="createEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
         insert into sys_event (host_id, event_name, event_type, site_name,
                                start_time, end_time, is_displayed, image, description)
@@ -14,13 +20,18 @@
 
     <select id="checkExist" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO"
             resultType="Integer">
-        select count(*)
-        from sys_event
-        where host_id = #{hostId} and event_name = #{eventName};
+        select count(*) from sys_event
+        <include refid="event_name"/>;
     </select>
 
     <select id="updateEventName" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
-        update sys_event set event_name = #{newString} where host_id = #{hostId} and event_name = #{eventName};
+        update sys_event set event_name = #{newString}
+        <include refid="event_name"/>;
+    </select>
+
+    <select id="updateEventTime" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+        update sys_event set start_time = #{newStartTime}, end_time = #{newEndTime}
+        <include refid="event_name"/>;
     </select>
 
 </mapper>

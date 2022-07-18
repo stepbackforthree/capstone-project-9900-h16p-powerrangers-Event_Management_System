@@ -11,5 +11,9 @@ public interface EventService {
 
     Boolean checkExist(EventModifyDTO eventModifyDTO);
 
-    ResponseEntity<String> updateEventName(String token, String eventName, String newName);
+//    ResponseEntity<Object> updateEventName(String token, String eventName, String newName);
+
+    ResponseEntity<Object> updateEventTime(String token, EventModifyDTO eventModifyDTO);
+
+    ResponseEntity<Object> updateEventName(String token, EventModifyDTO eventModifyDTO);
 }

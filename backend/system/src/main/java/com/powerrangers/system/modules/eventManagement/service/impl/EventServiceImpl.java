@@ -44,31 +44,68 @@ public class EventServiceImpl implements EventService {
         return eventMapper.checkExist(eventModifyDTO) > 0;
     }
 
-    @Override
-    public ResponseEntity<String> updateEventName(String token, String eventName, String newName) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-
-//        if (!currUser.getIsAuth()){
-//            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
+//    @Override
+//    public ResponseEntity<Object> updateEventName(String token, String eventName, String newName) {
+//        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+//
+////        if (!currUser.getIsAuth()){
+////            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
+////        }
+//
+//        EventModifyDTO eventModifyDTO = new EventModifyDTO();
+//        eventModifyDTO.setHostId(currUser.getId());
+//        eventModifyDTO.setEventName(eventName);
+//
+//        if (checkExist(eventModifyDTO)) {
+//            eventModifyDTO.setNewString(newName);
+//            eventModifyDTO.setEventName(newName);
+//            if (checkExist(eventModifyDTO)){
+//                return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);}
+//            else {
+//                eventModifyDTO.setEventName(eventName);
+//                eventMapper.updateEventName(eventModifyDTO);
+//                return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
+//            }
+//
+//        }else{
+//            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
 //        }
+//    }
 
-        EventModifyDTO eventModifyDTO = new EventModifyDTO();
+    @Override
+    public ResponseEntity<Object> updateEventName(String token, EventModifyDTO eventModifyDTO){
+
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
-        eventModifyDTO.setEventName(eventName);
 
-        if (checkExist(eventModifyDTO)) {
-            eventModifyDTO.setNewString(newName);
-            eventModifyDTO.setEventName(newName);
+        if (checkExist(eventModifyDTO)){
+            String eventName = eventModifyDTO.getEventName();
+            eventModifyDTO.setEventName(eventModifyDTO.getNewString());
             if (checkExist(eventModifyDTO)){
-                return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);}
-            else {
+                return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);
+            }else{
                 eventModifyDTO.setEventName(eventName);
                 eventMapper.updateEventName(eventModifyDTO);
-                return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
+                return new ResponseEntity<>("Update event time succeed!", HttpStatus.OK);
             }
 
         }else{
             return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
         }
+
+    }
+
+    @Override
+    public ResponseEntity<Object> updateEventTime(String token, EventModifyDTO eventModifyDTO){
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        eventModifyDTO.setHostId(currUser.getId());
+
+        if (checkExist(eventModifyDTO)){
+            eventMapper.updateEventTime(eventModifyDTO);
+            return new ResponseEntity<>("Update event time succeed!", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
