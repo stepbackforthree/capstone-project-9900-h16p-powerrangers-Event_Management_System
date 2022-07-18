@@ -28,9 +28,9 @@ public class EventServiceImpl implements EventService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
-//        if (!currUser.getIsAuth()) {
-//            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
-//        }
+        if (!currUser.getIsAuth()) {
+            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
+        }
 
         smallEventDTO.setHostId(currUser.getId());
 
@@ -43,34 +43,6 @@ public class EventServiceImpl implements EventService {
     public Boolean checkExist(EventModifyDTO eventModifyDTO) {
         return eventMapper.checkExist(eventModifyDTO) > 0;
     }
-
-//    @Override
-//    public ResponseEntity<Object> updateEventName(String token, String eventName, String newName) {
-//        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-//
-////        if (!currUser.getIsAuth()){
-////            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
-////        }
-//
-//        EventModifyDTO eventModifyDTO = new EventModifyDTO();
-//        eventModifyDTO.setHostId(currUser.getId());
-//        eventModifyDTO.setEventName(eventName);
-//
-//        if (checkExist(eventModifyDTO)) {
-//            eventModifyDTO.setNewString(newName);
-//            eventModifyDTO.setEventName(newName);
-//            if (checkExist(eventModifyDTO)){
-//                return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);}
-//            else {
-//                eventModifyDTO.setEventName(eventName);
-//                eventMapper.updateEventName(eventModifyDTO);
-//                return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
-//            }
-//
-//        }else{
-//            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
     @Override
     public ResponseEntity<Object> updateEventName(String token, EventModifyDTO eventModifyDTO){

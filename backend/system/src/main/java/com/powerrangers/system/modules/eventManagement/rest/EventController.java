@@ -25,12 +25,6 @@ public class EventController {
         return eventService.createEvent(token, smallEventDTO);
     }
 
-//    @PostMapping(value = "updateEventName")
-//    public ResponseEntity<Object> updateEventName(@RequestHeader("Authorization") String token,
-//                                                 @RequestParam String eventName, @RequestParam String newName) {
-//        return eventService.updateEventName(token, eventName, newName);
-//    }
-
     @PostMapping(value = "/updateEventName")
     public ResponseEntity<Object> updateEventName(@RequestBody EventModifyDTO eventModifyDTO,
                                                   @RequestHeader("Authorization") String token) {
