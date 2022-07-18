@@ -28,9 +28,9 @@ public class EventServiceImpl implements EventService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
-        if (!currUser.getIsAuth()) {
-            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
-        }
+//        if (!currUser.getIsAuth()) {
+//            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
+//        }
 
         smallEventDTO.setHostId(currUser.getId());
 
