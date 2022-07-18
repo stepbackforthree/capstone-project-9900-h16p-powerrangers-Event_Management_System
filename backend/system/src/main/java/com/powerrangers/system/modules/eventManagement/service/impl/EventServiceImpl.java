@@ -54,15 +54,15 @@ public class EventServiceImpl implements EventService {
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         eventModifyDTO.setHostId(currUser.getId());
-        eventModifyDTO.setOldString(eventName);
+        eventModifyDTO.setEventName(eventName);
 
         if (checkExist(eventModifyDTO)) {
             eventModifyDTO.setNewString(newName);
-            eventModifyDTO.setOldString(newName);
+            eventModifyDTO.setEventName(newName);
             if (checkExist(eventModifyDTO)){
                 return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);}
             else {
-                eventModifyDTO.setOldString(eventName);
+                eventModifyDTO.setEventName(eventName);
                 eventMapper.updateEventName(eventModifyDTO);
                 return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
             }
