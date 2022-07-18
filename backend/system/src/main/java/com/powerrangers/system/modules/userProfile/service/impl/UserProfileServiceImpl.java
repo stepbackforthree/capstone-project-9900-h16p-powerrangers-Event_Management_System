@@ -23,21 +23,21 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileMapper userProfileMapper;
 
     @Override
-    public String updateNickname(String token, String nickname) {
+    public String updateNickname(String token, String nickName) {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
-        if (currUser.getNickName().equals(nickname)) {
+        if (currUser.getNickName().equals(nickName)) {
             return "duplicated nickname!";
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
         userProfileDTO.setUserName(currUser.getUserName());
-        userProfileDTO.setNickName(nickname);
+        userProfileDTO.setNickName(nickName);
 
         userProfileMapper.updateNickname(userProfileDTO);
 
-        currUser.setNickName(nickname);
+        currUser.setNickName(nickName);
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 

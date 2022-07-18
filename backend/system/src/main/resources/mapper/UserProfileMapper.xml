@@ -6,8 +6,8 @@
 <mapper namespace="com.powerrangers.system.modules.userProfile.dao.UserProfileMapper">
 
     <sql id="username">
-        <if test="username != null and username.length() > 0">
-            where username = #{username};
+        <if test="userName != null and userName.length() > 0">
+            where username = #{userName};
         </if>
     </sql>
 

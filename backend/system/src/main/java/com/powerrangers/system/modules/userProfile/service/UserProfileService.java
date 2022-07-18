@@ -1,7 +1,7 @@
 package com.powerrangers.system.modules.userProfile.service;
 
 public interface UserProfileService {
-    String updateNickname(String token, String nickname);
+    String updateNickname(String token, String nickName);
 
     String updateEmail(String token, String email);
 
