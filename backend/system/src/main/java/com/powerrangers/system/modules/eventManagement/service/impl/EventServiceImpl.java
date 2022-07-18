@@ -86,7 +86,7 @@ public class EventServiceImpl implements EventService {
             }else{
                 eventModifyDTO.setEventName(eventName);
                 eventMapper.updateEventName(eventModifyDTO);
-                return new ResponseEntity<>("Update event time succeed!", HttpStatus.OK);
+                return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
             }
 
         }else{
