@@ -27,7 +27,7 @@ public class EventController {
     }
 
     @PostMapping(value = "updateEventName")
-    public ResponseEntity<Object> updateNickname(@RequestHeader("Authorization") String token,
+    public ResponseEntity<Object> updateEventName(@RequestHeader("Authorization") String token,
                                                  @RequestParam String eventName, @RequestParam String newName) {
         return new ResponseEntity<>(eventService.updateEventName(token, eventName, newName), HttpStatus.OK);
     }
