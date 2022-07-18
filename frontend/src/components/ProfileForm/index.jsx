@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import MyDetails from './MyDetails';
+import BankDetails from './BankDetails';
 import ResetPassword from './ResetPassword';
 
 
@@ -96,7 +97,10 @@ export default function ProfileForm() {
             <MyDetails/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.panel}>
-            Bank Detail
+            <h1>
+              Bank Detail
+            </h1>
+            <BankDetails/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.panel}>
             <h1>

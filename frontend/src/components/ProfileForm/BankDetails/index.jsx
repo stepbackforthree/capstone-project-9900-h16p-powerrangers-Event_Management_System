@@ -7,8 +7,8 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import request from '../../../utils/request';
 
 const initalFValues = {
-  email: '',
-  password: '',
+  method: '',
+  accountNumber: '',
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ResetPassword() {
+export default function BankDetails() {
   const classes = useStyles();
 
   const { values, setValues, handleInputChange } = useForm(initalFValues);
@@ -87,3 +87,4 @@ export default function ResetPassword() {
     </div>
   )
 }
+
