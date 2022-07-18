@@ -28,6 +28,7 @@ export default function SimpleMenu() {
     console.log(window.localStorage.getItem('token'));
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('userName');
+    window.localStorage.removeItem('role');
     window.location.href = '/login';
   }
 

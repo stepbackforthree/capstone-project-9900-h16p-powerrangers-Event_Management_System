@@ -16,6 +16,8 @@ import EmailIcon from '@material-ui/icons/Email';
 
 import { useForm, Form } from '../useForm';
 
+import request from '../../utils/request';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -78,13 +80,34 @@ export default function RegisterForm(props) {
     }
   }
 
+  const verifyEmail = () => {
+    // console.log(values.email);
+    console.log({"email": values.email});
+
+    // request('./users/sendEmail',{
+    //   method: 'POST',
+    //   data: {"email": values.email}
+    // }).then(data => {
+    //   console.log(data);
+    // })
+  }
+
   const validateEmail = (email) => {
-  return String(email)
+    return String(email)
     .toLowerCase()
     .match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
   };
+
+  const strongPassword = (password) => {
+    let testPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[!#@*&.])[a-zA-Z\d!#@*&.]*$/
+    if (testPassword.test(password) === false) {
+      console.log('not strong password');
+      return false;
+    }
+    return true;
+  }
 
   const validateInput = e => {
     let { name, value } = e.target;
@@ -119,6 +142,8 @@ export default function RegisterForm(props) {
         case "password":
           if (!value) {
             stateObj[name] = "Please enter Password.";
+          } else if (!strongPassword(value)) {
+            stateObj[name] = "Password isn't strong enough.";
           } else if (values.confirmPassword && value !== values.confirmPassword) {
             stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
           } else {
@@ -191,7 +216,8 @@ export default function RegisterForm(props) {
                 fullWidth
                 color="primary"
                 endIcon={<EmailIcon/>}
-                style={{textTransform: "none", fontSize: "7px"}}
+                onClick={verifyEmail}
+                style={{textTransform: "none", fontSize: "7px", height:"100%", fontWeight: "bold"}}
                 >Verify Code</Button>}
             </Grid>
             <Grid item xs={12}>
@@ -223,6 +249,7 @@ export default function RegisterForm(props) {
                 onChange = {handleInputChange}
                 onBlur={validateInput}
               />
+              <p style={{fontSize: '12px', color: '#666'}}>Password must contain lowercase letters, numbers, and symbols.</p>
               {error.password && <span className='err'>{error.password}</span>}
             </Grid>
             <Grid item xs={12}>
