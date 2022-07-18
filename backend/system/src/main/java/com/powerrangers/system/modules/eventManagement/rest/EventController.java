@@ -4,7 +4,6 @@ import com.powerrangers.system.modules.eventManagement.service.EventService;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import io.swagger.annotations.Api;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class EventController {
 //        return eventService.updateEventName(token, eventName, newName);
 //    }
 
-    @PostMapping(value = "updateEventName")
+    @PostMapping(value = "/updateEventName")
     public ResponseEntity<Object> updateEventName(@RequestBody EventModifyDTO eventModifyDTO,
                                                   @RequestHeader("Authorization") String token) {
         System.out.println(eventModifyDTO.getEventName() + eventModifyDTO.getNewString()+token);

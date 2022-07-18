@@ -7,7 +7,7 @@
 
     <sql id="event_name">
         <if test="eventName != null and eventName.length() > 0">
-            where host_5id = #{hostId} and event_name = #{eventName};
+            where host_id = #{hostId} and event_name = #{eventName};
         </if>
     </sql>
 
