@@ -8,7 +8,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 // import MenuIcon from '@material-ui/icons/Menu';
 // import SearchIcon from '@material-ui/icons/Search';
 import {
-  Link,
+  // Link,
   useNavigate
 } from 'react-router-dom';
 import LeftBar from '../LeftBar';
@@ -127,21 +127,33 @@ export default function SearchAppBar() {
           {/* <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/profile">profile</Link>
           </Typography> */}
-          <Typography className={classes.title} variant="h6" noWrap>
-            <Button size="large" onClick={naviToEventEdit} className={classes.navi}>
-              EventEdit
-            </Button>
-          </Typography>
-          <Typography className={classes.title} variant="h6" noWrap>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              onClick={naviToEventAdd}
-              startIcon={<PostAddIcon />}
-            >
-              Event Add
-            </Button>
-          </Typography>
+
+
+          {localStorage.getItem('token') && 
+          <>
+            <Typography className={classes.title} variant="h6" noWrap>
+              <Button size="large" onClick={naviToEventEdit} className={classes.navi}>
+                EventEdit
+              </Button>
+            </Typography>
+          </>
+          }
+          
+
+          {localStorage.getItem('role') === 'host' && 
+          <>
+            <Typography className={classes.title} variant="h6" noWrap>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={naviToEventAdd}
+                startIcon={<PostAddIcon />}
+              >
+                Event Add
+              </Button>
+            </Typography>
+          </>
+          }
           
           {!localStorage.getItem('token') && 
           <>

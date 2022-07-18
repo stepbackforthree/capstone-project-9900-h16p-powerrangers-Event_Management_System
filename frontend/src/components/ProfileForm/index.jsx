@@ -6,6 +6,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import MyDetails from './MyDetails';
+import ResetPassword from './ResetPassword';
 
 
 function TabPanel(props) {
@@ -47,10 +49,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '80vh',
+    width: '100%',
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
+  panel: {
+    flexGrow: 1,
+  }
 }));
 
 
@@ -78,24 +84,30 @@ export default function ProfileForm() {
             className={classes.tabs}
           >
             <Tab label="My details" {...a11yProps(0)} />
-            <Tab label="Profile" {...a11yProps(1)} />
+            <Tab label="Bank Detail" {...a11yProps(1)} />
             <Tab label="Password" {...a11yProps(2)} />
             <Tab label="Email" {...a11yProps(3)} />
             <Tab label="Notification" {...a11yProps(4)} />
           </Tabs>
-          <TabPanel value={value} index={0}>
-            My details
+          <TabPanel value={value} index={0} className={classes.panel}>
+            <h1>
+              My details
+            </h1>
+            <MyDetails/>
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            Profile
+          <TabPanel value={value} index={1} className={classes.panel}>
+            Bank Detail
           </TabPanel>
-          <TabPanel value={value} index={2}>
-            Password
+          <TabPanel value={value} index={2} className={classes.panel}>
+            <h1>
+              Password
+            </h1>
+            <ResetPassword/>
           </TabPanel>
-          <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={3} className={classes.panel}>
             Email
           </TabPanel>
-          <TabPanel value={value} index={4}>
+          <TabPanel value={value} index={4} className={classes.panel}>
             Notification
           </TabPanel>
         </div>
