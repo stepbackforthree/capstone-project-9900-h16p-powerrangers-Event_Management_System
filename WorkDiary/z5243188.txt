@@ -27,7 +27,7 @@ Add verification email information when registering
 Add logout&avatar&eventAddPage
 
 Week7
-
+update personal profile page
 
 Week8
 

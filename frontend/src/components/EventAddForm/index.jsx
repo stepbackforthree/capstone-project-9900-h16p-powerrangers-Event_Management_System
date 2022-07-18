@@ -189,6 +189,22 @@ export default function EventAddForm(props) {
             </TextField>
           </div>
           <div>
+            <h2>Number of tickets:</h2>
+            <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="numberOfTickets"
+            label="Number of tickets(Only numbers are allowed)"
+            name="numberOfTickets"
+            autoComplete="numberOfTickets"
+            autoFocus
+            value = {values.numberOfTickets}
+            onChange = {handleInputChange}
+          />
+          </div>
+          <div>
             <h3>Start Time:</h3>
             <TextField
               id="startTime"

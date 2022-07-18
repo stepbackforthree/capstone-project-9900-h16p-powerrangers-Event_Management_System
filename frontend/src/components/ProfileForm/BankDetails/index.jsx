@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm, Form } from '../../useForm';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import BackupIcon from '@material-ui/icons/Backup';
 import request from '../../../utils/request';
 
 const initalFValues = {
@@ -33,43 +33,42 @@ export default function BankDetails() {
   const handleSubmit = () => {
     console.log('submit success');
     console.log(values);
-    request('/users/resetPassword',{
-      method: 'POST',
-      data: values
-    }).then(data => {
-      console.log(data);
-    })
+    // request('/users/updateBankDetails',{
+    //   method: 'POST',
+    //   data: values
+    // }).then(data => {
+    //   console.log(data);
+    // })
   }
 
   return (
     <div className={classes.paper}>
       <Form>
-        <h5>Email:</h5>
+        <h5>Method:</h5>
         <TextField
           variant="outlined"
           margin="normal"
           required
-          fullWidth
-          id="email"
-          label="email"
-          name="email"
-          autoComplete="email"
+          // fullWidth
+          id="method"
+          label="method"
+          name="method"
+          autoComplete="method"
           autoFocus
-          value = {values.email}
+          value = {values.method}
           onChange = {handleInputChange}
         />
-        <h5>New Password:</h5>
+        <h5>Account Number:</h5>
         <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value = {values.password}
+          name="accountNumber"
+          label="accountNumber"
+          id="accountNumber"
+          autoComplete="accountNumber"
+          value = {values.accountNumber}
           onChange = {handleInputChange}
         />
         <Button
@@ -79,9 +78,9 @@ export default function BankDetails() {
           // color="primary"
           className={classes.submit}
           onClick={handleSubmit}
-          startIcon={<VpnKeyIcon/>}
+          startIcon={<BackupIcon/>}
         >
-          change password
+          submit change
         </Button>
       </Form>
     </div>

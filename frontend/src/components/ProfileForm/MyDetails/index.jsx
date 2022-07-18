@@ -24,7 +24,7 @@ export default function Mydetails() {
   return (
     <>
       <div className="detail-container">
-        <h4>Avatar</h4>
+        <h4>Avatar:</h4>
         <Avatar className={classes.purple}>H</Avatar>
         <Button
           // fullWidth
@@ -37,16 +37,15 @@ export default function Mydetails() {
           update
         </Button>
 
-
-        <h4>Description</h4>
+        <h4>Phone Number:</h4>
         <TextField
           variant="outlined"
           margin="normal"
           fullWidth
-          id="description"
-          label="Description"
-          name="description"
-          autoComplete="description"
+          id="phoneNumber"
+          label="Phone Number"
+          name="phoneNumber"
+          autoComplete="phoneNumber"
           autoFocus
           // value = {}
           // onChange = {}
@@ -63,15 +62,40 @@ export default function Mydetails() {
           update
         </Button>
 
-        <h4>Phone Number</h4>
+        <h4>Email:</h4>
         <TextField
           variant="outlined"
           margin="normal"
           fullWidth
-          id="phoneNumber"
-          label="Phone Number"
-          name="phoneNumber"
-          autoComplete="phoneNumber"
+          id="email"
+          label="email"
+          name="email"
+          autoComplete="email"
+          // autoFocus
+          // value = {}
+          // onChange = {}
+        />
+        <Button
+          // fullWidth
+          variant="contained"
+          color="default"
+          className={classes.button}
+          startIcon={<CloudUploadIcon />}
+          // className={classes.submit}
+          // onClick={handleSubmitHost}
+        >
+          update
+        </Button>
+
+        <h4>Description:</h4>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="description"
+          label="Description"
+          name="description"
+          autoComplete="description"
           autoFocus
           // value = {}
           // onChange = {}

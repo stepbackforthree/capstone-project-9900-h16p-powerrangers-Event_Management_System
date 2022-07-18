@@ -87,8 +87,7 @@ export default function ProfileForm() {
             <Tab label="My details" {...a11yProps(0)} />
             <Tab label="Bank Detail" {...a11yProps(1)} />
             <Tab label="Password" {...a11yProps(2)} />
-            <Tab label="Email" {...a11yProps(3)} />
-            <Tab label="Notification" {...a11yProps(4)} />
+            <Tab label="Notification" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0} className={classes.panel}>
             <h1>
@@ -109,9 +108,6 @@ export default function ProfileForm() {
             <ResetPassword/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.panel}>
-            Email
-          </TabPanel>
-          <TabPanel value={value} index={4} className={classes.panel}>
             Notification
           </TabPanel>
         </div>
