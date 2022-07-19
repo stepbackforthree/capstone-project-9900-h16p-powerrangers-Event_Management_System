@@ -28,15 +28,19 @@ public class EventController {
     @PostMapping(value = "/updateEventName")
     public ResponseEntity<Object> updateEventName(@RequestBody EventModifyDTO eventModifyDTO,
                                                   @RequestHeader("Authorization") String token) {
-        System.out.println(eventModifyDTO.getEventName() + eventModifyDTO.getNewString()+token);
         return eventService.updateEventName(token, eventModifyDTO);
     }
 
-    @PostMapping(value = "updateEventTime")
+    @PostMapping(value = "/updateEventTime")
     public ResponseEntity<Object> updateEventTime(@RequestHeader("Authorization") String token,
                                                   @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.updateEventTime(token, eventModifyDTO);
     }
 
+    @PostMapping(value = "/updateEventDescription")
+    public ResponseEntity<Object> updateEventDescription(@RequestHeader("Authorization") String token,
+                                                  @RequestBody EventModifyDTO eventModifyDTO) {
+        return eventService.updateEventDescription(token, eventModifyDTO);
+    }
 
 }

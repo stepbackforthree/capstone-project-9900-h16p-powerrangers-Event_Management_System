@@ -34,4 +34,8 @@
         <include refid="event_name"/>;
     </select>
 
+    <select id="updateEventDescription" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+        update sys_event set description = #{newString}
+        <include refid="event_name"/>;
+    </select>
 </mapper>
