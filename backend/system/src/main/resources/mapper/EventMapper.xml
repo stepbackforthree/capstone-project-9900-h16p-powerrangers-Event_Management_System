@@ -38,4 +38,10 @@
         update sys_event set description = #{newString}
         <include refid="event_name"/>;
     </select>
+
+    <select id="updateEventAddress" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+        update sys_event set site_name = #{newString}, site_description = #{secondNewString}
+        <include refid="event_name"/>;
+    </select>
+
 </mapper>

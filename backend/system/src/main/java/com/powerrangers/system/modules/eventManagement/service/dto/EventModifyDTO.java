@@ -16,6 +16,8 @@ public class EventModifyDTO implements Serializable {
 
     private String  newString;
 
+    private String  secondNewString;
+
     private Integer newInteger;
 
     private Timestamp newStartTime;
