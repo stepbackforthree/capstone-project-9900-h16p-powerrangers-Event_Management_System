@@ -28,6 +28,9 @@ Add logout&avatar&eventAddPage
 
 Week7
 update personal profile page
+Add image conversion 64base functionality to support database storage
+Added the function of picture display back
+Added an input box for entering only numbers
 
 Week8
 
