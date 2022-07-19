@@ -37,7 +37,7 @@ export default function EventAdd() {
       <Paper elevation={20} className={classes.paper} style={{'borderRadius': '35px'}}>
         <EventAddForm submit={(values) => { 
           console.log('get values:', values);
-          window.location.href = '/dashboard';
+          // window.location.href = '/dashboard';
         }}/>
       </Paper>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './styles.css';
 import Button from '@material-ui/core/Button';
@@ -19,13 +19,39 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Mydetails() {
+  const [baseImage, setBaseImage] = useState("");
   const classes = useStyles();
+
+  // upload img
+  const uploadIamge = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setBaseImage(base64);
+  }
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
 
   return (
     <>
       <div className="detail-container">
         <h4>Avatar:</h4>
-        <Avatar className={classes.purple}>H</Avatar>
+          <input type="file" onChange={(e) => uploadIamge(e)} />
+        <Avatar>
+          <img alt="avatar" src={baseImage} height="100%"/>
+        </Avatar>
         <Button
           // fullWidth
           variant="contained"
