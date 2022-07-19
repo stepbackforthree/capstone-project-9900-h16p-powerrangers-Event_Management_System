@@ -54,4 +54,8 @@
         <include refid="event_name"/>;
     </select>
 
+    <select id="changeEventDisplayState" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+        update sys_event set is_displayed = #{newInteger}
+        <include refid="event_name"/>;
+    </select>
 </mapper>

@@ -61,5 +61,11 @@ public class EventController {
         return eventService.changeEventCancelState(token, eventModifyDTO);
     }
 
+    @PostMapping(value = "/changeEventDisplayState")
+    public ResponseEntity<Object> changeEventDisplayState(@RequestHeader("Authorization") String token,
+                                                         @RequestBody EventModifyDTO eventModifyDTO) {
+        return eventService.changeEventDisplayState(token, eventModifyDTO);
+    }
+
 
 }
