@@ -21,4 +21,6 @@ public interface UserService {
     ResponseEntity<Object> sendEmail(String email) throws IOException;
 
     ResponseEntity<Object> resetPassword(SmallUserDTO smallUserDTO);
+
+    ResponseEntity<Object> queryUser(String token);
 }

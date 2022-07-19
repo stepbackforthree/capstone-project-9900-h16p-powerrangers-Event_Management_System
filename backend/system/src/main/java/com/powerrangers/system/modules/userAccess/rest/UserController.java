@@ -61,7 +61,13 @@ public class UserController {
     @ApiOperation(value = "User reset password")
     @ApiImplicitParams({@ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String"), @ApiImplicitParam(name = "password", value = "password", required = true, dataType = "String")})
     @PostMapping(value = "resetPassword")
-    public ResponseEntity<Object> resetPassword(@RequestHeader("Authorization") String token, @RequestBody SmallUserDTO smallUserDTO) {
+    public ResponseEntity<Object> resetPassword(@RequestBody SmallUserDTO smallUserDTO) {
         return userService.resetPassword(smallUserDTO);
+    }
+
+    @ApiOperation(value = "information of specific user")
+    @GetMapping(value = "queryUser")
+    public ResponseEntity<Object> queryUser(@RequestHeader("Authorization") String token) {
+        return userService.queryUser(token);
     }
 }

@@ -189,4 +189,14 @@ public class UserServiceImpl implements UserService {
 
         return new ResponseEntity<>("reset succeed!", HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> queryUser(String token) {
+
+        if (token == null || token.length() == 0) {
+            return new ResponseEntity<>("Invalid token!", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(redisTemplate.opsForValue().get("token_" + token), HttpStatus.OK);
+    }
 }
