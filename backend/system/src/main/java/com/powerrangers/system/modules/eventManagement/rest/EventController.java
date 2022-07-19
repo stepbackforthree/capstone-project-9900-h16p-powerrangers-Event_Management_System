@@ -49,5 +49,11 @@ public class EventController {
         return eventService.updateEventAddress(token, eventModifyDTO);
     }
 
+    @PostMapping(value = "/updateEventType")
+    public ResponseEntity<Object> updateEventType(@RequestHeader("Authorization") String token,
+                                                     @RequestBody EventModifyDTO eventModifyDTO) {
+        return eventService.updateEventType(token, eventModifyDTO);
+    }
+
 
 }

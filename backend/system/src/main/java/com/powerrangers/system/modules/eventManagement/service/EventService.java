@@ -18,5 +18,8 @@ public interface EventService {
     ResponseEntity<Object> updateEventDescription(String token, EventModifyDTO eventModifyDTO);
 
     ResponseEntity<Object> updateEventAddress(String token, EventModifyDTO eventModifyDTO);
+
+    ResponseEntity<Object> updateEventType(String token, EventModifyDTO eventModifyDTO);
+
 }
 

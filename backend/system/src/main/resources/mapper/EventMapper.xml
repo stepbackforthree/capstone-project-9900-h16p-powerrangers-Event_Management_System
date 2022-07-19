@@ -44,4 +44,9 @@
         <include refid="event_name"/>;
     </select>
 
+    <select id="updateEventType" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+        update sys_event set event_type = #{newInteger}
+        <include refid="event_name"/>;
+    </select>
+
 </mapper>

@@ -18,4 +18,6 @@ public interface EventMapper {
     void updateEventDescription(EventModifyDTO eventModifyDTO);
 
     void updateEventAddress(EventModifyDTO eventModifyDTO);
+
+    void updateEventType(EventModifyDTO eventModifyDTO);
 }
