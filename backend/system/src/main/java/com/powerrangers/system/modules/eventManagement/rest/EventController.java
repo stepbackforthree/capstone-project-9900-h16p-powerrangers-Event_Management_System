@@ -55,5 +55,11 @@ public class EventController {
         return eventService.updateEventType(token, eventModifyDTO);
     }
 
+    @PostMapping(value = "/changeEventCancelState")
+    public ResponseEntity<Object> changeEventCancelState(@RequestHeader("Authorization") String token,
+                                                  @RequestBody EventModifyDTO eventModifyDTO) {
+        return eventService.changeEventCancelState(token, eventModifyDTO);
+    }
+
 
 }
