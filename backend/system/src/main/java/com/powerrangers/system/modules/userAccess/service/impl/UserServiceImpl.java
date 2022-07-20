@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        String userJSON = (String) redisTemplate.opsForValue().get("token_" + token);
+        String userJSON = redisTemplate.opsForValue().get("token_" + token);
         if (userJSON == null || userJSON.isBlank()) {
             return null;
         }
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean checkPassword(String token, String password) {
-        User user = JSON.parseObject((String) redisTemplate.opsForValue().get("token_" + token), User.class);
+        User user = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         if (user == null) {
             return false;
@@ -200,6 +200,6 @@ public class UserServiceImpl implements UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-type", "application/json");
 
-        return ResponseEntity.ok().headers(headers).body(redisTemplate.opsForValue().get("token_" + token));
+        return ResponseEntity.ok().headers(headers).body(JSON.toJSONString(redisTemplate.opsForValue().get("token_" + token)));
     }
 }
