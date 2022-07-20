@@ -2,7 +2,19 @@ week1
 Team formation.
 
 week2
-Producing the user stories and the background.
+Producing the user stories and the background in proposal.
 
 week3
 Producing the events details in the perspective of the hosts in Json format with pictures to help the frontend display page.
+
+Week 4
+Learn the MVC design pattern and learn how to use Spring Boot based on our project.
+
+Week 5
+Develop functions in userAccess and userProfile parts like change the user's profile information etc.
+
+Week 6
+Figure out the email Api usage of one company to merge it in to our project so that the user could receive the verification code.
+
+Week 7
+Develop the function in eventManagement part like changing the event information etc.
