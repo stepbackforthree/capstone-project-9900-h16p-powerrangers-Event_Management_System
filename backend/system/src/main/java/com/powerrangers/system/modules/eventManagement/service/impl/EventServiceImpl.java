@@ -153,4 +153,17 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public ResponseEntity<Object> changeEventTag(String token, EventModifyDTO eventModifyDTO) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        eventModifyDTO.setHostId(currUser.getId());
+
+        if (checkExist(eventModifyDTO)){
+            eventMapper.changeEventTag(eventModifyDTO);
+            return new ResponseEntity<>("Update event tag succeed!", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

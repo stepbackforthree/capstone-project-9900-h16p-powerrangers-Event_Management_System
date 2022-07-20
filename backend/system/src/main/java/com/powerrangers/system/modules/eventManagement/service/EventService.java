@@ -24,5 +24,8 @@ public interface EventService {
     ResponseEntity<Object> changeEventCancelState(String token, EventModifyDTO eventModifyDTO);
 
     ResponseEntity<Object> changeEventDisplayState(String token, EventModifyDTO eventModifyDTO);
+
+    ResponseEntity<Object> changeEventTag(String token, EventModifyDTO eventModifyDTO);
+
 }
 

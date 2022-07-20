@@ -24,4 +24,6 @@ public interface EventMapper {
     void changeEventCancelState(EventModifyDTO eventModifyDTO);
 
     void changeEventDisplayState(EventModifyDTO eventModifyDTO);
+
+    void changeEventTag(EventModifyDTO eventModifyDTO);
 }
