@@ -100,7 +100,7 @@ export default function ProfileForm(props) {
             <ResetPassword/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.panel}>
-            {userDetail.username}
+            {userDetail.userName}
             {userDetail.password}
           </TabPanel>
         </div>
