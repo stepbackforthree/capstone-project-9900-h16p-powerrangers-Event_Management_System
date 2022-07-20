@@ -73,5 +73,8 @@ public class EventController {
         return eventService.changeEventTag(token, eventModifyDTO);
     }
 
-
+    @PostMapping(value = "/queryEvent")
+    public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestParam String eventName) {
+        return eventService.queryEvent(token, eventName);
+    }
 }

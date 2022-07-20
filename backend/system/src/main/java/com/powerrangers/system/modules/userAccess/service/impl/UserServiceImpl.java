@@ -137,7 +137,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Object> sendEmail(String email) throws IOException {
 
-        final String rcpt_to = email;
         boolean flag = false;
 
         String subject = "Verification code";
@@ -150,7 +149,7 @@ public class UserServiceImpl implements UserService {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("apiUser", apiUser));
         params.add(new BasicNameValuePair("apiKey", apiKey));
-        params.add(new BasicNameValuePair("to", rcpt_to));
+        params.add(new BasicNameValuePair("to", email));
         params.add(new BasicNameValuePair("from", "sendcloud@sendcloud.org"));
         params.add(new BasicNameValuePair("fromName", "SendCloud"));
         params.add(new BasicNameValuePair("subject", subject));
@@ -200,6 +199,7 @@ public class UserServiceImpl implements UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-type", "application/json");
 
-        return ResponseEntity.ok().headers(headers).body(JSON.toJSONString(redisTemplate.opsForValue().get("token_" + token)));
+        return ResponseEntity.ok().headers(headers)
+                .body(JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class));
     }
 }

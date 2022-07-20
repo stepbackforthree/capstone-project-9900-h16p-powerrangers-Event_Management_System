@@ -63,4 +63,10 @@
         update sys_event set event_tag = #{newString}
         <include refid="event_name"/>;
     </select>
+
+    <select id="queryEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO"
+                            resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+        select * from sys_event
+        <include refid="event_name"/>;
+    </select>
 </mapper>

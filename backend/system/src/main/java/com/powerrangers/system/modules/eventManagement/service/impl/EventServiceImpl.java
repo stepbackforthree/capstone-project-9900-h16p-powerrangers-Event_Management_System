@@ -6,9 +6,11 @@ import com.powerrangers.system.modules.eventManagement.service.EventService;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import com.powerrangers.system.modules.userAccess.domain.User;
+import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -165,5 +167,22 @@ public class EventServiceImpl implements EventService {
         }else{
             return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> queryEvent(String token, String eventName) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        EventModifyDTO eventModifyDTO = new EventModifyDTO();
+        if (currUser != null) {
+            eventModifyDTO.setHostId(currUser.getId());
+            eventModifyDTO.setEventName(eventName);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("content-type", "application/json");
+
+        return ResponseEntity.ok().headers(headers)
+                .body(JSON.parseObject(JSON.toJSONString(eventMapper.queryEvent(eventModifyDTO))));
     }
 }

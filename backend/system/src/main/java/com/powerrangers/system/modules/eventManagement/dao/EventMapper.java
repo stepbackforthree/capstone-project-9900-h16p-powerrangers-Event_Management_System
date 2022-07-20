@@ -1,5 +1,6 @@
 package com.powerrangers.system.modules.eventManagement.dao;
 
+import com.powerrangers.system.modules.eventManagement.service.dto.EventDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,4 +27,6 @@ public interface EventMapper {
     void changeEventDisplayState(EventModifyDTO eventModifyDTO);
 
     void changeEventTag(EventModifyDTO eventModifyDTO);
+
+    EventDTO queryEvent(EventModifyDTO eventModifyDTO);
 }
