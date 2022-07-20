@@ -3,6 +3,7 @@ package com.powerrangers.system.modules.eventManagement.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.powerrangers.system.modules.eventManagement.dao.EventMapper;
 import com.powerrangers.system.modules.eventManagement.service.EventService;
+import com.powerrangers.system.modules.eventManagement.service.dto.EventDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import com.powerrangers.system.modules.userAccess.domain.User;
