@@ -26,11 +26,14 @@ export default async function apiCall (url, opt = {}) {
   // console.log(`${API_HOST}${url}`);
 
   const res = await fetch(`${API_HOST}${url}`, init);
-  // console.log(res);
+  console.log(res);
+  console.log(typeof(res));
+  console.log(res.body);
+
 
   const dataJson = await res.json();
   // const dataJson = await fetch(`${API_HOST}${url}`, init);
-  // console.log(dataJson);
+  console.log(dataJson);
 
   if (dataJson.error) {
     if (dataJson.error.includes('invalid token')) {
