@@ -13,9 +13,9 @@
 
     <insert id="createEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
         insert into sys_event (host_id, event_name, event_type, site_name,
-                               start_time, end_time, is_displayed, image, description)
+                               start_time, end_time, is_displayed, description)
         values (#{hostId}, #{eventName}, #{eventType}, #{siteName},
-                #{startTime}, #{endTime}, #{isDisplayed}, #{image}, #{description});
+                #{startTime}, #{endTime}, #{isDisplayed}, #{description});
     </insert>
 
     <select id="checkExist" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO"

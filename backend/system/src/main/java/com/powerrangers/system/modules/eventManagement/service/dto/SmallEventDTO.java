@@ -25,7 +25,7 @@ public class SmallEventDTO extends BaseDTO implements Serializable {
 
     private Boolean isDisplayed;
 
-    private Byte[] image;
+    //private Byte[] image;
 
     private String description;
 }

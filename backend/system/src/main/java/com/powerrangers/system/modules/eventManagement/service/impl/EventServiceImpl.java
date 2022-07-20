@@ -32,6 +32,13 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
         }
 
+        EventModifyDTO eventModifyDTO = new EventModifyDTO();
+        eventModifyDTO.setEventName(smallEventDTO.getEventName());
+
+        if (eventMapper.checkExist(eventModifyDTO) < 1) {
+            return new ResponseEntity<>("Duplicated event name!", HttpStatus.BAD_REQUEST);
+        }
+
         smallEventDTO.setHostId(currUser.getId());
 
         eventMapper.createEvent(smallEventDTO);
