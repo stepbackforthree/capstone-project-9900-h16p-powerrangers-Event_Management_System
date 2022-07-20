@@ -13,10 +13,10 @@ const initalFValues = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    // alignItems: 'center',
     width: '50%',
   },
   submit: {
@@ -43,6 +43,9 @@ export default function ResetPassword() {
 
   return (
     <div className={classes.paper}>
+      <h1>
+        Password
+      </h1>
       <Form>
         <h5>Email:</h5>
         <TextField

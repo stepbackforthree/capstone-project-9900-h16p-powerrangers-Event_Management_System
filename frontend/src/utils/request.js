@@ -26,6 +26,8 @@ export default async function apiCall (url, opt = {}) {
   // console.log(`${API_HOST}${url}`);
 
   const res = await fetch(`${API_HOST}${url}`, init);
+  // console.log(res);
+
   const dataJson = await res.json();
   // const dataJson = await fetch(`${API_HOST}${url}`, init);
   // console.log(dataJson);

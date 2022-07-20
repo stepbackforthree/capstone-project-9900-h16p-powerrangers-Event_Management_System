@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import { useForm, Form } from '../useForm';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 function Copyright() {
@@ -29,16 +29,22 @@ function Copyright() {
   );
 }
 
-const initalFValues = {
-  eventTitle: '',
-  eventType: '',
-  location: '',
-  startTime: "2017-05-24T10:30",
-  endTime: "2017-05-24T11:30",
-  ifDisplay: true,
-  image: '',
-  eventDes: '',
-}
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.light,
+  },
+  submit: {
+    margin: theme.spacing(1, 0, 2),
+  },
+}));
 
 const ifDisplay = [
   {
@@ -91,29 +97,20 @@ const location = [
 ];
 
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    // backgroundColor: theme.palette.primary.main,
-  },
-  submit: {
-    margin: theme.spacing(4, 0, 2),
-  },
-}));
-
-
-
-export default function EventAddForm(props) {
+export default function EventManagementForm(props) {
+  // const event = {
+    // "eventName": "Kobe fan Meeting",
+    // "eventType": "sports",
+    // "description": "Fan meeting, recall the past time",
+    // "siteName": "Sydney",
+    // "siteDescription": "2 Macquarie Street, Sydney CBD NSW 2000",
+    // "startTime": "2022-07-30T17:30:00",
+    // "endTime": "2022-07-31T17:50:00",
+    // "isDisplayed": true,
+    // "starLevel": "4",
+    // "eventTag": "sports"
+  // }
   const classes = useStyles();
-
-  const { values, setValues, handleInputChange } = useForm(initalFValues);
 
   const handleSubmit = () => {
     console.log('submit success');
@@ -147,30 +144,34 @@ export default function EventAddForm(props) {
     })
   }
 
-
+  const { values, setValues, handleInputChange } = useForm(props.event);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <EditIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Event Management
+        </Typography>
         <Form>
-          <div>
-            <h2>Event Title:</h2>
-            <TextField
+          <h2>Event Name:</h2>
+          <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="eventTitle"
-            label="Event Title"
-            name="eventTitle"
-            autoComplete="eventTitle"
+            id="Event Name"
+            label="Event Name"
+            name="eventName"
+            // autoComplete="userName"
             autoFocus
-            value = {values.eventTitle}
+            value = {values.eventName}
             onChange = {handleInputChange}
           />
-          </div>
           <div>
-            <h2>Event Type:</h2>
+          <h2>Event Type:</h2>
             <TextField
               id="eventType"
               name="eventType"
@@ -214,6 +215,21 @@ export default function EventAddForm(props) {
             </TextField>
           </div>
           <div>
+            <h3>Site Description:</h3>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="siteDescription"
+              label="Site Description"
+              name="siteDescription"
+              autoFocus
+              value = {values.siteDescription}
+              onChange = {handleInputChange}
+            />
+          </div>
+          <div>
             <h2>Number of tickets:</h2>
             <TextField
             variant="outlined"
@@ -236,7 +252,7 @@ export default function EventAddForm(props) {
               name="startTime"
               label="Start Time"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              value={values.startTime}
               // className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -251,15 +267,13 @@ export default function EventAddForm(props) {
               name="endTime"
               label="End Time"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
-              // className={classes.textField}
+              value={values.endTime}
               InputLabelProps={{
                 shrink: true,
               }}
               onChange = {handleInputChange}
             />
           </div>
-          
           <div>
             <h4>Event If Display:</h4>
             <TextField
@@ -286,7 +300,6 @@ export default function EventAddForm(props) {
             <h4>Title Image:</h4>
             <input type="file" onChange={(e) => uploadIamge(e)} />
             <img alt="TitleImage" src={values.image} height="200px"/>
-
           </div>
           <div>
             <h4>Event Description:</h4>
@@ -304,32 +317,33 @@ export default function EventAddForm(props) {
               onChange = {handleInputChange}
             /> */}
             <TextField
-              id="eventDes"
-              name="eventDes"
+              id="eventDescription"
+              name="eventDescription"
               label="Event Description"
               multiline
               fullWidth
               rows={4}
               variant="outlined"
-              value = {values.eventDes}
+              value = {values.eventDescription}
               onChange = {handleInputChange}
             />
           </div>
           <Button
             // type="submit"
-            // fullWidth
+            fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             onClick={handleSubmit}
           >
-            submit
+            Change Event details
           </Button>
+          
         </Form>
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
-  );
+  )
 }

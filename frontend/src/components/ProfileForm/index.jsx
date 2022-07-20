@@ -24,7 +24,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={5}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: `2px solid ${theme.palette.divider}`,
   },
   panel: {
     flexGrow: 1,
@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProfileForm() {
+export default function ProfileForm(props) {
+  const userDetail = props.userDetail;
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -90,25 +91,17 @@ export default function ProfileForm() {
             <Tab label="Notification" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0} className={classes.panel}>
-            <h1>
-              My details
-            </h1>
             <MyDetails/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.panel}>
-            <h1>
-              Bank Detail
-            </h1>
             <BankDetails/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.panel}>
-            <h1>
-              Password
-            </h1>
             <ResetPassword/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.panel}>
-            Notification
+            {userDetail.username}
+            {userDetail.password}
           </TabPanel>
         </div>
       </div>

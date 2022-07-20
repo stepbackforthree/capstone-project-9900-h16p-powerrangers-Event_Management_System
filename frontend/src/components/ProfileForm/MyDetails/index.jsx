@@ -47,6 +47,9 @@ export default function Mydetails() {
   return (
     <>
       <div className="detail-container">
+        <h1>
+          My details
+        </h1>
         <h4>Avatar:</h4>
           <input type="file" onChange={(e) => uploadIamge(e)} />
         <Avatar>

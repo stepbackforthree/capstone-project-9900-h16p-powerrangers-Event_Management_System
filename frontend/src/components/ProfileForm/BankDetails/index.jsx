@@ -13,10 +13,10 @@ const initalFValues = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    // alignItems: 'center',
     width: '50%',
   },
   submit: {
@@ -46,12 +46,14 @@ const method = [
 
 export default function BankDetails() {
   const classes = useStyles();
+  const [bankDetails, setBankDetails] = React.useState('');
 
   const { values, setValues, handleInputChange } = useForm(initalFValues);
 
   const handleSubmit = () => {
     console.log('submit success');
-    console.log(values);
+    setBankDetails(values.method+'+'+values.accountNumber);
+    console.log(bankDetails);
     // request('/users/updateBankDetails',{
     //   method: 'POST',
     //   data: values
@@ -73,6 +75,9 @@ export default function BankDetails() {
 
   return (
     <div className={classes.paper}>
+      <h1>
+        Bank Detail
+      </h1>
       <Form>
         <h5>Method:</h5>
         <TextField
