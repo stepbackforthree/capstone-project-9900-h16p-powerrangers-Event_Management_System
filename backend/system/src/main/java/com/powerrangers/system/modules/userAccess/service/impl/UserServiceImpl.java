@@ -7,7 +7,6 @@ import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -197,6 +197,9 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>("Invalid token!", HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(redisTemplate.opsForValue().get("token_" + token), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("content-type", "application/json");
+
+        return ResponseEntity.ok().headers(headers).body(redisTemplate.opsForValue().get("token_" + token));
     }
 }

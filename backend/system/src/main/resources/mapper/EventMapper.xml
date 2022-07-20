@@ -12,9 +12,9 @@
     </sql>
 
     <insert id="createEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
-        insert into sys_event (host_id, event_name, event_type, site_name,
+        insert into sys_event (host_id, event_name, event_type, location,
                                start_time, end_time, is_displayed, description)
-        values (#{hostId}, #{eventName}, #{eventType}, #{siteName},
+        values (#{hostId}, #{eventName}, #{eventType}, #{location},
                 #{startTime}, #{endTime}, #{isDisplayed}, #{description});
     </insert>
 
@@ -40,7 +40,7 @@
     </select>
 
     <select id="updateEventAddress" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
-        update sys_event set site_name = #{newString}, site_description = #{secondNewString}
+        update sys_event set location = #{newString}, site_description = #{secondNewString}
         <include refid="event_name"/>;
     </select>
 

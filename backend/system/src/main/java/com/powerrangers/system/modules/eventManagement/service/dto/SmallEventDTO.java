@@ -17,7 +17,7 @@ public class SmallEventDTO extends BaseDTO implements Serializable {
 
     private Integer eventType;
 
-    private String siteName;
+    private String location;
 
     private Timestamp startTime;
 

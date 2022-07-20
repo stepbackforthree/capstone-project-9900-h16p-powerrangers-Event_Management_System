@@ -16,7 +16,7 @@ public class Event extends BaseEntity {
 
     private String description;
 
-    private String siteName;
+    private String location;
 
     private String siteDescription;
 
