@@ -39,7 +39,7 @@ public class EventServiceImpl implements EventService {
         eventModifyDTO.setEventName(smallEventDTO.getEventName());
         eventModifyDTO.setHostId(currUser.getId());
 
-        if (eventMapper.checkExist(eventModifyDTO) < 1) {
+        if (eventMapper.checkExist(eventModifyDTO) > 0) {
             return new ResponseEntity<>("Duplicated event name!", HttpStatus.BAD_REQUEST);
         }
 
