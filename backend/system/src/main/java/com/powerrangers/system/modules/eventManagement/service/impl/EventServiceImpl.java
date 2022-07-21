@@ -3,11 +3,9 @@ package com.powerrangers.system.modules.eventManagement.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.powerrangers.system.modules.eventManagement.dao.EventMapper;
 import com.powerrangers.system.modules.eventManagement.service.EventService;
-import com.powerrangers.system.modules.eventManagement.service.dto.EventDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import com.powerrangers.system.modules.userAccess.domain.User;
-import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -38,6 +36,7 @@ public class EventServiceImpl implements EventService {
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         eventModifyDTO.setEventName(smallEventDTO.getEventName());
         eventModifyDTO.setHostId(currUser.getId());
+        smallEventDTO.setHostId(currUser.getId());
 
         if (eventMapper.checkExist(eventModifyDTO) > 0) {
             return new ResponseEntity<>("Duplicated event name!", HttpStatus.BAD_REQUEST);
