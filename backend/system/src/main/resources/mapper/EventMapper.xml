@@ -69,4 +69,9 @@
         select * from sys_event
         <include refid="event_name"/>;
     </select>
+
+    <select id="getEvents" parameterType="integer"
+                            resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+        select * from sys_event where host_id = #{hostId} order by start_time desc;
+    </select>
 </mapper>

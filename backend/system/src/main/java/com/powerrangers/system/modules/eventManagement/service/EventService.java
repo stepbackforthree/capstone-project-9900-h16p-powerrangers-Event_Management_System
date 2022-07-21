@@ -28,5 +28,7 @@ public interface EventService {
     ResponseEntity<Object> changeEventTag(String token, EventModifyDTO eventModifyDTO);
 
     ResponseEntity<Object> queryEvent(String token, String eventName);
+
+    ResponseEntity<Object> getEvents(String token);
 }
 

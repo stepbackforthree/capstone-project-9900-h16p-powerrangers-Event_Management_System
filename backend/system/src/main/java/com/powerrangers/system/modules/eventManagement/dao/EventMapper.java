@@ -5,6 +5,8 @@ import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDT
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface EventMapper {
 
@@ -29,4 +31,6 @@ public interface EventMapper {
     void changeEventTag(EventModifyDTO eventModifyDTO);
 
     EventDTO queryEvent(EventModifyDTO eventModifyDTO);
+
+    List<EventDTO> getEvents(Integer hostId);
 }

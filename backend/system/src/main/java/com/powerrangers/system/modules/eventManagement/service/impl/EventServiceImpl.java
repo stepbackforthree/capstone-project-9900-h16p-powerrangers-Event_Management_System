@@ -31,7 +31,7 @@ public class EventServiceImpl implements EventService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
-        if (!currUser.getIsAuth()) {
+        if (currUser != null && !currUser.getIsAuth()) {
             return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
         }
 
@@ -184,5 +184,16 @@ public class EventServiceImpl implements EventService {
 
         return ResponseEntity.ok().headers(headers)
                 .body(JSON.parseObject(JSON.toJSONString(eventMapper.queryEvent(eventModifyDTO))));
+    }
+
+    @Override
+    public ResponseEntity<Object> getEvents(String token) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            return new ResponseEntity<>("User is not a host!", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(eventMapper.getEvents(currUser.getId()), HttpStatus.OK);
     }
 }

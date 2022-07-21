@@ -77,4 +77,9 @@ public class EventController {
     public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestParam String eventName) {
         return eventService.queryEvent(token, eventName);
     }
+
+    @GetMapping(value = "getEvents")
+    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token) {
+        return eventService.getEvents(token);
+    }
 }
