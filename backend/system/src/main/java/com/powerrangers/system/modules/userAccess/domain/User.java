@@ -17,7 +17,7 @@ public class User extends BaseEntity {
 
     private String nickName;
 
-    private Byte[] avatar;
+    private String avatar;
 
     private String description;
 
@@ -29,7 +29,7 @@ public class User extends BaseEntity {
 
     private BigDecimal balance;
 
-    private Byte[] qualification;
+    private String qualification;
 
     private Boolean isAuth;
 

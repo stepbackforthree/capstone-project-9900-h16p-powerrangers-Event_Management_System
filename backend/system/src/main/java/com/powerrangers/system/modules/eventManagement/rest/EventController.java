@@ -4,6 +4,7 @@ import com.powerrangers.system.modules.eventManagement.service.EventService;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,11 +74,13 @@ public class EventController {
         return eventService.changeEventTag(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "get all events created by specific host")
     @GetMapping(value = "/queryEvent")
     public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestParam String eventName) {
         return eventService.queryEvent(token, eventName);
     }
 
+    @ApiOperation(value = "get specific event through event name created by specific host")
     @GetMapping(value = "getEvents")
     public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token) {
         return eventService.getEvents(token);

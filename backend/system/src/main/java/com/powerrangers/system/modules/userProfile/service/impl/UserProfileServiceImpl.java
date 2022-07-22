@@ -66,10 +66,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public String updateAvatar(String token, Byte[] avatar) {
+    public String updateAvatar(String token, String avatar) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
-        if (currUser.getAvatar() != null && currUser.getAvatar() == avatar) {
+        if (currUser.getAvatar() != null && currUser.getAvatar().equals(avatar)) {
             return "duplicated avatar!";
         }
 
@@ -129,10 +129,10 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public String updateQualification(String token, Byte[] qualification) {
+    public String updateQualification(String token, String qualification) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
-        if (currUser.getQualification() != null && currUser.getQualification() == qualification) {
+        if (currUser.getQualification() != null && currUser.getQualification().equals(qualification)) {
             return "duplicated qualification!";
         }
 
