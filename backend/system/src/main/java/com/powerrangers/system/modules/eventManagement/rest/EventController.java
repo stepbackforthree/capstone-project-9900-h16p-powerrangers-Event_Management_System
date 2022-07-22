@@ -1,6 +1,7 @@
 package com.powerrangers.system.modules.eventManagement.rest;
 
 import com.powerrangers.system.modules.eventManagement.service.EventService;
+import com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Api(description = "Interface of event management")
 @RestController
@@ -74,15 +77,21 @@ public class EventController {
         return eventService.changeEventTag(token, eventModifyDTO);
     }
 
-    @ApiOperation(value = "get all events created by specific host")
-    @GetMapping(value = "/queryEvent")
-    public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestParam String eventName) {
-        return eventService.queryEvent(token, eventName);
+    @ApiOperation(value = "get specific event through event name created by specific host")
+    @PostMapping(value = "/queryEvent")
+    public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
+        return eventService.queryEvent(token, params.get("eventName"), params.get("userName"));
     }
 
-    @ApiOperation(value = "get specific event through event name created by specific host")
-    @GetMapping(value = "getEvents")
-    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token) {
-        return eventService.getEvents(token);
+    @ApiOperation(value = "get all events created by specific host")
+    @PostMapping(value = "getEvents")
+    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
+        return eventService.getEvents(token, params.get("userName"));
+    }
+
+    @ApiOperation(value = "get all events")
+    @PostMapping(value = "getAllEvents")
+    public ResponseEntity<Object> getAllEvents(@RequestHeader("Authorization") String token, @RequestBody EventFilterDTO eventFilterDTO) {
+        return eventService.getAllEvents(token, eventFilterDTO);
     }
 }

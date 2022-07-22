@@ -14,4 +14,6 @@ public interface UserMapper {
     UserDTO queryUser(SmallUserDTO smallUserDTO);
 
     void resetPassword(@Param("email") String email, @Param("password") String password);
+
+    Integer getUserIdByUserName(String userName);
 }

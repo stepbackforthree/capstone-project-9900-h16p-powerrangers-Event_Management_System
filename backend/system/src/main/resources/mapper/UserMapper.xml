@@ -29,4 +29,8 @@
         update sys_user set password = #{password}
                         where email = #{email};
     </select>
+    
+    <select id="getUserIdByUserName" parameterType="string" resultType="integer">
+        select id from sys_user where username = #{userName};
+    </select>
 </mapper>

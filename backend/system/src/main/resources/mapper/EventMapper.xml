@@ -74,4 +74,29 @@
                             resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
         select * from sys_event where host_id = #{hostId} order by start_time desc;
     </select>
+
+    <select id="getAllEvents" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO"
+                                resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+        select e.*, t.ticket_type, t.ticket_amount, t.ticket_price from sys_event e, event_ticket t
+        <where>
+            e.event_id = t.event_id and t.ticket_type = 1
+            <if test="location != null and location.length() != 0 and location != ''">
+                and location = #{location}
+            </if>
+            <if test="starLevel != null and starLevel != 0 and starLevel lte 5">
+                and star_level <![CDATA[ >= ]]> #{starLevel}
+            </if>
+            <if test="minPrice != null and maxPrice != null and minPrice lte maxPrice">
+                and t.ticket_price <![CDATA[ >= ]]> #{minPrice}
+                and t.ticket_price <![CDATA[ <= ]]> #{maxPrice}
+            </if>
+            <if test="online != null">
+                and online = #{online}
+            </if>
+            <if test="eventType != null and eventType != 0">
+                and event_type = #{eventType}
+            </if>
+        </where>
+        order by start_time desc;
+    </select>
 </mapper>

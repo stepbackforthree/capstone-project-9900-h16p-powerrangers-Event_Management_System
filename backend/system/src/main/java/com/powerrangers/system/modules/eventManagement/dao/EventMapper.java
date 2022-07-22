@@ -1,6 +1,7 @@
 package com.powerrangers.system.modules.eventManagement.dao;
 
 import com.powerrangers.system.modules.eventManagement.service.dto.EventDTO;
+import com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,4 +34,6 @@ public interface EventMapper {
     EventDTO queryEvent(EventModifyDTO eventModifyDTO);
 
     List<EventDTO> getEvents(Integer hostId);
+
+    List<EventDTO> getAllEvents(EventFilterDTO eventFilterDTO);
 }

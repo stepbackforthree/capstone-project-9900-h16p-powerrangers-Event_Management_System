@@ -3,8 +3,10 @@ package com.powerrangers.system.modules.eventManagement.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.powerrangers.system.modules.eventManagement.dao.EventMapper;
 import com.powerrangers.system.modules.eventManagement.service.EventService;
+import com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
+import com.powerrangers.system.modules.userAccess.dao.UserMapper;
 import com.powerrangers.system.modules.userAccess.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private final StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private final UserMapper userMapper;
 
     @Autowired
     private final EventMapper eventMapper;
@@ -169,13 +174,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> queryEvent(String token, String eventName) {
+    public ResponseEntity<Object> queryEvent(String token, String eventName, String userName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         if (currUser != null) {
-            eventModifyDTO.setHostId(currUser.getId());
+            eventModifyDTO.setHostId(userMapper.getUserIdByUserName(userName));
             eventModifyDTO.setEventName(eventName);
+        } else {
+            return new ResponseEntity<>("token is invalid!", HttpStatus.BAD_REQUEST);
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -186,13 +193,24 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> getEvents(String token) {
+    public ResponseEntity<Object> getEvents(String token, String userName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
-        if (currUser != null && !currUser.getIsAuth()) {
+        if (currUser == null) {
             return new ResponseEntity<>("User is not a host!", HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(eventMapper.getEvents(currUser.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(eventMapper.getEvents(userMapper.getUserIdByUserName(userName)), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        if (currUser == null) {
+            return new ResponseEntity<>("User is not a host!", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(eventMapper.getAllEvents(eventFilterDTO), HttpStatus.OK);
     }
 }
