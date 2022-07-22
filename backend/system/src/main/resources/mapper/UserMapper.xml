@@ -33,4 +33,11 @@
     <select id="getUserIdByUserName" parameterType="string" resultType="integer">
         select id from sys_user where username = #{userName};
     </select>
+
+    <select id="queryEvent" parameterType="com.powerrangers.system.modules.userAccess.service.dto.EmailDTO"
+            resultType="com.powerrangers.system.modules.userAccess.service.dto.EventInfoDTO">
+    select location, site_description, start_time from sys_event where event_id in
+    (select event_id from event_customer where customer_id = (select id from sys_user where username = #{userName}))
+    and event_name = #{eventName};
+    </select>
 </mapper>
