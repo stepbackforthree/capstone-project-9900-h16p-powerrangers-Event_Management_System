@@ -6,6 +6,7 @@ import com.powerrangers.system.modules.userAccess.dao.UserMapper;
 import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.EmailDTO;
+import com.powerrangers.system.modules.userAccess.service.dto.EventInfoDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -139,12 +140,31 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<Object> sendEmail(EmailDTO emailDTO) throws IOException {
 
         String email = emailDTO.getEmailAddress();
+        Integer state = emailDTO.getState();
+        int code = 0;
+        String subject;
+        String html;
+        String userName;
+        String eventName;
 
-        boolean flag = false;
-
-        String subject = "Verification code";
-        int code = (int)((Math.random()*9+1)*1000);
-        String html = "Thanks for your registration, the verify code is: " + code;
+        if(state == 0){
+            subject = "Verification code";
+            code = (int) ((Math.random() * 9 + 1) * 1000);
+            html = "Here you are, the verification code is: " + code;
+        }else if(state == 1){
+            userName = emailDTO.getUserName();
+            eventName = emailDTO.getEventName();
+            subject = "Refund letter";
+            html = "Sorry " + userName + ", the host has cancelled the event \"" + eventName +
+                    "\", the money will refund back to your account.";
+        }else{
+            userName = emailDTO.getUserName();
+            eventName = emailDTO.getEventName();
+            EventInfoDTO eventInfoDTO = userMapper.queryEvent(emailDTO);
+            subject = "Reservation letter";
+            html = "Dear "+userName+", you have successfully booked the ticket of \""+eventName+ "\", the event will hold on "
+                    +eventInfoDTO.getStartTime()+ ", in "+eventInfoDTO.getLocation()+" "+eventInfoDTO.getSiteDescription()+"." ;
+        }
 
         HttpPost httpPost = new HttpPost(url);
         HttpClient httpClient = new DefaultHttpClient();
@@ -161,21 +181,19 @@ public class UserServiceImpl implements UserService {
         httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
         HttpResponse response = httpClient.execute(httpPost);
+        ResponseEntity result;
 
         if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
             // Return correctly, parse the returned data
             System.out.println(EntityUtils.toString(response.getEntity()));
-            flag = true;
+            if(state == 0) result = new ResponseEntity<>("The email has been sent successfully, the code is "+ code, HttpStatus.OK);
+            else result = new ResponseEntity<>("The email has been sent successfully", HttpStatus.OK);
         } else {
             System.err.println("error");
+            result =  new ResponseEntity<>("Failed to send the email", HttpStatus.BAD_REQUEST);
         }
         httpPost.releaseConnection();
-
-        if(flag){
-            return new ResponseEntity<>("Verification code has been sent, the code is "+code, HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>("Failed to send the verification code, try again!", HttpStatus.OK);
-        }
+        return result;
 
     }
 
