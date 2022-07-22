@@ -1,5 +1,6 @@
 package com.powerrangers.system.modules.eventManagement.service;
 
+import com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,10 @@ public interface EventService {
 
     ResponseEntity<Object> changeEventTag(String token, EventModifyDTO eventModifyDTO);
 
-    ResponseEntity<Object> queryEvent(String token, String eventName);
+    ResponseEntity<Object> queryEvent(String token, String eventName, String userName);
 
-    ResponseEntity<Object> getEvents(String token);
+    ResponseEntity<Object> getEvents(String token, String userName);
+
+    ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO);
 }
 

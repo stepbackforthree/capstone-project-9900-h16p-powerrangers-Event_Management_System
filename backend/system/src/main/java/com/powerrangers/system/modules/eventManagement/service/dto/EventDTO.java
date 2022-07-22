@@ -5,4 +5,10 @@ import lombok.Data;
 
 @Data
 public class EventDTO extends Event {
+
+    private Integer ticketType;
+
+    private Integer ticketAmount;
+
+    private Double ticketPrice;
 }
