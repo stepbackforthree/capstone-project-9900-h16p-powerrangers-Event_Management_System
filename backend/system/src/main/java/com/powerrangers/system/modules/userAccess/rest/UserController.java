@@ -2,6 +2,7 @@ package com.powerrangers.system.modules.userAccess.rest;
 
 import com.powerrangers.system.modules.userAccess.service.UserService;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
+import com.powerrangers.system.modules.userAccess.service.dto.EmailDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -26,9 +27,9 @@ public class UserController {
 
     @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String")
     @PostMapping(value = "/sendEmail")
-    public ResponseEntity<Object> sendEmail(@RequestParam String email) {
+    public ResponseEntity<Object> sendEmail(@RequestBody EmailDTO emailDTO) {
         try {
-            return userService.sendEmail(email);
+            return userService.sendEmail(emailDTO.getEmailAddress());
         } catch (IOException e) {
             e.printStackTrace();
         }
