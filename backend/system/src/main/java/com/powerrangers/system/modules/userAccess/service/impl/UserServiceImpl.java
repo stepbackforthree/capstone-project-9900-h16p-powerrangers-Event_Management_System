@@ -5,6 +5,7 @@ import com.powerrangers.common.utils.JWTUtils;
 import com.powerrangers.system.modules.userAccess.dao.UserMapper;
 import com.powerrangers.system.modules.userAccess.domain.User;
 import com.powerrangers.system.modules.userAccess.service.UserService;
+import com.powerrangers.system.modules.userAccess.service.dto.EmailDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -135,7 +136,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Object> sendEmail(String email) throws IOException {
+    public ResponseEntity<Object> sendEmail(EmailDTO emailDTO) throws IOException {
+
+        String email = emailDTO.getEmailAddress();
 
         boolean flag = false;
 

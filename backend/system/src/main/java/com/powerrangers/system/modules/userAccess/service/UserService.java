@@ -1,5 +1,6 @@
 package com.powerrangers.system.modules.userAccess.service;
 
+import com.powerrangers.system.modules.userAccess.service.dto.EmailDTO;
 import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -18,7 +19,7 @@ public interface UserService {
 
     Boolean checkPassword(String token, String password);
 
-    ResponseEntity<Object> sendEmail(String email) throws IOException;
+    ResponseEntity<Object> sendEmail(EmailDTO emailDTO) throws IOException;
 
     ResponseEntity<Object> resetPassword(SmallUserDTO smallUserDTO);
 

@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestBody EmailDTO emailDTO) {
         try {
-            return userService.sendEmail(emailDTO.getEmailAddress());
+            return userService.sendEmail(emailDTO);
         } catch (IOException e) {
             e.printStackTrace();
         }
