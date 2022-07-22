@@ -10,7 +10,7 @@ public class UserProfileDTO {
 
     private String nickName;
 
-    private Byte[] avatar;
+    private String avatar;
 
     private String description;
 
@@ -20,7 +20,7 @@ public class UserProfileDTO {
 
     private String preTag;
 
-    private Byte[] qualification;
+    private String qualification;
 
     private String bankDetails;
 }

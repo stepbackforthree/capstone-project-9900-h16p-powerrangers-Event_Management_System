@@ -25,7 +25,7 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "updateAvatar")
-    public ResponseEntity<Object> updateAvatar(@RequestHeader("Authorization") String token, @RequestParam Byte[] avatar) {
+    public ResponseEntity<Object> updateAvatar(@RequestHeader("Authorization") String token, @RequestParam String avatar) {
         return new ResponseEntity<>(userProfileService.updateAvatar(token, avatar), HttpStatus.OK);
     }
 
@@ -40,7 +40,7 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "updateQualification")
-    public ResponseEntity<Object> updateQualification(@RequestHeader("Authorization") String token, @RequestParam Byte[] qualification) {
+    public ResponseEntity<Object> updateQualification(@RequestHeader("Authorization") String token, @RequestParam String qualification) {
         return new ResponseEntity<>(userProfileService.updateQualification(token, qualification), HttpStatus.OK);
     }
 

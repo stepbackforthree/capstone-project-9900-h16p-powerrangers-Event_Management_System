@@ -84,12 +84,12 @@ export default function RegisterForm(props) {
     // console.log(values.email);
     console.log({"email": values.email});
 
-    // request('./users/sendEmail',{
-    //   method: 'POST',
-    //   data: {"email": values.email}
-    // }).then(data => {
-    //   console.log(data);
-    // })
+    request('/users/sendEmail',{
+      method: 'POST',
+      data: {"email": values.email}
+    }).then(data => {
+      console.log(data);
+    })
   }
 
   const validateEmail = (email) => {

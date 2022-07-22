@@ -5,13 +5,13 @@ public interface UserProfileService {
 
     String updateEmail(String token, String email);
 
-    String updateAvatar(String token, Byte[] avatar);
+    String updateAvatar(String token, String avatar);
 
     String updateDescription(String token, String description);
 
     String updatePrefTag(String token, String prefTag);
 
-    String updateQualification(String token, Byte[] qualification);
+    String updateQualification(String token, String qualification);
 
     String updateBankDetails(String token, String bankDetails);
 

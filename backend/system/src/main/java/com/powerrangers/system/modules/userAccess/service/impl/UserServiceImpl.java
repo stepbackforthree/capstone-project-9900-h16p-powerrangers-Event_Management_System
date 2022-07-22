@@ -159,8 +159,6 @@ public class UserServiceImpl implements UserService {
 
         HttpResponse response = httpClient.execute(httpPost);
 
-
-
         if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
             // Return correctly, parse the returned data
             System.out.println(EntityUtils.toString(response.getEntity()));
