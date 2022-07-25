@@ -25,7 +25,6 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-    @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String")
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestBody EmailDTO emailDTO) {
         try {
