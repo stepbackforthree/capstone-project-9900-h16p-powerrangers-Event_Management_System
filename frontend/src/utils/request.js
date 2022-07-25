@@ -31,19 +31,21 @@ export default async function apiCall (url, opt = {}) {
   // console.log(res.text());
 
   const dataJson = await res.json();
+  console.log('dataJson:', dataJson);
   // const dataJson = await JSON.parse(res);
   // const dataJson = await fetch(`${API_HOST}${url}`, init);
 
   if (dataJson.error) {
-    if (dataJson.error.includes('invalid token')) {
+    if (dataJson.error.includes('token is invalid')) {
       message.error('token expired, please login', 3, () => {
         window.location.href = '/login';
       });
     } else {
+      console.log(dataJson.error)
       message.error({content: (dataJson.error),  duration: 2500})
     }
     return;
   }
-  console.log('dataJson:', dataJson);
+  // console.log('dataJson:', dataJson);
   return dataJson;
 }

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/Home/SearchBar';
 import FilterPanel from '../../components/Home/FilterPanel';
 import List from '../../components/Home/List';
 // import EmptyView from '../../components/Home/EmptyView';
 import { dataList } from '../../constants/index';
 import './style.css';
+import request from '../../utils/request';
 
 
 export default function DashBoard() {
@@ -31,6 +32,17 @@ export default function DashBoard() {
   ]);
 
   const [list, setList] = useState(dataList);
+
+  useEffect(() => {
+    request('/events/getAllEvents',{
+      method: 'POST',
+      data: {
+
+      }
+    }).then((data) => {
+      console.log(data);
+    })
+  }, []);
 
 
   const handleSelectCategory = (event, value) => {

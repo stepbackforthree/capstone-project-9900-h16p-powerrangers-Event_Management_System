@@ -35,12 +35,12 @@ const initalFValues = {
   location: 'Sydney',
   startTime: "2017-05-24T10:30",
   endTime: "2017-05-24T11:30",
-  ifDisplayed: true,
+  isDisplayed: true,
   image: '',
   description: '',
 }
 
-const ifDisplay = [
+const isDisplayed = [
   {
     value: true,
     label: 'online',
@@ -263,11 +263,11 @@ export default function EventAddForm(props) {
           <div>
             <h4>Event If Display:</h4>
             <TextField
-              id="ifDisplayed"
-              name="ifDisplayed"
+              id="isDisplayed"
+              name="isDisplayed"
               select
               // label="If Display"
-              value={values.ifDisplayed}
+              value={values.isDisplayed}
               onChange={handleInputChange}
               SelectProps={{
                 native: true,
@@ -275,7 +275,7 @@ export default function EventAddForm(props) {
               helperText="If you want to show the event"
               variant="outlined"
             >
-              {ifDisplay.map((option) => (
+              {isDisplayed.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>

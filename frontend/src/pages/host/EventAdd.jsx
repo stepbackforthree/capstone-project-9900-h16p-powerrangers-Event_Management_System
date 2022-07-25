@@ -3,6 +3,8 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import EventAddForm from '../../components/EventAddForm';
 import request from '../../utils/request';
+import message from '../../utils/message';
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EventAdd() {
   const classes = useStyles()
+  const navigate = useNavigate();
+
 
   return (
     <div className={classes.root} >
@@ -47,9 +51,9 @@ export default function EventAdd() {
             // localStorage.setItem('token', data.token);
             // localStorage.setItem('userName', values.userName);
             // localStorage.setItem('role', values.role);
-            // navigate('/dashboard');
+            navigate('/dashboard');
             // window.location.href = '/dashboard';
-            // message.success({content: ('log in successfully!'),  duration: 2500});
+            message.success({content: ('Create event successfully!'),  duration: 2500});
           })
 
           // window.location.href = '/dashboard';

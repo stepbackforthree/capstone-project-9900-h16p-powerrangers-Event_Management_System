@@ -6,6 +6,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { deepPurple } from '@material-ui/core/colors';
+import request from '../../../utils/request';
 
 const useStyles = makeStyles((theme) => ({
   purple: {
@@ -44,6 +45,18 @@ export default function Mydetails() {
     })
   }
 
+  const submitAvatar = () => {
+    console.log('Img: ', baseImage)
+    request('/profile/updateAvatar',{
+      method: 'POST',
+      data: {
+        'avatar': baseImage
+      }
+    }).then(data => {
+      console.log(data)
+    })
+  }
+
   return (
     <>
       <div className="detail-container">
@@ -61,7 +74,7 @@ export default function Mydetails() {
           color="default"
           startIcon={<CloudUploadIcon />}
           className={classes.button}
-          // onClick={handleSubmitHost}
+          onClick={submitAvatar}
         >
           update
         </Button>

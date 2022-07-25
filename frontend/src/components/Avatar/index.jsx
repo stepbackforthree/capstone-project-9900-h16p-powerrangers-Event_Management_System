@@ -24,6 +24,11 @@ export default function SimpleMenu() {
     navigate('/profile');
   }
 
+  const naviToEventList = () => {
+    navigate('/host/eventList');
+  }
+
+
   const handleLogOut = () => {
     console.log(window.localStorage.getItem('token'));
     window.localStorage.removeItem('token');
@@ -59,10 +64,10 @@ export default function SimpleMenu() {
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
-          naviToProfile()
+          naviToEventList()
         }}>
           {/* <Button onClick={naviToAccount}> */}
-          My account
+          My Event List
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
