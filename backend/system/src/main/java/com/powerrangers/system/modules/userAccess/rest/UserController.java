@@ -25,7 +25,6 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-    @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String")
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestBody EmailDTO emailDTO) {
         try {
@@ -46,7 +45,8 @@ public class UserController {
     @PostMapping(value = "/signUp")
     public ResponseEntity<Object> signUp(@RequestBody SmallUserDTO smallUserDTO) {
         if (userService.createUser(smallUserDTO)) {
-            return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
+            return userService.logIn(smallUserDTO);
+            //return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("user already existed!", HttpStatus.BAD_REQUEST);
         }
