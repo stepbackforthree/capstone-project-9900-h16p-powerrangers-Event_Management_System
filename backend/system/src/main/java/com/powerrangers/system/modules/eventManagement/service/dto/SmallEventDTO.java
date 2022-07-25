@@ -28,4 +28,8 @@ public class SmallEventDTO extends BaseDTO implements Serializable {
     private String image;
 
     private String description;
+
+    private Integer ticketAmount;
+
+    private Double ticketPrice;
 }

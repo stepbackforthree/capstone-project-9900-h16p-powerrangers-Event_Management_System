@@ -84,9 +84,9 @@ public class EventController {
     }
 
     @ApiOperation(value = "get all events created by specific host")
-    @PostMapping(value = "getEvents")
-    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
-        return eventService.getEvents(token, params.get("userName"));
+    @GetMapping(value = "getEvents")
+    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token, @RequestParam String userName) {
+        return eventService.getEvents(token, userName);
     }
 
     @ApiOperation(value = "get all events")

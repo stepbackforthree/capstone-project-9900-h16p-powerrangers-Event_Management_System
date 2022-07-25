@@ -16,6 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
@@ -34,8 +37,11 @@ public class EventServiceImpl implements EventService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (currUser != null && !currUser.getIsAuth()) {
-            return new ResponseEntity<>("Not a host or is not authenticated", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
@@ -44,12 +50,15 @@ public class EventServiceImpl implements EventService {
         smallEventDTO.setHostId(currUser.getId());
 
         if (eventMapper.checkExist(eventModifyDTO) > 0) {
-            return new ResponseEntity<>("Duplicated event name!", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "Duplicated event name!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         eventMapper.createEvent(smallEventDTO);
+        eventMapper.createEventInsertFullPriceTicket(smallEventDTO);
 
-        return new ResponseEntity<>("Create event succeed!", HttpStatus.OK);
+        responseBody.put("msg", "Create event succeed!");
+        return new ResponseEntity<>(responseBody ,HttpStatus.OK);
     }
 
     @Override
@@ -63,19 +72,24 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             String eventName = eventModifyDTO.getEventName();
             eventModifyDTO.setEventName(eventModifyDTO.getNewString());
             if (checkExist(eventModifyDTO)){
-                return new ResponseEntity<>("The new event name has existed", HttpStatus.BAD_REQUEST);
+                responseBody.put("error", "The new event name has existed");
+                return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
             }else{
                 eventModifyDTO.setEventName(eventName);
                 eventMapper.updateEventName(eventModifyDTO);
-                return new ResponseEntity<>("Update event name succeed!", HttpStatus.OK);
+                responseBody.put("msg", "Update event name succeed!");
+                return new ResponseEntity<>(responseBody, HttpStatus.OK);
             }
 
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -85,11 +99,19 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventTime(eventModifyDTO);
-            return new ResponseEntity<>("Update event time succeed!", HttpStatus.OK);
+
+            responseBody.put("msg", "Update event time succeed!");
+
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+
+            responseBody.put("error", "The event you want to modify did not exist");
+
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -177,12 +199,15 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> queryEvent(String token, String eventName, String userName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
+        Map<String, String> responseBody = new HashMap<>();
+
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         if (currUser != null) {
             eventModifyDTO.setHostId(userMapper.getUserIdByUserName(userName));
             eventModifyDTO.setEventName(eventName);
         } else {
-            return new ResponseEntity<>("token is invalid!", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         HttpHeaders headers = new HttpHeaders();
@@ -197,7 +222,9 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         if (currUser == null) {
-            return new ResponseEntity<>("User is not a host!", HttpStatus.BAD_REQUEST);
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("error", "User is not a host!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(eventMapper.getEvents(userMapper.getUserIdByUserName(userName)), HttpStatus.OK);
@@ -207,8 +234,11 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
+
         if (currUser == null) {
-            return new ResponseEntity<>("User is not a host!", HttpStatus.BAD_REQUEST);
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("error", "User is not a host!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(eventMapper.getAllEvents(eventFilterDTO), HttpStatus.OK);

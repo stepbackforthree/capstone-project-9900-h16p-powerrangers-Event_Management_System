@@ -13,6 +13,8 @@ public interface EventMapper {
 
     void createEvent(SmallEventDTO smallEventDTO);
 
+    void createEventInsertFullPriceTicket(SmallEventDTO smallEventDTO);
+
     Integer checkExist(EventModifyDTO eventModifyDTO);
 
     void updateEventName(EventModifyDTO eventModifyDTO);

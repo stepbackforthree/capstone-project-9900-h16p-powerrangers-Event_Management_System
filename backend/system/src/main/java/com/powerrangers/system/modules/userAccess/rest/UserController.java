@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(description = "Interface of user login and sign up")
 @RestController
@@ -32,7 +34,10 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>("Something error, please try again!", HttpStatus.BAD_REQUEST);
+
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("error", "Something error, please try again!");
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
     @ApiOperation(value = "User login")
@@ -48,7 +53,9 @@ public class UserController {
             return userService.logIn(smallUserDTO);
             //return new ResponseEntity<>("user sign up succeed!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("user already existed!", HttpStatus.BAD_REQUEST);
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("error", "user already existed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 

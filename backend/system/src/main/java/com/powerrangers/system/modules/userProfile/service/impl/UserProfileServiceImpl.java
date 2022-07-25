@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -22,13 +24,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     private final UserProfileMapper userProfileMapper;
 
+    private Map<String, String> responseBody = new HashMap<>();
+
     @Override
-    public String updateNickname(String token, String nickName) {
+    public Map<String, String> updateNickname(String token, String nickName) {
+
+        responseBody.clear();
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getNickName().equals(nickName)) {
-            return "duplicated nickname!";
+            responseBody.put("error", "duplicated nickname!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -41,15 +48,20 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update nickname success!";
+        responseBody.put("msg", "update nickname success!");
+        return responseBody;
     }
 
     @Override
-    public String updateEmail(String token, String email) {
+    public Map<String, String> updateEmail(String token, String email) {
+
+        responseBody.clear();
+
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         if (currUser.getEmail().equals(email)) {
-            return "duplicated email!";
+            responseBody.put("error", "duplicated email!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -62,15 +74,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update email success!";
+        responseBody.put("msg", "update email success!");
+        return responseBody;
     }
 
     @Override
-    public String updateAvatar(String token, String avatar) {
+    public Map<String, String> updateAvatar(String token, String avatar) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        responseBody.clear();
+
         if (currUser.getAvatar() != null && currUser.getAvatar().equals(avatar)) {
-            return "duplicated avatar!";
+            responseBody.put("error", "duplicated avatar!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -83,15 +99,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update avatar success!";
+        responseBody.put("msg", "update avatar success!");
+        return responseBody;
     }
 
     @Override
-    public String updateDescription(String token, String description) {
+    public Map<String, String> updateDescription(String token, String description) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        responseBody.clear();
+
         if (currUser.getDescription() != null || !currUser.getDescription().isEmpty() && currUser.getDescription().equals(description)) {
-            return "duplicated description!";
+            responseBody.put("error", "duplicated description!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -104,15 +124,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update description success!";
+        responseBody.put("msg", "update description success!");
+        return responseBody;
     }
 
     @Override
-    public String updatePrefTag(String token, String prefTag) {
+    public Map<String, String> updatePrefTag(String token, String prefTag) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        responseBody.clear();
+
         if (currUser.getPrefTag() != null || !currUser.getPrefTag().isEmpty() && currUser.getPrefTag().equals(prefTag)) {
-            return "duplicated prefTag!";
+            responseBody.put("error", "duplicate preTag!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -125,15 +149,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update prefTag success!";
+        responseBody.put("msg", "update preTag success!");
+        return responseBody;
     }
 
     @Override
-    public String updateQualification(String token, String qualification) {
+    public Map<String, String> updateQualification(String token, String qualification) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        responseBody.clear();
+
         if (currUser.getQualification() != null && currUser.getQualification().equals(qualification)) {
-            return "duplicated qualification!";
+            responseBody.put("error", "duplicated qualification!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -146,15 +174,20 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update qualification success!";
+        responseBody.put("msg", "udpate qualification success!");
+        return responseBody;
     }
 
     @Override
-    public String updateBankDetails(String token, String bankDetails) {
+    public Map<String, String> updateBankDetails(String token, String bankDetails) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        responseBody.clear();
+
         if (currUser.getBankDetails() != null || !currUser.getBankDetails().isEmpty() && currUser.getBankDetails().equals(bankDetails)) {
-            return "duplicated bankDetails!";
+            responseBody.put("error", "duplicated bankDetails!");
+            return responseBody;
+
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -167,14 +200,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update bankDetails success!";
+        responseBody.put("msg", "update bankDetails success!");
+        return responseBody;
     }
 
     @Override
-    public String updatePassword(String token, String password) {
+    public Map<String, String> updatePassword(String token, String password) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+
+        responseBody.clear();
+
         if (currUser.getPassword() != null && currUser.getPassword().equals(password)) {
-            return "duplicated bankDetails!";
+            responseBody.put("error", "duplicated password!");
+            return responseBody;
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
@@ -187,6 +225,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
-        return "update password success!";
+        responseBody.put("msg", "update password success!");
+        return responseBody;
     }
 }

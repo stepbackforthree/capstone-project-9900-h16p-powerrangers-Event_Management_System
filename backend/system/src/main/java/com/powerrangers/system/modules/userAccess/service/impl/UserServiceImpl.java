@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService {
     @Value("${EmailApi.apiKey}")
     private String apiKey;
 
+    private Map<String, String> responseBody = new HashMap<>();
+
     @Override
     public Boolean checkExist(SmallUserDTO smallUserDTO) {
         return userMapper.checkExist(smallUserDTO) > 0;
@@ -199,20 +201,27 @@ public class UserServiceImpl implements UserService {
 
     public ResponseEntity<Object> resetPassword(SmallUserDTO smallUserDTO) {
 
+        responseBody.clear();
+
         if (!checkExist(smallUserDTO)) {
-            return new ResponseEntity<>("email not exists!", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "email not exists!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         userMapper.resetPassword(smallUserDTO.getEmail(), smallUserDTO.getPassword());
 
-        return new ResponseEntity<>("reset succeed!", HttpStatus.OK);
+        responseBody.put("msg", "reset succeed!");
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> queryUser(String token) {
 
+        responseBody.clear();
+
         if (token == null || token.length() == 0) {
-            return new ResponseEntity<>("Invalid token!", HttpStatus.BAD_REQUEST);
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         HttpHeaders headers = new HttpHeaders();
