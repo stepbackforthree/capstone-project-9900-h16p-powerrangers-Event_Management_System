@@ -14,8 +14,12 @@ export default function Register() {
         console.log('get values:', values);
         request('/users/signUp', {
           method: 'POST',
-          data: values
-        }).then(data => {
+          data: {
+            ...values,
+            "isReceived": true
+          }
+        })
+        .then(data => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('userName', values.userName);
           // navigate('/dashboard');

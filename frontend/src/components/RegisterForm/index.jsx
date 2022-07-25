@@ -86,7 +86,10 @@ export default function RegisterForm(props) {
 
     request('/users/sendEmail',{
       method: 'POST',
-      data: {"email": values.email}
+      data: {
+        "state": 0,
+        "emailAddress": values.email
+      }
     }).then(data => {
       console.log(data);
     })
@@ -223,6 +226,7 @@ export default function RegisterForm(props) {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                type='number'
                 required
                 fullWidth
                 id="verifyCode"
