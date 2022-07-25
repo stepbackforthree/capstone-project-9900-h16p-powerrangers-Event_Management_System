@@ -176,7 +176,7 @@ export default function RegisterForm(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Reser Your Password
+          Reset Your Password
         </Typography>
         <Form>
           <Grid container spacing={2}>

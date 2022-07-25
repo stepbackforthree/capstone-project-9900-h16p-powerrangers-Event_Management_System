@@ -30,14 +30,14 @@ function Copyright() {
 }
 
 const initalFValues = {
-  eventTitle: '',
+  eventName: '',
   eventType: '',
-  location: '',
+  location: 'Sydney',
   startTime: "2017-05-24T10:30",
   endTime: "2017-05-24T11:30",
-  ifDisplay: true,
+  ifDisplayed: true,
   image: '',
-  eventDes: '',
+  description: '',
 }
 
 const ifDisplay = [
@@ -160,12 +160,12 @@ export default function EventAddForm(props) {
             margin="normal"
             required
             fullWidth
-            id="eventTitle"
-            label="Event Title"
-            name="eventTitle"
-            autoComplete="eventTitle"
+            id="eventName"
+            label="Event Name"
+            name="eventName"
+            autoComplete="eventName"
             autoFocus
-            value = {values.eventTitle}
+            value = {values.eventName}
             onChange = {handleInputChange}
           />
           </div>
@@ -213,7 +213,7 @@ export default function EventAddForm(props) {
               ))}
             </TextField>
           </div>
-          <div>
+          {/* <div>
             <h2>Number of tickets:</h2>
             <TextField
             variant="outlined"
@@ -228,7 +228,7 @@ export default function EventAddForm(props) {
             value = {values.numberOfTickets}
             onChange = {handleInputChange}
           />
-          </div>
+          </div> */}
           <div>
             <h3>Start Time:</h3>
             <TextField
@@ -263,11 +263,11 @@ export default function EventAddForm(props) {
           <div>
             <h4>Event If Display:</h4>
             <TextField
-              id="ifDisplay"
-              name="ifDisplay"
+              id="ifDisplayed"
+              name="ifDisplayed"
               select
               // label="If Display"
-              value={values.ifDisplay}
+              value={values.ifDisplayed}
               onChange={handleInputChange}
               SelectProps={{
                 native: true,
@@ -304,14 +304,14 @@ export default function EventAddForm(props) {
               onChange = {handleInputChange}
             /> */}
             <TextField
-              id="eventDes"
-              name="eventDes"
+              id="description"
+              name="description"
               label="Event Description"
               multiline
               fullWidth
               rows={4}
               variant="outlined"
-              value = {values.eventDes}
+              value = {values.description}
               onChange = {handleInputChange}
             />
           </div>

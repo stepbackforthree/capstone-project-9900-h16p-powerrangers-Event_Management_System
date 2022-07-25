@@ -39,7 +39,7 @@ export default function EventAdd() {
       <Paper elevation={20} className={classes.paper} style={{'borderRadius': '35px'}}>
         <EventAddForm submit={(values) => { 
           console.log('get values:', values);
-          request('/users/createEvent', {
+          request('/events/createEvent', {
             method: 'POST',
             data: values
           }).then(data => {
