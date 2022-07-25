@@ -25,5 +25,9 @@ public class EventTicketController {
         return eventTicketService.addTicketType(token, ticketDTO);
     }
 
-
+    @ApiOperation(value = "get all ticket type for specific event")
+    @PostMapping(value = "getTicketType")
+    public ResponseEntity<Object> getTicketType(@RequestHeader("Authorization") String token, @RequestBody TicketDTO ticketDTO) {
+        return eventTicketService.getTicketType(token, ticketDTO);
+    }
 }

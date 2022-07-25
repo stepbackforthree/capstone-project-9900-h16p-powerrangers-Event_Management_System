@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class Ticket {
 
+    private String hostName;
+
     private String eventName;
 
     private String ticketType;

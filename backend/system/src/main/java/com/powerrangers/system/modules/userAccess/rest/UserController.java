@@ -38,8 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "User login")
     @PostMapping(value = "/logIn")
-    public ResponseEntity<Object> logIn(@RequestHeader("Authorization") String token,
-                                        @RequestBody SmallUserDTO smallUserDTO) {
+    public ResponseEntity<Object> logIn(@RequestBody SmallUserDTO smallUserDTO) {
         return userService.logIn(smallUserDTO);
     }
 

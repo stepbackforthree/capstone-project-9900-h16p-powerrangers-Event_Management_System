@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EventTicketServiceImpl implements EventTicketService {
@@ -48,5 +50,22 @@ public class EventTicketServiceImpl implements EventTicketService {
         } else {
             return new ResponseEntity<>("token is invalid!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> getTicketType(String token, TicketDTO ticketDTO) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        if (currUser == null) {
+            return new ResponseEntity<>("token is invalid!", HttpStatus.BAD_REQUEST);
+        }
+
+        List<TicketDTO> ticketList = eventTicketMapper.getTicketType(ticketDTO);
+
+        if (ticketList == null || ticketList.size() == 0) {
+            return new ResponseEntity<>("ticket type is not exist!", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ticketList, HttpStatus.OK);
     }
 }

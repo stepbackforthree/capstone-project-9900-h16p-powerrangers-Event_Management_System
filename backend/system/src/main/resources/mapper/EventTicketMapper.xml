@@ -5,10 +5,19 @@
 
 <mapper namespace="com.powerrangers.system.modules.eventManagement.dao.EventTicketMapper">
 
-<insert id="insertEventTicketType" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.TicketDTO">
+    <insert id="insertEventTicketType" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.TicketDTO">
 
-    insert into event_ticket (event_id, ticket_type, ticket_amount, ticket_price)
-    values ((select event_id from sys_event where event_name = #{eventName}), #{ticketType}, #{ticketAmount}, #{ticketPrice});
-</insert>
+        insert into event_ticket (event_id, ticket_type, ticket_amount, ticket_price)
+        values ((select event_id from sys_event where event_name = #{eventName}), #{ticketType}, #{ticketAmount}, #{ticketPrice});
+    </insert>
+
+    <select id="getTicketType" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.TicketDTO"
+                                resultType="com.powerrangers.system.modules.eventManagement.service.dto.TicketDTO">
+        select tt.type_name as ticketType, t.ticket_amount, t.ticket_price from
+                     sys_event e inner join event_ticket t on e.event_id = t.event_id
+                        inner join event_ticket_type tt on t.ticket_type = tt.type_id
+                        inner join sys_user u on e.host_id = u.id
+        where e.event_name = #{eventName} and u.username = #{hostName} order by t.ticket_type;
+    </select>
 
 </mapper>

@@ -5,4 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface EventTicketService {
     ResponseEntity<Object> addTicketType(String token, TicketDTO ticketDTO);
+
+    ResponseEntity<Object> getTicketType(String token, TicketDTO ticketDTO);
 }
