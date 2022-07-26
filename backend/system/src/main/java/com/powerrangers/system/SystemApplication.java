@@ -1,9 +1,9 @@
 package com.powerrangers.system;
 
 import com.alibaba.fastjson.JSON;
-import com.powerrangers.system.modules.userAccess.dao.UserMapper;
-import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
-import com.powerrangers.system.modules.userAccess.service.dto.UserDTO;
+import com.powerrangers.system.modules.UserAccess.dao.UserMapper;
+import com.powerrangers.system.modules.UserAccess.service.dto.SmallUserDTO;
+import com.powerrangers.system.modules.UserAccess.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,13 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class})
 @RestController

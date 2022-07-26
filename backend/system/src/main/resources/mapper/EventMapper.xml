@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.powerrangers.system.modules.eventManagement.dao.EventMapper">
+<mapper namespace="com.powerrangers.system.modules.EventManagement.dao.EventMapper">
 
     <sql id="event_name">
         <if test="eventName != null and eventName.length() > 0">
@@ -11,77 +11,77 @@
         </if>
     </sql>
 
-    <insert id="createEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
+    <insert id="createEvent" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO">
         insert into sys_event (host_id, event_name, event_type, location,
                                start_time, end_time, is_displayed, image, description)
         values (#{hostId}, #{eventName}, #{eventType}, #{location},
                 #{startTime}, #{endTime}, #{isDisplayed}, #{image}, #{description});
     </insert>
 
-    <insert id="createEventInsertFullPriceTicket" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.SmallEventDTO">
+    <insert id="createEventInsertFullPriceTicket" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO">
         insert into event_ticket (event_id, ticket_type, ticket_amount, ticket_price)
         values ((select event_id from sys_event where host_id = #{hostId} and event_name = #{eventName}), 1, #{ticketAmount}, #{ticketPrice});
     </insert>
 
-    <select id="checkExist" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO"
+    <select id="checkExist" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO"
             resultType="Integer">
         select count(*) from sys_event
         <include refid="event_name"/>;
     </select>
 
-    <select id="updateEventName" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="updateEventName" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set event_name = #{newString}
         <include refid="event_name"/>;
     </select>
 
-    <select id="updateEventTime" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="updateEventTime" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set start_time = #{newStartTime}, end_time = #{newEndTime}
         <include refid="event_name"/>;
     </select>
 
-    <select id="updateEventDescription" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="updateEventDescription" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set description = #{newString}
         <include refid="event_name"/>;
     </select>
 
-    <select id="updateEventAddress" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="updateEventAddress" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set location = #{newString}, site_description = #{secondNewString}
         <include refid="event_name"/>;
     </select>
 
-    <select id="updateEventType" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="updateEventType" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set event_type = #{newInteger}
         <include refid="event_name"/>;
     </select>
 
-    <select id="changeEventCancelState" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="changeEventCancelState" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set is_cancelled = #{newInteger}
         <include refid="event_name"/>;
     </select>
 
-    <select id="changeEventDisplayState" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="changeEventDisplayState" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set is_displayed = #{newInteger}
         <include refid="event_name"/>;
     </select>
 
-    <select id="changeEventTag" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO">
+    <select id="changeEventTag" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
         update sys_event set event_tag = #{newString}
         <include refid="event_name"/>;
     </select>
 
-    <select id="queryEvent" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventModifyDTO"
-                            resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+    <select id="queryEvent" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO"
+                            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select * from sys_event
         <include refid="event_name"/>;
     </select>
 
     <select id="getEvents" parameterType="integer"
-                            resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+                            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select * from sys_event where host_id = #{hostId} order by start_time desc;
     </select>
 
-    <select id="getAllEvents" parameterType="com.powerrangers.system.modules.eventManagement.service.dto.EventFilterDTO"
-                                resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+    <select id="getAllEvents" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO"
+                                resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select e.*, t.ticket_type, t.ticket_amount, t.ticket_price from sys_event e, event_ticket t
         <where>
             e.event_id = t.event_id and t.ticket_type = 1

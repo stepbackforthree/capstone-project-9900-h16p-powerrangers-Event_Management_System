@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.powerrangers.system.modules.userProfile.dao.UserProfileMapper">
+<mapper namespace="com.powerrangers.system.modules.UserProfile.dao.UserProfileMapper">
 
     <sql id="username">
         <if test="userName != null and userName.length() > 0">
@@ -11,42 +11,42 @@
         </if>
     </sql>
 
-    <select id="updateNickname" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateNickname" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set nickname = #{nickName}
         <include refid="username"/>;
     </select>
 
-    <select id="updateEmail" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateEmail" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set email = #{email}
         <include refid="username"/>;
     </select>
 
-    <select id="updateAvatar" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateAvatar" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set avatar = #{avatar}
         <include refid="username"/>
     </select>
 
-    <select id="updateDescription" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateDescription" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set description = #{description}
         <include refid="username"/>
     </select>
 
-    <select id="updatePrefTag" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updatePrefTag" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set pref_tag = #{prefTag}
         <include refid="username"/>
     </select>
 
-    <select id="updateQualification" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateQualification" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set qualification = #{qualification}
         <include refid="username"/>
     </select>
 
-    <select id="updateBankDetails" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updateBankDetails" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set bank_details = #{bankDetails}
         <include refid="username"/>
     </select>
 
-    <select id="updatePassword" parameterType="com.powerrangers.system.modules.userProfile.service.dto.UserProfileDTO">
+    <select id="updatePassword" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set password = #{password}
         <include refid="username"/>
     </select>

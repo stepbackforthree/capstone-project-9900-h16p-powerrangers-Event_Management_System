@@ -1,7 +1,7 @@
 package com.powerrangers.system;
 
-import com.powerrangers.system.modules.userAccess.service.UserService;
-import com.powerrangers.system.modules.userAccess.service.dto.SmallUserDTO;
+import com.powerrangers.system.modules.UserAccess.service.UserService;
+import com.powerrangers.system.modules.UserAccess.service.dto.SmallUserDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
