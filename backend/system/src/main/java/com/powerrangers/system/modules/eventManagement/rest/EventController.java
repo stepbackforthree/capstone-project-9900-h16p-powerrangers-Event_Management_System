@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Api(description = "Interface of event management")
@@ -93,5 +94,12 @@ public class EventController {
     @PostMapping(value = "getAllEvents")
     public ResponseEntity<Object> getAllEvents(@RequestHeader("Authorization") String token, @RequestBody EventFilterDTO eventFilterDTO) {
         return eventService.getAllEvents(token, eventFilterDTO);
+    }
+
+    @ApiOperation(value = "search the events")
+    @PostMapping(value = "searchEvents")
+    public ResponseEntity<Object> searchEvents(@RequestHeader("Authorization") String token, @RequestBody HashMap keyWords) {
+        String keywords = (String)keyWords.get("keyWords");
+        return eventService.searchEvents(keywords);
     }
 }
