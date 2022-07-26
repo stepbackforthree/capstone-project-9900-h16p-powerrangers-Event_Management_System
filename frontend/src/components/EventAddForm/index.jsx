@@ -31,13 +31,15 @@ function Copyright() {
 
 const initalFValues = {
   eventName: '',
-  eventType: '',
+  eventType: 1,
   location: 'Sydney',
   startTime: "2017-05-24T10:30",
   endTime: "2017-05-24T11:30",
   isDisplayed: true,
   image: '',
   description: '',
+  ticketPrice: 0,
+  ticketAmount: 0
 }
 
 const isDisplayed = [
@@ -290,19 +292,6 @@ export default function EventAddForm(props) {
           </div>
           <div>
             <h4>Event Description:</h4>
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value = {values.password}
-              onChange = {handleInputChange}
-            /> */}
             <TextField
               id="description"
               name="description"
@@ -315,6 +304,32 @@ export default function EventAddForm(props) {
               onChange = {handleInputChange}
             />
           </div>
+          <div>
+            <h4>Ticket Price:</h4>
+            <TextField
+              id="ticketPrice"
+              name="ticketPrice"
+              label="Ticket Price"
+              type="number"
+              fullWidth
+              variant="outlined"
+              value = {values.ticketPrice}
+              onChange = {handleInputChange}
+            />
+          </div>
+          <div>
+            <h4>Ticket Amount:</h4>
+            <TextField
+              id="ticketAmount"
+              name="ticketAmount"
+              label="Ticket Amount"
+              type="number"
+              fullWidth
+              variant="outlined"
+              value = {values.ticketAmount}
+              onChange = {handleInputChange}
+            />
+          </div>       
           <Button
             // type="submit"
             // fullWidth
