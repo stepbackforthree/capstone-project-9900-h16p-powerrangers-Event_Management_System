@@ -33,9 +33,11 @@ Added the function of picture display back
 Added an input box for entering only numbers
 
 Week8
-
+retro b meeting
+The frontend and backend of the profile page connection.
 
 Week9
-
+update eventList page
+dev profile page
 
 Week10
