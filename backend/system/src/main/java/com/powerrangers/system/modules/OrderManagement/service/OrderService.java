@@ -6,4 +6,6 @@ import org.springframework.http.ResponseEntity;
 public interface OrderService {
 
     ResponseEntity<Object> insertOrder(String token, OrderDTO orderDTO);
+
+    ResponseEntity<Object> refundOrder(String token, OrderDTO orderDTO);
 }

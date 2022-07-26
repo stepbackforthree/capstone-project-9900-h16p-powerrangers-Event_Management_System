@@ -45,4 +45,23 @@ public class OrderServiceImpl implements OrderService {
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> refundOrder(String token, OrderDTO orderDTO) {
+
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
+        orderDTO.setCustomerId(currUser.getId());
+        orderMapper.refundOrder(orderDTO);
+        responseBody.put("msg", "refund order succeed!");
+
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
 }

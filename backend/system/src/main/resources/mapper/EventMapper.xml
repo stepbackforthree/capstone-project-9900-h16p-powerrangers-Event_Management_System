@@ -106,7 +106,7 @@
     </select>
 
     <select id="searchEvents" parameterType="string"
-            resultType="com.powerrangers.system.modules.eventManagement.service.dto.EventDTO">
+            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select * from sys_event where event_name LIKE CONCAT('%',#{keyWords},'%') or event_tag LIKE CONCAT('%',#{keyWords},'%')
         or event_type in (select type_id from event_type where type_name LIKE CONCAT('%',#{keyWords},'%'))
         or host_id in (select id from sys_user where username LIKE CONCAT('%',#{keyWords},'%'));

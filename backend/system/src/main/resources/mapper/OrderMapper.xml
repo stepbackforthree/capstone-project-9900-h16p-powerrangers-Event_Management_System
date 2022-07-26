@@ -5,10 +5,48 @@
 
 <mapper namespace="com.powerrangers.system.modules.OrderManagement.dao.OrderMapper">
 
+    <sql id="select all">
+        select * from sys_order
+    </sql>
+
     <insert id="insertOrder" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO">
         insert into sys_order (event_id, customer_id, host_id, payment_type, payment_amount)
         values ((select e.event_id from sys_event e where e.host_id = (select id from sys_user where username = #{hostName}) and e.event_name = #{eventName}),
                 #{customerId}, (select id from sys_user where username = #{hostName}), #{paymentType}, #{ticketAmount} * #{ticketPrice});
     </insert>
 
+    <update id="refundOrder" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO">
+        update sys_order set is_paid = 0, is_refund = 1
+        where
+            customer_id = #{customerId} and
+            event_id = (select event_id from sys_event where event_name = #{eventName} and host_id = (select id from sys_user where username = #{hostName})) and
+            host_id = (select id from sys_user where username = #{hostName});
+    </update>
+    
+    <select id="getOrder" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
+                            resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
+        <include refid="select all"/>
+        where
+            customer_id = #{customerId} and
+                event_id = (select event_id from sys_event where event_name = #{eventName} and host_id = (select id from sys_user where username = #{hostName})) and
+            host_id = (select id from sys_user where username = #{hostName});
+    </select>
+
+    <select id="queryOrdersByCustomer" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
+                                        resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
+        <include refid="select all"/>
+        where
+            customer_id = #{customerId};
+    </select>
+
+    <select id="queryOrderByHost" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
+                                    resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
+        <include refid="select all"/>
+        where
+            host_id = (select id from sys_user where username = #{hostName});
+    </select>
+
+    <select id="getAllOrders">
+        <include refid="select all"/>
+    </select>
 </mapper>
