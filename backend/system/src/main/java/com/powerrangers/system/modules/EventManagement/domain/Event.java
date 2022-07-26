@@ -31,4 +31,6 @@ public class Event extends BaseEntity {
     private BigDecimal startLevel;
 
     private String eventTag;
+
+    private String image;
 }
