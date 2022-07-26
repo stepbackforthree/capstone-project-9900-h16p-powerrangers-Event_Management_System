@@ -267,4 +267,14 @@ public class EventServiceImpl implements EventService {
 
         return new ResponseEntity<>(eventMapper.getAllEvents(eventFilterDTO), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> searchEvents(String keyWords) {
+        if(keyWords != null && keyWords.length() != 0) {
+            return new ResponseEntity<>(eventMapper.searchEvents(keyWords), HttpStatus.OK);
+        }
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("error","empty content to search");
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
 }

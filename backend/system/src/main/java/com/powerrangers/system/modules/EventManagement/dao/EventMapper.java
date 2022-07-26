@@ -38,4 +38,6 @@ public interface EventMapper {
     List<EventDTO> getEvents(Integer hostId);
 
     List<EventDTO> getAllEvents(EventFilterDTO eventFilterDTO);
+
+    List<EventDTO> searchEvents(String keyWords);
 }
