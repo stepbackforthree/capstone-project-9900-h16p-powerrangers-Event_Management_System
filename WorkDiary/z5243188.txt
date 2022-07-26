@@ -39,5 +39,6 @@ The frontend and backend of the profile page connection.
 Week9
 update eventList page
 dev profile page
+develop order page
 
 Week10
