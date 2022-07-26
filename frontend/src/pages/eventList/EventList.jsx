@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import request from '../../utils/request';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { Avatar, List, Space } from 'antd';
+import { Button, List, Space, Modal } from 'antd';
+import LocationCityIcon from '@material-ui/icons/LocationCity';import ScheduleIcon from '@material-ui/icons/Schedule';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
+import EventAvailableRoundedIcon from '@material-ui/icons/EventAvailableRounded';
 
 const TitleContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  /* padding: 10px; */
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  padding: 1.5rem 1rem;
 `;
 
 const Container = styled.div`
@@ -20,6 +26,17 @@ const Container = styled.div`
   /* background-color: #a1be95; */
 `;
 
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  /* position: relative;
+  max-width: 1200px; */
+  padding: 0px 20px;
+  /* margin: 0 auto; */
+`;
+
 const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
@@ -27,35 +44,51 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
+const eventType = {
+  1: 'Concert',
+  2: 'Sports',
+  3: 'Comic and Animation',
+  4: 'Parents-child Campaign',
+  5: 'Tourism Exhibition'
+}
+
 const data = Array.from({
-  length: 23,
+  length: 15,
 }).map((_, i) => ({
-  href: 'https://ant.design',
-  title: `ant design part ${i}`,
-  avatar: 'https://joeschmoe.io/api/v1/random',
+  eventName: `Event part ${i+1}`,
+  eventType: 3,
+  location: 'Sydney',
   description:
     'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+  startTime: '2022-07-07T10:00:00',
+  endTime: '2022-07-08T10:00:00',
+  isDisplayed: true,
+  starLevel: 3,
+  image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
+  isCancelled: false,
+  ticketPrice: 100,
+  ticketAmount: 500
 }));
 
 export default function EventList() {
   const [eventList, setEventList] = useState('');
 
-  useEffect(() => {
-    request(`/events/getEvents?userName=${window.localStorage.getItem('userName')}`,{
-      method: 'GET',
-    }).then((response) => {
-      // console.log(response);
-      setEventList(response);
-    })
-  }, []);
+  // useEffect(() => {
+  //   request(`/events/getEvents?userName=${window.localStorage.getItem('userName')}`,{
+  //     method: 'GET',
+  //   }).then((response) => {
+  //     // console.log(response);
+  //     setEventList(response);
+  //   })
+  // }, []);
+
+
 
 
   return (
     <div>
       <TitleContainer>
-        <h2>eventList</h2>
+        <h2>Your Event List</h2>
       </TitleContainer>
       <Container>
         <List
@@ -70,31 +103,42 @@ export default function EventList() {
           dataSource={data}
           footer={
             <div>
-              <b>ant design</b> footer part
+              <b>9900-H16P-PowerRangers</b>
             </div>
           }
           renderItem={(item) => (
             <List.Item
-              key={item.title}
+              key={item.eventName}
               actions={[
                 <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                <IconText icon={LikeOutlined} text="112" key="list-vertical-like-o" />,
+                <IconText icon={MessageOutlined} text="3" key="list-vertical-message" />,
               ]}
               extra={
                 <img
-                  width={272}
+                  width={200}
                   alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                  src={item.image}
                 />
               }
             >
               <List.Item.Meta
                 // avatar={<Avatar src={item.avatar} />}
-                title={<a href={item.href}>{item.title}</a>}
+                title={
+                  <>
+                    <b style={{fontSize: '25px'}}>{item.eventName}</b>
+                    <Button type="link">Edit</Button>
+                  </>
+                }
                 description={item.description}
               />
-              {item.content}
+              <InfoContainer>
+                <p><EventAvailableRoundedIcon/><b>Event Type: </b>{eventType[item.eventType]}</p>
+                <p><LocationCityIcon/><b>Location: </b>{item.location}</p>
+                <p><StarBorderRoundedIcon/><b>Star Level: </b>{item.starLevel}</p>
+                <p><ScheduleIcon/><b>Start Time: </b>{item.startTime}</p>
+                <p><AttachMoneyIcon/><b>Ticket Price: </b>{item.ticketPrice}</p>
+              </InfoContainer>
             </List.Item>
           )}
         />
