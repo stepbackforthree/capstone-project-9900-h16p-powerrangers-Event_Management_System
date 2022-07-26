@@ -183,16 +183,24 @@ public class UserServiceImpl implements UserService {
         httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
         HttpResponse response = httpClient.execute(httpPost);
+        Map<String, String> responseBody = new HashMap<>();
         ResponseEntity result;
 
         if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
             // Return correctly, parse the returned data
             System.out.println(EntityUtils.toString(response.getEntity()));
-            if(state == 0) result = new ResponseEntity<>("The email has been sent successfully, the code is "+ code, HttpStatus.OK);
-            else result = new ResponseEntity<>("The email has been sent successfully", HttpStatus.OK);
+            if(state == 0) {
+                responseBody.put("msg","The email has been sent successfully, the code is " + code);
+                result = new ResponseEntity<>(responseBody, HttpStatus.OK);
+            }
+            else {
+                responseBody.put("msg","The email has been sent successfully");
+                result = new ResponseEntity<>(responseBody, HttpStatus.OK);
+            }
         } else {
             System.err.println("error");
-            result =  new ResponseEntity<>("Failed to send the email", HttpStatus.BAD_REQUEST);
+            responseBody.put("msg","Failed to send the email");
+            result =  new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         httpPost.releaseConnection();
         return result;
