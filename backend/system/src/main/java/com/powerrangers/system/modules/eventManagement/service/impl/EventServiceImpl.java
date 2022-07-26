@@ -121,11 +121,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventDescription(eventModifyDTO);
-            return new ResponseEntity<>("Update event description succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event description succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -135,11 +139,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventAddress(eventModifyDTO);
-            return new ResponseEntity<>("Update event address succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event address succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -148,11 +156,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventType(eventModifyDTO);
-            return new ResponseEntity<>("Update event type succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event type succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -161,11 +173,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventCancelState(eventModifyDTO);
-            return new ResponseEntity<>("Update event cancel_state succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event cancel_state succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -174,11 +190,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventDisplayState(eventModifyDTO);
-            return new ResponseEntity<>("Update event display_state succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event display_state succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -187,11 +207,15 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
         eventModifyDTO.setHostId(currUser.getId());
 
+        Map<String, String> responseBody = new HashMap<>();
+
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventTag(eventModifyDTO);
-            return new ResponseEntity<>("Update event tag succeed!", HttpStatus.OK);
+            responseBody.put("msg","Update event tag succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("The event you want to modify did not exist", HttpStatus.BAD_REQUEST);
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
