@@ -30,4 +30,10 @@ public class EventTicketController {
     public ResponseEntity<Object> getTicketType(@RequestHeader("Authorization") String token, @RequestBody TicketDTO ticketDTO) {
         return eventTicketService.getTicketType(token, ticketDTO);
     }
+
+    @ApiOperation(value = "update ticket amount for specific event")
+    @PostMapping(value = "updateTicketAmount")
+    public ResponseEntity<Object> updateTicketAmount(@RequestHeader("Authorization") String token, @RequestBody TicketDTO ticketDTO) {
+        return eventTicketService.updateTicketAmount(token, ticketDTO);
+    }
 }

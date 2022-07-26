@@ -7,4 +7,6 @@ public interface EventTicketService {
     ResponseEntity<Object> addTicketType(String token, TicketDTO ticketDTO);
 
     ResponseEntity<Object> getTicketType(String token, TicketDTO ticketDTO);
+
+    ResponseEntity<Object> updateTicketAmount(String token, TicketDTO ticketDTO);
 }

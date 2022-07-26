@@ -81,4 +81,26 @@ public class EventTicketServiceImpl implements EventTicketService {
 
         return new ResponseEntity<>(ticketList, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> updateTicketAmount(String token, TicketDTO ticketDTO) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
+        if (ticketDTO.getTicketAmount() > eventTicketMapper.getRemainTicketAmount(ticketDTO)) {
+            responseBody.put("error", "buying beyond the remaining amount!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
+        eventTicketMapper.updateTicketAmount(ticketDTO);
+
+        responseBody.put("msg", "Buy ticket succeed!");
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
 }

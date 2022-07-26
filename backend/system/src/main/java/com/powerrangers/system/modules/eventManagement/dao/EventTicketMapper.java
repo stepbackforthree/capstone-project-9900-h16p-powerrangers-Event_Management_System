@@ -11,4 +11,8 @@ public interface EventTicketMapper {
     void insertEventTicketType(TicketDTO ticketDTO);
 
     List<TicketDTO> getTicketType(TicketDTO ticketDTO);
+
+    Integer getRemainTicketAmount(TicketDTO ticketDTO);
+
+    void updateTicketAmount(TicketDTO ticketDTO);
 }
