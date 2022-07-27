@@ -3,6 +3,8 @@ package com.powerrangers.system.modules.EventManagement.domain;
 import com.powerrangers.common.base.BaseEntity;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class Ticket extends BaseEntity {
 
@@ -14,5 +16,5 @@ public class Ticket extends BaseEntity {
 
     private Integer ticketAmount;
 
-    private Double ticketPrice;
+    private BigDecimal ticketPrice;
 }

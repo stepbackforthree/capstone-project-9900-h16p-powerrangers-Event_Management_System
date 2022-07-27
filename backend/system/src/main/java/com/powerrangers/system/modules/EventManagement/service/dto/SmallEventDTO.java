@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @ApiModel(value = "Event create object")
@@ -31,5 +32,5 @@ public class SmallEventDTO extends BaseDTO implements Serializable {
 
     private Integer ticketAmount;
 
-    private Double ticketPrice;
+    private BigDecimal ticketPrice;
 }

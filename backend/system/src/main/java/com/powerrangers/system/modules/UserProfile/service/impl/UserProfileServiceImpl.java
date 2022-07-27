@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -201,6 +202,32 @@ public class UserProfileServiceImpl implements UserProfileService {
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
         responseBody.put("msg", "update bankDetails success!");
+        return responseBody;
+    }
+
+    @Override
+    public Map<String, String> updateBalance(String token, BigDecimal balance) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        responseBody.clear();
+
+        if (currUser == null || currUser.getBalance() == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
+
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setUserName(currUser.getUserName());
+        userProfileDTO.setBalance(balance);
+
+        userProfileMapper.updateBalance(userProfileDTO);
+
+        currUser.setBalance(balance);
+        redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
+                redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
+
+        responseBody.put("msg", "update balance succeed!");
+
         return responseBody;
     }
 

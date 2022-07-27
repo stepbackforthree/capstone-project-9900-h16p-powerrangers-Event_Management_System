@@ -19,5 +19,7 @@ public interface UserProfileMapper {
 
     void updateBankDetails(UserProfileDTO userProfileDTO);
 
+    void updateBalance(UserProfileDTO userProfileDTO);
+
     void updatePassword(UserProfileDTO userProfileDTO);
 }

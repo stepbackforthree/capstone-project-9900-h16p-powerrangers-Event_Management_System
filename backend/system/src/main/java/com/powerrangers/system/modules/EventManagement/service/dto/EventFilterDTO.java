@@ -2,6 +2,8 @@ package com.powerrangers.system.modules.EventManagement.service.dto;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class EventFilterDTO {
 
@@ -9,9 +11,9 @@ public class EventFilterDTO {
 
     private Integer starLevel;
 
-    private Double minPrice;
+    private BigDecimal minPrice;
 
-    private Double maxPrice;
+    private BigDecimal maxPrice;
 
     private Boolean online;
 

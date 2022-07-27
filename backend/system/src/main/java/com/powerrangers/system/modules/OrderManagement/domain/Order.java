@@ -3,6 +3,8 @@ package com.powerrangers.system.modules.OrderManagement.domain;
 import com.powerrangers.common.base.BaseEntity;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class Order extends BaseEntity {
 
@@ -16,7 +18,7 @@ public class Order extends BaseEntity {
 
     private Integer paymentType;
 
-    private Double paymentAmount;
+    private BigDecimal paymentAmount;
 
     private Boolean isPaid;
 

@@ -46,6 +46,11 @@
         <include refid="username"/>
     </select>
 
+    <update id="updateBalance" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
+        update sys_user set balance = #{balance}
+        <include refid="username"/>
+    </update>
+
     <select id="updatePassword" parameterType="com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO">
         update sys_user set password = #{password}
         <include refid="username"/>
