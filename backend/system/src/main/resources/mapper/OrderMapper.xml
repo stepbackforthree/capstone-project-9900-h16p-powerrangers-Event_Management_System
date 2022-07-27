@@ -39,14 +39,15 @@
             customer_id = #{customerId};
     </select>
 
-    <select id="queryOrderByHost" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
+    <select id="queryOrdersByHost" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
                                     resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
         <include refid="select all"/>
         where
             host_id = (select id from sys_user where username = #{hostName});
     </select>
 
-    <select id="getAllOrders">
+    <select id="getAllOrders" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
+                                resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
         <include refid="select all"/>
     </select>
 </mapper>
