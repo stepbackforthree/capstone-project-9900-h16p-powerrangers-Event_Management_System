@@ -3,7 +3,7 @@ import SearchBar from '../../components/Home/SearchBar';
 import FilterPanel from '../../components/Home/FilterPanel';
 import List from '../../components/Home/List';
 // import EmptyView from '../../components/Home/EmptyView';
-import { dataList } from '../../constants/index';
+// import { dataList } from '../../constants/index';
 import './style.css';
 import request from '../../utils/request';
 
@@ -31,7 +31,7 @@ export default function DashBoard() {
     },
   ]);
 
-  const [list, setList] = useState(dataList);
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     request('/events/getAllEvents',{
@@ -41,6 +41,7 @@ export default function DashBoard() {
       }
     }).then((data) => {
       console.log(data);
+      setList(data)
     })
   }, []);
 

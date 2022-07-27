@@ -26,6 +26,9 @@ export default function Register() {
           window.location.href = '/dashboard';
           message.success({content: ('log in successfully!'),  duration: 2500})
         })
+        .catch(error => {
+          message.error({content: (error),  duration: 2500})
+        })
       }}/>
     </div>
   )
