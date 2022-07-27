@@ -40,4 +40,10 @@ public interface EventMapper {
     List<EventDTO> getAllEvents(EventFilterDTO eventFilterDTO);
 
     List<EventDTO> searchEvents(String keyWords);
+
+    Integer checkUserExist(String userName);
+
+    Integer checkSpendingHistory(String userName);
+
+    List<EventDTO> getSpendingHistory(String userName);
 }

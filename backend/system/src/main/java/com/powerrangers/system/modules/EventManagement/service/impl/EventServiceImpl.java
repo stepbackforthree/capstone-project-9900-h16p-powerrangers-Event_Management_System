@@ -277,4 +277,18 @@ public class EventServiceImpl implements EventService {
         responseBody.put("error","empty content to search");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public ResponseEntity<Object> checkSpendingHistory(String userName) {
+        Map<String, String> responseBody = new HashMap<>();
+        if(eventMapper.checkUserExist(userName)>0){
+            if(eventMapper.checkSpendingHistory(userName)>0){
+                return new ResponseEntity<>(eventMapper.getSpendingHistory(userName), HttpStatus.BAD_REQUEST);
+            }
+            responseBody.put("error", "the user did not spend anything");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        responseBody.put("error", "the user did not exist");
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
 }

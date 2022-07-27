@@ -102,4 +102,11 @@ public class EventController {
         String keywords = (String)keyWords.get("keyWords");
         return eventService.searchEvents(keywords);
     }
+
+    @ApiOperation(value = "check out one particular user's spending history")
+    @PostMapping(value = "checkSpendingHistory")
+    public ResponseEntity<Object> checkSpendingHistory(@RequestHeader("Authorization") String token, @RequestBody HashMap username) {
+        String userName = (String)username.get("username");
+        return eventService.checkSpendingHistory(userName);
+    }
 }

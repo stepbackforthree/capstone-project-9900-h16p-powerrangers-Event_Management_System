@@ -111,4 +111,20 @@
         or event_type in (select type_id from event_type where type_name LIKE CONCAT('%',#{keyWords},'%'))
         or host_id in (select id from sys_user where username LIKE CONCAT('%',#{keyWords},'%'));
     </select>
+
+    <select id="checkUserExist" parameterType="string"
+            resultType="Integer">
+        select count(*) from sys_user where username = #{userName};
+    </select>
+
+    <select id="checkSpendingHistory" parameterType="string"
+            resultType="Integer">
+        select count(*) from event_customer where customer_id = (select id from sys_user where username = #{userName});
+    </select>
+
+    <select id="getSpendingHistory" parameterType="string"
+            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
+        select * from sys_event where event_id  in (select event_id from event_customer
+        where customer_id = (select id from sys_user where username = #{userName}));
+    </select>
 </mapper>
