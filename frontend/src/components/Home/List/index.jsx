@@ -6,7 +6,7 @@ import './styles.css';
 export default function List({list}) {
   return (
     <div className="list-wrap">
-    {list.map(item => <ListItem key={item.id} item={item} />)}
+      {list.map(item => <ListItem key={item.eventName} item={item} />)}
     </div>
   )
 }

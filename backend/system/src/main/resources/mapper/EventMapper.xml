@@ -78,7 +78,7 @@
     <select id="getEvents" parameterType="integer"
                             resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select e.*, t.ticket_type, t.ticket_amount, t.ticket_price from sys_event e, event_ticket t
-        where e.event_id = t.event_id and
+        where e.event_id = t.event_id and t.ticket_type = 1 and
                 e.host_id = #{hostId} order by e.start_time desc;
     </select>
 

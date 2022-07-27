@@ -104,7 +104,7 @@ export default function RegisterForm(props) {
   };
 
   const strongPassword = (password) => {
-    let testPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[!#@*&.])[a-zA-Z\d!#@*&.]*$/
+    let testPassword = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[!#@*%^&.])[a-zA-Z\d!#@%^*&.]*$/
     if (testPassword.test(password) === false) {
       console.log('not strong password');
       return false;
