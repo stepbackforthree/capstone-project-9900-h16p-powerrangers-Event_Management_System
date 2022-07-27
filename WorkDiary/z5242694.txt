@@ -19,15 +19,15 @@ Week 5
 Start to develop the process of sign up, login and profile edit in backend part and finish. Then start to develop event management process.
 
 Week 6
-Fix redis bugs.
+Fix redis bugs and re-deploy cloud databases for higher security. Start to develop the process of event display.
 
 Week 7
-
+Finish event display and start to develop the process of creating event and editing event.
 
 Week 8
-
+Finish creating event and editing event, besides, preparing for the demo B and retro B, start to develop order related interfaces.
 
 Week 9
-
+Finish interfaces of insert order and refund order, continue to develop order comments related interfaces.
 
 Week 10
