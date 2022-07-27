@@ -2,10 +2,9 @@ package com.powerrangers.system.modules.EventManagement.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.powerrangers.system.modules.EventManagement.dao.EventMapper;
+import com.powerrangers.system.modules.EventManagement.dao.EventTicketMapper;
 import com.powerrangers.system.modules.EventManagement.service.EventService;
-import com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO;
-import com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO;
-import com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO;
+import com.powerrangers.system.modules.EventManagement.service.dto.*;
 import com.powerrangers.system.modules.UserAccess.dao.UserMapper;
 import com.powerrangers.system.modules.UserAccess.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +31,9 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private final EventMapper eventMapper;
+
+    @Autowired
+    private final EventTicketMapper eventTicketMapper;
 
     @Value("${DefaultImage.eventImage}")
     private String defaultEventImage;
@@ -225,14 +227,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> queryEvent(String token, String eventName, String userName) {
+    public ResponseEntity<Object> queryEvent(String token, String eventName, String hostName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         Map<String, String> responseBody = new HashMap<>();
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         if (currUser != null) {
-            eventModifyDTO.setHostId(userMapper.getUserIdByUserName(userName));
+            eventModifyDTO.setHostId(userMapper.getUserIdByUserName(hostName));
             eventModifyDTO.setEventName(eventName);
         } else {
             responseBody.put("error", "token is invalid!");
@@ -242,12 +244,20 @@ public class EventServiceImpl implements EventService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-type", "application/json");
 
+        EventDTO eventDTO = eventMapper.queryEvent(eventModifyDTO);
+
+        TicketDTO ticketDTO = new TicketDTO();
+        ticketDTO.setEventName(eventName);
+        ticketDTO.setHostName(hostName);
+
+        eventDTO.setTicketDTOS(eventTicketMapper.getTicketType(ticketDTO));
+
         return ResponseEntity.ok().headers(headers)
-                .body(JSON.parseObject(JSON.toJSONString(eventMapper.queryEvent(eventModifyDTO))));
+                .body(JSON.parseObject(JSON.toJSONString(eventDTO)));
     }
 
     @Override
-    public ResponseEntity<Object> getEvents(String token, String userName) {
+    public ResponseEntity<Object> getEvents(String token, String hostName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         if (currUser == null) {
@@ -256,13 +266,12 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(eventMapper.getEvents(userMapper.getUserIdByUserName(userName)), HttpStatus.OK);
+        return new ResponseEntity<>(eventMapper.getEvents(userMapper.getUserIdByUserName(hostName)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
-
 
         if (currUser == null) {
             Map<String, String> responseBody = new HashMap<>();

@@ -4,6 +4,7 @@ import com.powerrangers.system.modules.EventManagement.domain.Event;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class EventDTO extends Event {
@@ -13,4 +14,6 @@ public class EventDTO extends Event {
     private Integer ticketAmount;
 
     private BigDecimal ticketPrice;
+
+    private List<TicketDTO> ticketDTOS;
 }
