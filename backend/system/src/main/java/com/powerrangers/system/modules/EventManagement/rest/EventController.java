@@ -6,6 +6,7 @@ import com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDT
 import com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -81,13 +82,14 @@ public class EventController {
     @ApiOperation(value = "get specific event through event name created by specific host")
     @PostMapping(value = "/queryEvent")
     public ResponseEntity<Object> queryEvent(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> params) {
-        return eventService.queryEvent(token, params.get("eventName"), params.get("userName"));
+        return eventService.queryEvent(token, params.get("eventName"), params.get("hostName"));
     }
 
     @ApiOperation(value = "get all events created by specific host")
     @GetMapping(value = "getEvents")
-    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token, @RequestParam String userName) {
-        return eventService.getEvents(token, userName);
+    @ApiParam(value = "hostName")
+    public ResponseEntity<Object> getEvents(@RequestHeader("Authorization") String token, @RequestParam String hostName) {
+        return eventService.getEvents(token, hostName);
     }
 
     @ApiOperation(value = "get all events")
@@ -97,16 +99,16 @@ public class EventController {
     }
 
     @ApiOperation(value = "search the events")
-    @PostMapping(value = "searchEvents")
-    public ResponseEntity<Object> searchEvents(@RequestHeader("Authorization") String token, @RequestBody HashMap keyWords) {
-        String keywords = (String)keyWords.get("keyWords");
-        return eventService.searchEvents(keywords);
+    @GetMapping(value = "searchEvents")
+    @ApiParam(value = "keyWords")
+    public ResponseEntity<Object> searchEvents(@RequestHeader("Authorization") String token, @RequestParam String keyWords) {
+        return eventService.searchEvents(keyWords);
     }
 
     @ApiOperation(value = "check out one particular user's spending history")
-    @PostMapping(value = "checkSpendingHistory")
-    public ResponseEntity<Object> checkSpendingHistory(@RequestHeader("Authorization") String token, @RequestBody HashMap username) {
-        String userName = (String)username.get("username");
+    @GetMapping(value = "checkSpendingHistory")
+    @ApiParam(value = "userName")
+    public ResponseEntity<Object> checkSpendingHistory(@RequestHeader("Authorization") String token, @RequestParam String userName) {
         return eventService.checkSpendingHistory(userName);
     }
 }

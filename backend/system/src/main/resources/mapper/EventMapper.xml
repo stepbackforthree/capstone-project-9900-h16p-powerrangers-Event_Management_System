@@ -77,7 +77,9 @@
 
     <select id="getEvents" parameterType="integer"
                             resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
-        select * from sys_event where host_id = #{hostId} order by start_time desc;
+        select e.*, t.ticket_type, t.ticket_amount, t.ticket_price from sys_event e, event_ticket t
+        where e.event_id = t.event_id and
+                e.host_id = #{hostId} order by e.start_time desc;
     </select>
 
     <select id="getAllEvents" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO"
