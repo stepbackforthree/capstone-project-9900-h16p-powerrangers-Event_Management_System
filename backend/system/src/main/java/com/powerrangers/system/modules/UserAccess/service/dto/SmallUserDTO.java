@@ -23,6 +23,9 @@ public class SmallUserDTO extends BaseDTO implements Serializable {
     @ApiModelProperty("role")
     private String role;
 
-    @ApiModelProperty("Whether to receive email from host")
+    @ApiModelProperty("whether to receive email from host")
     private Boolean isReceived;
+
+    @ApiModelProperty("user avatar")
+    private String avatar;
 }

@@ -10,6 +10,7 @@ import com.powerrangers.system.modules.UserAccess.dao.UserMapper;
 import com.powerrangers.system.modules.UserAccess.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private final EventMapper eventMapper;
 
+    @Value("${DefaultImage.eventImage}")
+    private String defaultEventImage;
+
     @Override
     public ResponseEntity<Object> createEvent(String token, SmallEventDTO smallEventDTO) {
 
@@ -48,6 +52,7 @@ public class EventServiceImpl implements EventService {
         eventModifyDTO.setEventName(smallEventDTO.getEventName());
         eventModifyDTO.setHostId(currUser.getId());
         smallEventDTO.setHostId(currUser.getId());
+        smallEventDTO.setImage(defaultEventImage);
 
         if (eventMapper.checkExist(eventModifyDTO) > 0) {
             responseBody.put("error", "Duplicated event name!");

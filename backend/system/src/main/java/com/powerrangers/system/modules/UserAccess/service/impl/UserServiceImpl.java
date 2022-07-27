@@ -55,6 +55,9 @@ public class UserServiceImpl implements UserService {
     @Value("${EmailApi.apiKey}")
     private String apiKey;
 
+    @Value("${DefaultImage.userAvatar}")
+    private String defaultUserAvatar;
+
     private Map<String, String> responseBody = new HashMap<>();
 
     @Override
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
     public Boolean createUser(SmallUserDTO smallUserDTO) {
 
         if (!checkExist(smallUserDTO)) {
+            smallUserDTO.setAvatar(defaultUserAvatar);
             userMapper.addUser(smallUserDTO);
             return true;
         } else {

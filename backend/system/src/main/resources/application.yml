@@ -57,3 +57,7 @@ EmailApi:
   apiUser: sc_bjklvn_test_dBTXGm
   apiKey: 826a23a47afc7cc97e721a03b35bce6b
 
+DefaultImage:
+  eventImage: https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png
+  userAvatar: https://joeschmoe.io/api/v1/random
+

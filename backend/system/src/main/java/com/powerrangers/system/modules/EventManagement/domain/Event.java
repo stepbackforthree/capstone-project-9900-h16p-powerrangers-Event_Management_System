@@ -28,7 +28,7 @@ public class Event extends BaseEntity {
 
     private Boolean isDisplayed;
 
-    private BigDecimal startLevel;
+    private BigDecimal starLevel;
 
     private String eventTag;
 

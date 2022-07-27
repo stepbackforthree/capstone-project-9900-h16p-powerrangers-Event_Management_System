@@ -101,6 +101,7 @@
             <if test="eventType != null and eventType != 0">
                 and event_type = #{eventType}
             </if>
+            and is_displayed = 1
         </where>
         order by start_time desc;
     </select>
