@@ -11,10 +11,16 @@ Week 4
 Learn the MVC design pattern and learn how to use Spring Boot based on our project.
 
 Week 5
+Retro a meeting.
 Develop functions in userAccess and userProfile parts like change the user's profile information etc.
 
 Week 6
 Figure out the email Api usage of one company to merge it in to our project so that the user could receive the verification code.
 
 Week 7
-Develop the function in eventManagement part like changing the event information etc.
+Develop the functions in eventManagement part like changing the event information etc.
+
+Week8
+Retro b meeting.
+Change the email interface to improve the reusability.
+Develop the functions in eventManagement part like fuzzy searching the keywords etc.
