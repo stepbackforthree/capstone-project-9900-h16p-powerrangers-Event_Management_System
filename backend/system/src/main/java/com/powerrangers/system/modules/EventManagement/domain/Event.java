@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 public class Event extends BaseEntity {
     private Integer eventId;
 
+    private Integer hostId;
+
     private String eventName;
 
     private Integer eventType;
