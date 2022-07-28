@@ -3,7 +3,6 @@ package com.powerrangers.system.modules.EventManagement.domain;
 import com.powerrangers.common.base.BaseEntity;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
@@ -30,7 +29,7 @@ public class Event extends BaseEntity {
 
     private Boolean isDisplayed;
 
-    private BigDecimal starLevel;
+    private Float starLevel;
 
     private String eventTag;
 

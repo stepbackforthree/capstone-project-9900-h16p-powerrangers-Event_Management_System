@@ -46,4 +46,6 @@ public interface EventMapper {
     Integer checkSpendingHistory(String userName);
 
     List<EventDTO> getSpendingHistory(String userName);
+
+    void updateStarLevel(EventDTO eventDTO);
 }
