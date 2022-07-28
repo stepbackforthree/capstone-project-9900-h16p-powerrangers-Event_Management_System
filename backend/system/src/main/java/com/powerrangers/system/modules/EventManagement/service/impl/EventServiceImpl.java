@@ -262,7 +262,7 @@ public class EventServiceImpl implements EventService {
 
         if (currUser == null) {
             Map<String, String> responseBody = new HashMap<>();
-            responseBody.put("error", "User is not a host!");
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
@@ -275,7 +275,7 @@ public class EventServiceImpl implements EventService {
 
         if (currUser == null) {
             Map<String, String> responseBody = new HashMap<>();
-            responseBody.put("error", "User is not a host!");
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
