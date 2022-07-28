@@ -305,4 +305,9 @@ public class EventServiceImpl implements EventService {
         responseBody.put("error", "the user did not exist");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public void updateStarLevel(EventDTO eventDTO) {
+        eventMapper.updateStarLevel(eventDTO);
+    }
 }

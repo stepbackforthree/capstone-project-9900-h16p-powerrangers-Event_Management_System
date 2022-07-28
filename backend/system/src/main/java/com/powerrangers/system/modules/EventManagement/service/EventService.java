@@ -1,5 +1,6 @@
 package com.powerrangers.system.modules.EventManagement.service;
 
+import com.powerrangers.system.modules.EventManagement.service.dto.EventDTO;
 import com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO;
 import com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO;
 import com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO;
@@ -37,5 +38,7 @@ public interface EventService {
     ResponseEntity<Object> searchEvents(String keyWords);
 
     ResponseEntity<Object> checkSpendingHistory(String userName);
+
+    void updateStarLevel(EventDTO eventDTO);
 }
 

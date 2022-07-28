@@ -11,5 +11,9 @@ public interface CommentMapper {
 
     void addComment(CommentDTO commentDTO);
 
+    void editComment(CommentDTO commentDTO);
+
+    void deleteComment(CommentDTO commentDTO);
+
     List<Comment> getComments(CommentDTO commentDTO);
 }

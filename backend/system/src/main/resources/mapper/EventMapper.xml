@@ -131,4 +131,9 @@
         select * from sys_event where event_id  in (select event_id from event_customer
         where customer_id = (select id from sys_user where username = #{userName}));
     </select>
+
+    <update id="updateStarLevel" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
+        update sys_event set star_level = #{starLevel} where
+        host_id = #{hostId} and event_name = #{eventName};
+    </update>
 </mapper>
