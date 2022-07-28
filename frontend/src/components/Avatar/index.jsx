@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 // import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -6,11 +6,15 @@ import Avatar from '@material-ui/core/Avatar';
 import {
   useNavigate
 } from 'react-router-dom';
+import request from '../../utils/request';
 
 export default function SimpleMenu() {
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [avatar, setAvatar] = useState('');
+  const [userName, setUserName] = useState('');
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +32,15 @@ export default function SimpleMenu() {
     navigate('/host/eventList');
   }
 
+  useEffect(() => {
+    request('/users/queryUser',{
+      method: 'GET'
+    }).then(data => {
+      setAvatar(data.avatar);
+      setUserName(data.userName);
+    })
+  }, []);
+
 
   const handleLogOut = () => {
     console.log(window.localStorage.getItem('token'));
@@ -44,7 +57,7 @@ export default function SimpleMenu() {
       </Button> */}
       <Avatar 
         alt="Remy Sharp" 
-        src="/img/userAvatar.jpg" 
+        src={avatar}
         aria-controls="simple-menu" 
         aria-haspopup="true" 
         onClick={handleClick} 
@@ -56,6 +69,10 @@ export default function SimpleMenu() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <MenuItem>
+          <b>User:</b>
+          <i>{userName}</i>
+        </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
           naviToProfile()

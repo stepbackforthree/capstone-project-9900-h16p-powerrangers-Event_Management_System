@@ -34,3 +34,10 @@
 .listItem-wrap footer p b {
   margin-right: 0.5rem;
 }
+
+.listItem-wrap div {
+  font-size: .8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -75,7 +75,6 @@ export default function ProfileForm(props) {
       <div className="title">
         <h1>Profile</h1>
       </div>
-      {userDetail.id}
       <div className="profile-form">
         <div className={classes.root}>
           <Tabs

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm, Form } from '../useForm';
 import EditIcon from '@material-ui/icons/Edit';
+import Paper from '@material-ui/core/Paper';
+import EditLocationIcon from '@material-ui/icons/EditLocation';
+import './styles.css';
+import { Image } from 'antd';
+import moment from 'moment';
 
 
 function Copyright() {
@@ -98,35 +103,26 @@ const location = [
 
 
 export default function EventManagementForm(props) {
-  // const event = {
-    // "eventName": "Kobe fan Meeting",
-    // "eventType": "sports",
-    // "description": "Fan meeting, recall the past time",
-    // "siteName": "Sydney",
-    // "siteDescription": "2 Macquarie Street, Sydney CBD NSW 2000",
-    // "startTime": "2022-07-30T17:30:00",
-    // "endTime": "2022-07-31T17:50:00",
-    // "isDisplayed": true,
-    // "starLevel": "4",
-    // "eventTag": "sports"
-  // }
-  const classes = useStyles();
 
+  const classes = useStyles();
+  // const { values, setValues, handleInputChange } = useForm(event);
+
+  const event = props.event;
   const handleSubmit = () => {
     console.log('submit success');
-    props.submit({
-      ...values,
-    });
+    // props.submit({
+    //   ...values,
+    // });
   }
 
   // upload img
   const uploadIamge = async (e) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    setValues({
-      ...values,
-      image: base64,
-    })
+    // setValues({
+    //   ...values,
+    //   image: base64,
+    // })
   }
 
   const convertBase64 = (file) => {
@@ -144,7 +140,7 @@ export default function EventManagementForm(props) {
     })
   }
 
-  const { values, setValues, handleInputChange } = useForm(props.event);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -153,193 +149,50 @@ export default function EventManagementForm(props) {
           <EditIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Event Management
+          Event Edit Management
         </Typography>
-        <Form>
-          <h2>Event Name:</h2>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="Event Name"
-            label="Event Name"
-            name="eventName"
-            // autoComplete="userName"
-            autoFocus
-            value = {values.eventName}
-            onChange = {handleInputChange}
-          />
-          <div>
-          <h2>Event Type:</h2>
-            <TextField
-              id="eventType"
-              name="eventType"
-              select
-              // label="If Display"
-              value={values.eventType}
-              onChange={handleInputChange}
-              SelectProps={{
-                native: true,
-              }}
-              // helperText="If you want to show the event"
-              variant="outlined"
-            >
-              {eventType.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
+        <Paper elevation={3} className="details">
+          <div className="details-row">
+            <div>
+              <b>Event Name:</b>
+              {event.eventName}
+            </div>
+            <div>
+              <EditLocationIcon/>{event.location}
+            </div>
           </div>
-          <div>
-            <h3>Location:</h3>
-            <TextField
-              id="location"
-              name="location"
-              select
-              // label="If Display"
-              value={values.location}
-              onChange={handleInputChange}
-              SelectProps={{
-                native: true,
-              }}
-              // helperText="If you want to show the event"
-              variant="outlined"
-            >
-              {location.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
+          <div className="details-row">
+            <div>
+              <div>
+                <b>Start Time:</b>
+              </div>
+              <div>
+                {moment(event.startTime).format("YYYY-MM-DD HH:mm:ss")}
+              </div>
+            </div>
+            <i style={{"padding": "0 20px"}}>To</i>
+            <div>
+              <div>
+                <b>End Time:</b>
+              </div>
+              <div>
+                {moment(event.endTime).format("YYYY-MM-DD HH:mm:ss")}
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>Site Description:</h3>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="siteDescription"
-              label="Site Description"
-              name="siteDescription"
-              autoFocus
-              value = {values.siteDescription}
-              onChange = {handleInputChange}
+          <div className="details-one-center">
+            <b>Image:</b>
+            <Image
+              width={200}
+              src={event.image}
             />
           </div>
-          <div>
-            <h2>Number of tickets:</h2>
-            <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="numberOfTickets"
-            label="Number of tickets(Only numbers are allowed)"
-            name="numberOfTickets"
-            autoComplete="numberOfTickets"
-            autoFocus
-            value = {values.numberOfTickets}
-            onChange = {handleInputChange}
-          />
+          <div className="details-one">
+            <b>Event Description:</b>
+              {event.description}
           </div>
-          <div>
-            <h3>Start Time:</h3>
-            <TextField
-              id="startTime"
-              name="startTime"
-              label="Start Time"
-              type="datetime-local"
-              value={values.startTime}
-              // className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange = {handleInputChange}
-            />
-          </div>
-          <div>
-            <h3>End Time:</h3>
-            <TextField
-              id="endTime"
-              name="endTime"
-              label="End Time"
-              type="datetime-local"
-              value={values.endTime}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              onChange = {handleInputChange}
-            />
-          </div>
-          <div>
-            <h4>Event If Display:</h4>
-            <TextField
-              id="ifDisplay"
-              name="ifDisplay"
-              select
-              // label="If Display"
-              value={values.ifDisplay}
-              onChange={handleInputChange}
-              SelectProps={{
-                native: true,
-              }}
-              helperText="If you want to show the event"
-              variant="outlined"
-            >
-              {ifDisplay.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
-          </div>
-          <div>
-            <h4>Title Image:</h4>
-            <input type="file" onChange={(e) => uploadIamge(e)} />
-            <img alt="TitleImage" src={values.image} height="200px"/>
-          </div>
-          <div>
-            <h4>Event Description:</h4>
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value = {values.password}
-              onChange = {handleInputChange}
-            /> */}
-            <TextField
-              id="eventDescription"
-              name="eventDescription"
-              label="Event Description"
-              multiline
-              fullWidth
-              rows={4}
-              variant="outlined"
-              value = {values.eventDescription}
-              onChange = {handleInputChange}
-            />
-          </div>
-          <Button
-            // type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Change Event details
-          </Button>
           
-        </Form>
+        </Paper>
       </div>
       <Box mt={8}>
         <Copyright />

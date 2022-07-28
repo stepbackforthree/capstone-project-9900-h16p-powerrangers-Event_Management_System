@@ -1,0 +1,29 @@
+.details {
+  background-color: #fff;
+  /* width: 100%; */
+  padding: 20px 10px;
+}
+
+.details-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+}
+
+.details-one-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 20px;
+}
+
+.details-one {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  padding: 5px 20px;
+}
