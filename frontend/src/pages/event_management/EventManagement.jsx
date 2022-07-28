@@ -25,7 +25,7 @@ export default function EventManagement() {
       method: 'POST',
       data: {
         'eventName': window.localStorage.getItem('eventName'),
-        'userName': window.localStorage.getItem('userName')
+        'hostName': window.localStorage.getItem('userName')
       }
     }).then((response) => {
       // console.log(response);

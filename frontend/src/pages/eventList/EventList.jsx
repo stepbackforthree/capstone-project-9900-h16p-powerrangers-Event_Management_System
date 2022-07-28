@@ -78,7 +78,7 @@ export default function EventList() {
   const [eventList, setEventList] = useState('');
 
   useEffect(() => {
-    request(`/events/getEvents?userName=${window.localStorage.getItem('userName')}`,{
+    request(`/events/getEvents?hostName=${window.localStorage.getItem('userName')}`,{
       method: 'GET',
     }).then((response) => {
       // console.log(response);
