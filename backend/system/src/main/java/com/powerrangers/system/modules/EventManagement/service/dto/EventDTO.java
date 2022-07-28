@@ -15,5 +15,5 @@ public class EventDTO extends Event {
 
     private BigDecimal ticketPrice;
 
-    private List<TicketDTO> ticketDTOS;
+    private List<TicketDTO> tickets;
 }

@@ -250,7 +250,7 @@ public class EventServiceImpl implements EventService {
         ticketDTO.setEventName(eventName);
         ticketDTO.setHostName(hostName);
 
-        eventDTO.setTicketDTOS(eventTicketMapper.getTicketType(ticketDTO));
+        eventDTO.setTickets(eventTicketMapper.getTicketType(ticketDTO));
 
         return ResponseEntity.ok().headers(headers)
                 .body(JSON.parseObject(JSON.toJSONString(eventDTO)));
