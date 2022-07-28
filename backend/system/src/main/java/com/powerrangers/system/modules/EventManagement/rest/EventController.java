@@ -61,19 +61,19 @@ public class EventController {
         return eventService.updateEventType(token, eventModifyDTO);
     }
 
-    @PostMapping(value = "/changeEventCancelState")
+    @PostMapping(value = "/updateEventCancelState")
     public ResponseEntity<Object> changeEventCancelState(@RequestHeader("Authorization") String token,
                                                   @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.changeEventCancelState(token, eventModifyDTO);
     }
 
-    @PostMapping(value = "/changeEventDisplayState")
+    @PostMapping(value = "/updateEventDisplayState")
     public ResponseEntity<Object> changeEventDisplayState(@RequestHeader("Authorization") String token,
                                                          @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.changeEventDisplayState(token, eventModifyDTO);
     }
 
-    @PostMapping(value = "/changeEventTag")
+    @PostMapping(value = "/updateEventTag")
     public ResponseEntity<Object> changeEventTag(@RequestHeader("Authorization") String token,
                                                           @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.changeEventTag(token, eventModifyDTO);
