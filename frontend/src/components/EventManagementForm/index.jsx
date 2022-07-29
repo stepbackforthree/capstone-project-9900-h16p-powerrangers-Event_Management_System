@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,9 +16,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import Paper from '@material-ui/core/Paper';
 import EditLocationIcon from '@material-ui/icons/EditLocation';
 import './styles.css';
-import { Image } from 'antd';
 import moment from 'moment';
+import { Button, Modal, Select,Image } from 'antd';
+import request from '../../utils/request';
 
+
+const { Option } = Select;
 
 function Copyright() {
   return (
@@ -33,6 +35,8 @@ function Copyright() {
     </Typography>
   );
 }
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -101,8 +105,92 @@ const location = [
   },
 ];
 
+const eventTypeMap = {
+  1: 'Concert',
+  2: 'Sports',
+  3: 'Comic and Animation',
+  4: 'Parents-child Campaign',
+  5: 'Tourism Exhibition'
+}
+
 
 export default function EventManagementForm(props) {
+  const [isModal1Visible, setIsModal1Visible] = useState(false);
+  const [isModal2Visible, setIsModal2Visible] = useState(false);
+  const [editUrl, setEditUrl] = useState('');
+  const [inputType, setInputType] = useState('text');
+  const [inputKey, setInputKey] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [locationValue, setLocationValue] = useState('');
+
+  const eventName = window.localStorage.getItem('eventName');
+
+
+  const showModal1 = () => {
+    setIsModal1Visible(true);
+  };
+  const handleOk1 = () => {
+    console.log('submit.....');
+    console.log(editUrl);
+    console.log(inputValue);
+    console.log('/'+editUrl);
+    console.log(inputKey);
+    const data = {
+      'eventName': eventName,
+      [inputKey]: inputValue
+    }
+    console.log('data:', data);
+    request('/events/'+editUrl, {
+      method: 'POST',
+      data: data
+    }).then(data => {
+      console.log('data:', data);
+    })
+    setIsModal1Visible(false);
+    window.location.href = '/host/eventList';
+  };
+  const handleCancel1 = () => {
+    setIsModal1Visible(false);
+  };
+
+
+  const showModal2 = () => {
+    setIsModal2Visible(true);
+  };
+  const handleOk2 = () => {
+    console.log('submit.....');
+    console.log(editUrl);
+    console.log(locationValue);
+    console.log('/'+editUrl);
+    const data = {
+      'eventName': eventName,
+      'newString': locationValue
+    }
+    console.log('data:', data);
+    request('/events/'+editUrl, {
+      method: 'POST',
+      data: data
+    }).then(data => {
+      console.log('data:', data);
+    })
+    setIsModal2Visible(false);
+    window.location.href = '/host/eventList';
+  };
+  const handleCancel2 = () => {
+    setIsModal2Visible(false);
+  };
+
+  useEffect(() => {
+    console.log('editUrl:',editUrl)
+  },[editUrl])
+
+  useEffect(() => {
+    console.log('inputType:',inputType)
+  },[inputType])
+
+  useEffect(() => {
+    console.log('inputValue:',inputValue)
+  },[inputValue])
 
   const classes = useStyles();
   // const { values, setValues, handleInputChange } = useForm(event);
@@ -140,63 +228,154 @@ export default function EventManagementForm(props) {
     })
   }
 
+  const handleInputChange = (e) => {
+    console.log('input change:', e.target.value);
+    setInputValue(e.target.value);
+  }
+
+  const handleLocationChange = (value) => {
+    setLocationValue(value);
+    console.log(`selected ${value}`);
+  };
+
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <EditIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Event Edit Management
-        </Typography>
-        <Paper elevation={3} className="details">
-          <div className="details-row">
-            <div>
-              <b>Event Name:</b>
-              {event.eventName}
-            </div>
-            <div>
-              <EditLocationIcon/>{event.location}
-            </div>
-          </div>
-          <div className="details-row">
-            <div>
+    <>
+      <Modal title="Text Input" visible={isModal1Visible} onOk={handleOk1} onCancel={handleCancel1}>
+        <b>{editUrl}:</b>
+        <input type={inputType} value={inputValue} onChange={handleInputChange}/>
+      </Modal>
+      <Modal title="Selection" visible={isModal2Visible} onOk={handleOk2} onCancel={handleCancel2}>
+        <b>{editUrl}:</b>
+        <Select
+          value={locationValue}
+          style={{
+            width: 150,
+          }}
+          onChange={handleLocationChange}
+        >
+          <Option value="Sydney">Sydney</Option>
+          <Option value="Melbourne">Melbourne</Option>
+          <Option value="Queensland ">Queensland </Option>
+        </Select>
+      </Modal>
+
+
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <EditIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Event Edit Management
+          </Typography>
+
+
+          <Paper elevation={3} className="details">
+            <div className="details-row">
               <div>
-                <b>Start Time:</b>
+                <b>Event Name:</b>
+                {event.eventName}
               </div>
               <div>
-                {moment(event.startTime).format("YYYY-MM-DD HH:mm:ss")}
+                <EditLocationIcon/>{event.location}
               </div>
             </div>
-            <i style={{"padding": "0 20px"}}>To</i>
-            <div>
+
+            <div className="details-row">
+              <Button type="link" onClick={() => {
+                showModal1();
+                setEditUrl('updateEventName');
+                setInputType('text');
+                setInputKey('newString');
+                setInputValue(event.eventName);
+              }}>
+                Edit Event Name
+              </Button>
+              <Button type="link" onClick={() => {
+                showModal2();
+                setEditUrl('updateEventAddress');
+                setLocationValue(event.location);
+              }}>
+                Edit Location
+              </Button>
+            </div>
+            <div className="details-row">
               <div>
-                <b>End Time:</b>
+                <div>
+                  <b>Start Time:</b>
+                </div>
+                <div>
+                  {moment(event.startTime).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
               </div>
+              <i style={{"padding": "0 20px"}}>To</i>
               <div>
-                {moment(event.endTime).format("YYYY-MM-DD HH:mm:ss")}
+                <div>
+                  <b>End Time:</b>
+                </div>
+                <div>
+                  {moment(event.endTime).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="details-one-center">
-            <b>Image:</b>
-            <Image
-              width={200}
-              src={event.image}
-            />
-          </div>
-          <div className="details-one">
-            <b>Event Description:</b>
-              {event.description}
-          </div>
-          
-        </Paper>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+            <div className="details-one-center">
+              <b>Image:</b>
+              <Image
+                width={200}
+                src={event.image}
+              />
+            </div>
+            <div className="details-one">
+              <b>Event Type:</b>
+              {eventTypeMap[event.eventType]}
+            </div>
+            <div className="details-row">
+              <div>
+                <b>Event Description:</b>
+                {event.description}
+              </div>
+              <Button type="link" onClick={() => {
+                showModal1();
+                setEditUrl('updateEventDescription');
+                setInputType('text');
+                setInputKey('newString');
+                setInputValue(event.description);
+              }}>
+                Edit Description
+              </Button>
+            </div>
+            <div className="details-one">
+              <b>If Display this Event:</b>
+              {event.isDisplayed}
+            </div>
+            <div className="details-one">
+              <b>Event Cancelled:</b>
+              {event.isCancelled}
+            </div>
+            <div className="details-one">
+              <h3><b>Tickets Detail:</b></h3>
+            </div>
+
+            {event.tickets && event.tickets.map((item) => {
+              return (
+                <div className="details-row" key={item.ticketType}>
+                  <div>{item.ticketType}:<i>${item.ticketPrice}</i></div>
+                  <div><b>Amount:</b>{item.ticketAmount}</div>
+                </div>
+              )
+            })}
+
+            
+
+            
+          </Paper>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </>
   )
 }

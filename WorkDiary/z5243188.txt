@@ -40,5 +40,6 @@ Week9
 update eventList page
 dev profile page
 develop order page
+update event management page
 
 Week10
