@@ -10,6 +10,8 @@ public interface EventTicketMapper {
 
     Integer getTicketTypeIdByTicketTypeName(String ticketType);
 
+    Integer checkExist(TicketDTO ticketDTO);
+
     void insertEventTicketType(TicketDTO ticketDTO);
 
     List<TicketDTO> getTicketType(TicketDTO ticketDTO);

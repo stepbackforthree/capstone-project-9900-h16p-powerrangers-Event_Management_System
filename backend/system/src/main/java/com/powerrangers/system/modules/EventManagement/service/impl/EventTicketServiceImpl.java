@@ -44,9 +44,15 @@ public class EventTicketServiceImpl implements EventTicketService {
 
             eventModifyDTO.setHostId(currUser.getId());
             eventModifyDTO.setEventName(ticketDTO.getEventName());
+            ticketDTO.setHostName(currUser.getUserName());
 
             if (eventMapper.queryEvent(eventModifyDTO) == null) {
                 responseBody.put("error", "host and event is not match!");
+                return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+            }
+
+            if (eventTicketMapper.checkExist(ticketDTO) > 0) {
+                responseBody.put("error", "ticket type has already existed!");
                 return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
             }
 
