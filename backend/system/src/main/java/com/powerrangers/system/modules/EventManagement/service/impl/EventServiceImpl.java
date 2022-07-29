@@ -49,6 +49,10 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "Not a host or is not authenticated");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         eventModifyDTO.setEventName(smallEventDTO.getEventName());
@@ -82,6 +86,10 @@ public class EventServiceImpl implements EventService {
 
         if (currUser != null && !currUser.getIsAuth()) {
             responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         eventModifyDTO.setHostId(currUser.getId());
@@ -118,6 +126,10 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "Not a host or is not authenticated");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
         eventModifyDTO.setHostId(currUser.getId());
 
 
@@ -146,6 +158,10 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "Not a host or is not authenticated");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
         eventModifyDTO.setHostId(currUser.getId());
 
 
@@ -168,6 +184,10 @@ public class EventServiceImpl implements EventService {
 
         if (currUser != null && !currUser.getIsAuth()) {
             responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         eventModifyDTO.setHostId(currUser.getId());
@@ -193,6 +213,10 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "Not a host or is not authenticated");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
         eventModifyDTO.setHostId(currUser.getId());
 
         if (checkExist(eventModifyDTO)){
@@ -213,6 +237,10 @@ public class EventServiceImpl implements EventService {
 
         if (currUser != null && !currUser.getIsAuth()) {
             responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         eventModifyDTO.setHostId(currUser.getId());
@@ -238,6 +266,10 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "Not a host or is not authenticated");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
         eventModifyDTO.setHostId(currUser.getId());
 
 
@@ -259,6 +291,10 @@ public class EventServiceImpl implements EventService {
 
         if (currUser != null && !currUser.getIsAuth()) {
             responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         eventModifyDTO.setHostId(currUser.getId());
