@@ -94,8 +94,8 @@ public class EventController {
 
     @ApiOperation(value = "get all events")
     @PostMapping(value = "getAllEvents")
-    public ResponseEntity<Object> getAllEvents(@RequestHeader("Authorization") String token, @RequestBody EventFilterDTO eventFilterDTO) {
-        return eventService.getAllEvents(token, eventFilterDTO);
+    public ResponseEntity<Object> getAllEvents(@RequestBody EventFilterDTO eventFilterDTO) {
+        return eventService.getAllEvents(eventFilterDTO);
     }
 
     @ApiOperation(value = "search the events")

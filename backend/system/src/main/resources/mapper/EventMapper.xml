@@ -85,7 +85,9 @@
 
     <select id="getAllEvents" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO"
                                 resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
-        select e.*, t.ticket_type, t.ticket_amount, t.ticket_price from sys_event e, event_ticket t
+        select e.*, t.ticket_type, t.ticket_amount, t.ticket_price,
+               (select username from sys_user where id = e.host_id) as hostName
+                from sys_event e, event_ticket t
         <where>
             e.event_id = t.event_id and t.ticket_type = 1
             <if test="location != null and location.length() != 0 and location != ''">

@@ -366,8 +366,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+    public ResponseEntity<Object> getAllEvents(EventFilterDTO eventFilterDTO) {
+        /*User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         Map<String, String> responseBody = new HashMap<>();
 
@@ -379,7 +379,7 @@ public class EventServiceImpl implements EventService {
         if (currUser == null) {
             responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
-        }
+        }*/
 
         return new ResponseEntity<>(eventMapper.getAllEvents(eventFilterDTO), HttpStatus.OK);
     }

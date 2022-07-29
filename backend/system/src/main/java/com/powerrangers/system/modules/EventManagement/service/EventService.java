@@ -33,7 +33,7 @@ public interface EventService {
 
     ResponseEntity<Object> getEvents(String token, String hostName);
 
-    ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO);
+    ResponseEntity<Object> getAllEvents(EventFilterDTO eventFilterDTO);
 
     ResponseEntity<Object> searchEvents(String keyWords);
 
