@@ -2,6 +2,7 @@ package com.powerrangers.system.modules.OrderManagement.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.powerrangers.system.modules.OrderManagement.dao.OrderMapper;
+import com.powerrangers.system.modules.OrderManagement.domain.Order;
 import com.powerrangers.system.modules.OrderManagement.service.OrderService;
 import com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO;
 import com.powerrangers.system.modules.UserAccess.domain.User;
@@ -64,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<Object> refundOrder(String token, OrderDTO orderDTO) {
+    public ResponseEntity<Object> refundOrder(String token, Integer orderId) {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
@@ -75,10 +76,11 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        orderDTO.setCustomerId(currUser.getId());
-        orderMapper.refundOrder(orderDTO);
+        orderMapper.refundOrder(orderId);
 
-        userProfileService.updateBalance(token, currUser.getBalance().add(orderDTO.getTicketPrice().multiply(BigDecimal.valueOf(orderDTO.getTicketAmount()))));
+        Order currOrder = orderMapper.queryOrderById(orderId);
+
+        userProfileService.updateBalance(token, currUser.getBalance().add(currOrder.getPaymentAmount()));
 
         responseBody.put("msg", "refund order succeed!");
 

@@ -61,3 +61,7 @@ DefaultImage:
   eventImage: https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png
   userAvatar: https://joeschmoe.io/api/v1/random
 
+StarLevel:
+  baseLevel: 3f
+  baseAmount: 3
+

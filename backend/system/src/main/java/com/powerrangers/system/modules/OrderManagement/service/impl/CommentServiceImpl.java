@@ -11,6 +11,7 @@ import com.powerrangers.system.modules.UserAccess.dao.UserMapper;
 import com.powerrangers.system.modules.UserAccess.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,12 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     EventMapper eventMapper;
 
+    @Value("${StarLevel.baseLevel}")
+    private Float baseLevel;
+
+    @Value("${StarLevel.baseAmount}")
+    private Integer baseAmount;
+
     Map<String, String> responseBody = new HashMap<>();
 
     public void updateStarLevel(CommentDTO commentDTO) {
@@ -48,7 +55,9 @@ public class CommentServiceImpl implements CommentService {
                 sum += comment.getStarLevel();
             }
 
-            float avg = sum / comments.size();
+            sum += baseLevel * baseAmount;
+
+            float avg = sum / (comments.size() + baseAmount);
             float exact = (float) Math.floor(avg);
             float remain = (float) (avg - exact);
             if (remain >= 0.5) {

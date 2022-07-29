@@ -9,9 +9,11 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
+    Order queryOrderById(Integer orderId);
+
     void insertOrder(OrderDTO orderDTO);
 
-    void refundOrder(OrderDTO orderDTO);
+    void refundOrder(Integer orderId);
 
     Order getOrder(OrderDTO orderDTO);
 

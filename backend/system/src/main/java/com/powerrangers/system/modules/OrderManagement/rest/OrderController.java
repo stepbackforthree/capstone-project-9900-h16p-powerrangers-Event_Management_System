@@ -24,8 +24,8 @@ public class OrderController {
     }
 
     @ApiOperation(value = "Customer canceal the order and refund")
-    @PostMapping(value = "refundOrder")
-    public ResponseEntity<Object> refundOrder(@RequestHeader("Authorization") String token, @RequestBody OrderDTO orderDTO) {
-        return orderService.refundOrder(token, orderDTO);
+    @GetMapping(value = "refundOrder")
+    public ResponseEntity<Object> refundOrder(@RequestHeader("Authorization") String token, @RequestParam Integer orderId) {
+        return orderService.refundOrder(token, orderId);
     }
 }
