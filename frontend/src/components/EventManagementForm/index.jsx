@@ -227,6 +227,21 @@ export default function EventManagementForm(props) {
   };
   const handleOkAddTicket = () => {
     console.log(ticketTypeValue, ticketPriceValue, ticketAmountValue);
+    const data = {
+      'eventName': eventName,
+      'ticketType': ticketTypeValue,
+      'ticketPrice': ticketPriceValue,
+      'ticketAmount': ticketAmountValue
+    }
+    console.log('data:', data);
+    request('/tickets/addTicketType', {
+      method: 'POST',
+      data: data
+    }).then(data => {
+      console.log('data:', data);
+    })
+    setIsModalTypeVisible(false);
+    window.location.href = '/host/eventList';
     // setIsModalAddTicketVisible(false);
   };
   const handleCancelAddTicket = () => {
@@ -359,11 +374,11 @@ export default function EventManagementForm(props) {
             }}
             onChange={setTicketTypeValue}
           >
-            <Option value="fullPriceTicket">fullPriceTicket</Option>
-            <Option value="studentTicket">studentTicket</Option>
-            <Option value="infieldTicket">infieldTicket</Option>
-            <Option value="standTicket">standTicket</Option>
-            <Option value="earlyBirdTicket">earlyBirdTicket</Option>
+            <Option value="full price ticket">Full Price Ticket</Option>
+            <Option value="student ticket">Student Ticket</Option>
+            <Option value="infield ticket">Infield Ticket</Option>
+            <Option value="stand ticket">Stand Ticket</Option>
+            <Option value="early bird ticket">Early Bird Ticket</Option>
           </Select>
         </div>
         <div className="add-ticket-type-modal">

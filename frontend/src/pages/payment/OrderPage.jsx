@@ -7,6 +7,9 @@ import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import GradeRoundedIcon from '@material-ui/icons/GradeRounded';
 import { Radio, Button } from 'antd';
+import moment from 'moment';
+import request from '../../utils/request';
+
 
 const TitleContainer = styled.div`
   /* position: relative; */
@@ -40,14 +43,29 @@ const data = {
   location: 'Sydney',
   description:
     'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  startTime: '2022-07-07T10:00:00',
-  endTime: '2022-07-08T10:00:00',
+  startTime: 1659177000000,
+  endTime: 1660818600000,
   isDisplayed: true,
   starLevel: 3,
   image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
   isCancelled: false,
-  ticketPrice: 100,
-  ticketAmount: 500
+  tickets: [
+		{
+			"ticketAmount": 200,
+			"ticketPrice": 100.00,
+			"ticketType": "full price ticket"
+		},
+		{
+			"ticketAmount": 100,
+			"ticketPrice": 30.00,
+			"ticketType": "student ticket"
+		},
+		{
+			"ticketAmount": 100,
+			"ticketPrice": 20.00,
+			"ticketType": "infield ticket"
+		}
+	],
 }
 
 export default function OrderPage() {
@@ -60,6 +78,21 @@ export default function OrderPage() {
   useEffect(() => {
     console.log('ticketChoise:',ticketChoise)
   }, [ticketChoise]);
+
+  // const [data, setData] = useState('');
+
+  // useEffect(() => {
+  //   request(`/events/queryEvent`,{
+  //     method: 'POST',
+  //     data: {
+  //       'eventName': window.localStorage.getItem('eventName'),
+  //       'hostName': window.localStorage.getItem('userName')
+  //     }
+  //   }).then((response) => {
+  //     // console.log(response);
+  //     setData(response);
+  //   })
+  // }, []);
 
   return (
     <div>
@@ -83,7 +116,9 @@ export default function OrderPage() {
               <div className="eventContentTop-container">
                 <div className="icon-text-container">
                   <QueryBuilderIcon/>
-                  {data.startTime} - {data.endTime}
+                  {moment(data.startTime).format("YYYY-MM-DD HH:mm:ss")}
+                  -
+                  {moment(data.endTime).format("YYYY-MM-DD HH:mm:ss")}
                 </div>
                 <div>
                   <b>Ticket Amount: </b>

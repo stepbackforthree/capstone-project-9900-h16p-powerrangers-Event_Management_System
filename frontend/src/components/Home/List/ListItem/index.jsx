@@ -44,7 +44,7 @@ export default function ListItem( {item:{image, eventName, eventType, location, 
         <div>
           <LocationOnIcon/>{location}
         </div>
-        <Button variant="contained" color="secondary" size="small" onClick={goToOrder}>Join!</Button>
+        <Button variant="contained" color="secondary" size="small" onClick={() => goToOrder()}>Join!</Button>
       </div>
     </div>
   )
