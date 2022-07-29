@@ -77,9 +77,16 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> updateEventName(String token, EventModifyDTO eventModifyDTO){
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
+
 
         if (checkExist(eventModifyDTO)){
             String eventName = eventModifyDTO.getEventName();
@@ -104,9 +111,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> updateEventTime(String token, EventModifyDTO eventModifyDTO){
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventTime(eventModifyDTO);
@@ -126,9 +139,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> updateEventDescription(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventDescription(eventModifyDTO);
@@ -144,9 +163,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> updateEventAddress(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventAddress(eventModifyDTO);
@@ -161,9 +186,14 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> updateEventType(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
 
         if (checkExist(eventModifyDTO)){
             eventMapper.updateEventType(eventModifyDTO);
@@ -178,9 +208,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> changeEventCancelState(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventCancelState(eventModifyDTO);
@@ -195,9 +231,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> changeEventDisplayState(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventDisplayState(eventModifyDTO);
@@ -212,9 +254,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<Object> changeEventTag(String token, EventModifyDTO eventModifyDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
-        eventModifyDTO.setHostId(currUser.getId());
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
 
         if (checkExist(eventModifyDTO)){
             eventMapper.changeEventTag(eventModifyDTO);
@@ -231,6 +279,12 @@ public class EventServiceImpl implements EventService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
 
         EventModifyDTO eventModifyDTO = new EventModifyDTO();
         if (currUser != null) {
@@ -260,8 +314,14 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> getEvents(String token, String hostName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
         if (currUser == null) {
-            Map<String, String> responseBody = new HashMap<>();
             responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
@@ -273,8 +333,14 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> getAllEvents(String token, EventFilterDTO eventFilterDTO) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser != null && !currUser.getIsAuth()) {
+            responseBody.put("error", "Not a host or is not authenticated");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
         if (currUser == null) {
-            Map<String, String> responseBody = new HashMap<>();
             responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
