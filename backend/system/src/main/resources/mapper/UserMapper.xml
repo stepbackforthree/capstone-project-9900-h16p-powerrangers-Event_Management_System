@@ -15,8 +15,8 @@
     <insert id="addUser" parameterType="com.powerrangers.system.modules.UserAccess.service.dto.SmallUserDTO"
             useGeneratedKeys="true">
         insert into sys_user
-            (username, email, password, is_received, avatar)
-        values (#{userName}, #{email}, #{password}, #{isReceived}, #{avatar})
+            (username, email, password, is_received, avatar, is_auth)
+        values (#{userName}, #{email}, #{password}, #{isReceived}, #{avatar}, 1)
 
     </insert>
 
