@@ -34,6 +34,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
+
+
+
         if (currUser.getNickName().equals(nickName)) {
             responseBody.put("error", "duplicated nickname!");
             return responseBody;
@@ -60,6 +67,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
+
+
         if (currUser.getEmail().equals(email)) {
             responseBody.put("error", "duplicated email!");
             return responseBody;
@@ -84,6 +97,11 @@ public class UserProfileServiceImpl implements UserProfileService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
 
         if (currUser.getAvatar() != null && currUser.getAvatar().equals(avatar)) {
             responseBody.put("error", "duplicated avatar!");
@@ -110,6 +128,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         responseBody.clear();
 
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
+
         if (currUser.getDescription() != null || !currUser.getDescription().isEmpty() && currUser.getDescription().equals(description)) {
             responseBody.put("error", "duplicated description!");
             return responseBody;
@@ -134,6 +157,11 @@ public class UserProfileServiceImpl implements UserProfileService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
 
         if (currUser.getPrefTag() != null || !currUser.getPrefTag().isEmpty() && currUser.getPrefTag().equals(prefTag)) {
             responseBody.put("error", "duplicate preTag!");
@@ -160,6 +188,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         responseBody.clear();
 
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
+
         if (currUser.getQualification() != null && currUser.getQualification().equals(qualification)) {
             responseBody.put("error", "duplicated qualification!");
             return responseBody;
@@ -184,6 +217,11 @@ public class UserProfileServiceImpl implements UserProfileService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
 
         if (currUser.getBankDetails() != null || !currUser.getBankDetails().isEmpty() && currUser.getBankDetails().equals(bankDetails)) {
             responseBody.put("error", "duplicated bankDetails!");
@@ -211,6 +249,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         responseBody.clear();
 
+
         if (currUser == null || currUser.getBalance() == null) {
             responseBody.put("error", "token is invalid!");
             return responseBody;
@@ -236,6 +275,11 @@ public class UserProfileServiceImpl implements UserProfileService {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return responseBody;
+        }
 
         if (currUser.getPassword() != null && currUser.getPassword().equals(password)) {
             responseBody.put("error", "duplicated password!");
