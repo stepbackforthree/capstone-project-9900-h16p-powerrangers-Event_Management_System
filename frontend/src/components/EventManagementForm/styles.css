@@ -27,3 +27,11 @@
   justify-content: center; */
   padding: 5px 20px;
 }
+
+.add-ticket-type-modal {
+  margin: 10px;
+}
+
+.add-ticket-type-modal > b {
+  margin-right: 10px;
+}

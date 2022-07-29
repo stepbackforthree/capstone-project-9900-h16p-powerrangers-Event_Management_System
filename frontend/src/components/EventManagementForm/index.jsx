@@ -74,7 +74,7 @@ const eventType = [
   },
   {
     value: 2,
-    label: 'sports',
+    label: 'Sports',
   },
   {
     value: 3,
@@ -109,23 +109,37 @@ const eventTypeMap = {
   1: 'Concert',
   2: 'Sports',
   3: 'Comic and Animation',
-  4: 'Parents-child Campaign',
+  4: 'Parents-Child Campaign',
   5: 'Tourism Exhibition'
+}
+
+const ticketType = {
+  "fullPriceTicket": "fullPriceTicket",
+  "studentTicket": "studentTicket",
+  "infieldTicket": "infieldTicket",
+  "standTicket": "standTicket",
+  "earlyBirdTicket": "earlyBirdTicket"
 }
 
 
 export default function EventManagementForm(props) {
   const [isModal1Visible, setIsModal1Visible] = useState(false);
   const [isModal2Visible, setIsModal2Visible] = useState(false);
+  const [isModalTypeVisible, setIsModalTypeVisible] = useState(false);
+  const [isModalAddTicketVisible, setIsModalAddTicketVisible] = useState(false);
   const [editUrl, setEditUrl] = useState('');
   const [inputType, setInputType] = useState('text');
   const [inputKey, setInputKey] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [locationValue, setLocationValue] = useState('');
+  const [typeValue, setTypeValue] = useState('');
+  const [ticketTypeValue, setTicketTypeValue] = useState('');
+  const [ticketPriceValue, setTicketPriceValue] = useState('');
+  const [ticketAmountValue, setTicketAmountValue] = useState('');
 
   const eventName = window.localStorage.getItem('eventName');
 
-
+  // text input modal
   const showModal1 = () => {
     setIsModal1Visible(true);
   };
@@ -153,7 +167,7 @@ export default function EventManagementForm(props) {
     setIsModal1Visible(false);
   };
 
-
+  // location selection modal
   const showModal2 = () => {
     setIsModal2Visible(true);
   };
@@ -180,6 +194,47 @@ export default function EventManagementForm(props) {
     setIsModal2Visible(false);
   };
 
+  // type selection modal
+  const showModalType = () => {
+    setIsModalTypeVisible(true);
+  };
+  const handleOkType = () => {
+    console.log('submit.....');
+    console.log(editUrl);
+    console.log(typeValue);
+    console.log('/'+editUrl);
+    const data = {
+      'eventName': eventName,
+      'newInteger': parseInt(typeValue)
+    }
+    console.log('data:', data);
+    request('/events/'+editUrl, {
+      method: 'POST',
+      data: data
+    }).then(data => {
+      console.log('data:', data);
+    })
+    setIsModalTypeVisible(false);
+    window.location.href = '/host/eventList';
+  };
+  const handleCancelType = () => {
+    setIsModalTypeVisible(false);
+  };
+  
+  // text input modal
+  const showModalAddTicket = () => {
+    setIsModalAddTicketVisible(true);
+  };
+  const handleOkAddTicket = () => {
+    console.log(ticketTypeValue, ticketPriceValue, ticketAmountValue);
+    // setIsModalAddTicketVisible(false);
+  };
+  const handleCancelAddTicket = () => {
+    setIsModalAddTicketVisible(false);
+  };
+
+
+
   useEffect(() => {
     console.log('editUrl:',editUrl)
   },[editUrl])
@@ -191,6 +246,10 @@ export default function EventManagementForm(props) {
   useEffect(() => {
     console.log('inputValue:',inputValue)
   },[inputValue])
+
+  useEffect(() => {
+    console.log('typeValue:',typeValue)
+  },[typeValue])
 
   const classes = useStyles();
   // const { values, setValues, handleInputChange } = useForm(event);
@@ -238,6 +297,19 @@ export default function EventManagementForm(props) {
     console.log(`selected ${value}`);
   };
 
+  const handleTypeChange = (value) => {
+    setTypeValue(value);
+    console.log(`selected ${value}`);
+  };
+
+  const handleTicketPriceChange = (e) => {
+    setTicketPriceValue(e.target.value);
+  }
+
+  const handleTicketAmountChange = (e) => {
+    setTicketAmountValue(e.target.value);
+  }
+
 
   return (
     <>
@@ -245,7 +317,7 @@ export default function EventManagementForm(props) {
         <b>{editUrl}:</b>
         <input type={inputType} value={inputValue} onChange={handleInputChange}/>
       </Modal>
-      <Modal title="Selection" visible={isModal2Visible} onOk={handleOk2} onCancel={handleCancel2}>
+      <Modal title="Location Update" visible={isModal2Visible} onOk={handleOk2} onCancel={handleCancel2}>
         <b>{editUrl}:</b>
         <Select
           value={locationValue}
@@ -259,6 +331,52 @@ export default function EventManagementForm(props) {
           <Option value="Queensland ">Queensland </Option>
         </Select>
       </Modal>
+
+      <Modal title="Type Update" visible={isModalTypeVisible} onOk={handleOkType} onCancel={handleCancelType}>
+        <b>{editUrl}:</b>
+        <Select
+          value={typeValue}
+          style={{
+            width: 200,
+          }}
+          onChange={setTypeValue}
+        >
+          <Option value="1">Concert</Option>
+          <Option value="2">Sports</Option>
+          <Option value="3">Comic and Animation</Option>
+          <Option value="4">Parents-Child Campaign</Option>
+          <Option value="5">Tourism Exhibition</Option>
+        </Select>
+      </Modal>
+
+      <Modal title="Add Ticket Type" visible={isModalAddTicketVisible} onOk={handleOkAddTicket} onCancel={handleCancelAddTicket}>
+        <div className="add-ticket-type-modal">
+          <b>Choose Ticket Type:</b>
+          <Select
+            value={ticketTypeValue}
+            style={{
+              width: 200,
+            }}
+            onChange={setTicketTypeValue}
+          >
+            <Option value="fullPriceTicket">fullPriceTicket</Option>
+            <Option value="studentTicket">studentTicket</Option>
+            <Option value="infieldTicket">infieldTicket</Option>
+            <Option value="standTicket">standTicket</Option>
+            <Option value="earlyBirdTicket">earlyBirdTicket</Option>
+          </Select>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Choose Ticket Price:</b>
+          <input type='number' value={ticketPriceValue} onChange={handleTicketPriceChange}/>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Choose Ticket Amount:</b>
+          <input type='number' value={ticketAmountValue} onChange={handleTicketAmountChange}/>
+        </div>
+      </Modal>
+
+
 
 
       <Container component="main" maxWidth="xs">
@@ -327,9 +445,20 @@ export default function EventManagementForm(props) {
                 src={event.image}
               />
             </div>
-            <div className="details-one">
-              <b>Event Type:</b>
-              {eventTypeMap[event.eventType]}
+            <div className="details-row">
+              <div>
+                <b>Event Type:</b>
+                {eventTypeMap[event.eventType]}
+              </div>
+              <Button type="link" onClick={() => {
+                showModalType();
+                setEditUrl('updateEventType');
+                setTypeValue(event.eventType.toString());
+                console.log(typeof (event.eventType.toString()));
+                console.log(event.eventType.toString());
+              }}>
+                Edit Event Type
+              </Button>
             </div>
             <div className="details-row">
               <div>
@@ -355,7 +484,13 @@ export default function EventManagementForm(props) {
               {event.isCancelled}
             </div>
             <div className="details-one">
-              <h3><b>Tickets Detail:</b></h3>
+              <span><b>Tickets Detail:</b></span>
+              <Button type="primary" size="small" onClick={() => {
+                showModalAddTicket();
+                setEditUrl('addTicketType');
+              }}>
+                add ticket type
+              </Button>
             </div>
 
             {event.tickets && event.tickets.map((item) => {
