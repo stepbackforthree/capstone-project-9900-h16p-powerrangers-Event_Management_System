@@ -9,6 +9,8 @@ import GradeRoundedIcon from '@material-ui/icons/GradeRounded';
 import { Radio, Button } from 'antd';
 import moment from 'moment';
 import request from '../../utils/request';
+import { Modal } from 'antd';
+
 
 
 const TitleContainer = styled.div`
@@ -37,39 +39,10 @@ const eventType = {
   5: 'Tourism Exhibition'
 }
 
-const data = {
-  eventName: `Event part 2`,
-  eventType: 3,
-  location: 'Sydney',
-  description:
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  startTime: 1659177000000,
-  endTime: 1660818600000,
-  isDisplayed: true,
-  starLevel: 3,
-  image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
-  isCancelled: false,
-  tickets: [
-		{
-			"ticketAmount": 200,
-			"ticketPrice": 100.00,
-			"ticketType": "full price ticket"
-		},
-		{
-			"ticketAmount": 100,
-			"ticketPrice": 30.00,
-			"ticketType": "student ticket"
-		},
-		{
-			"ticketAmount": 100,
-			"ticketPrice": 20.00,
-			"ticketType": "infield ticket"
-		}
-	],
-}
-
 export default function OrderPage() {
   const [ticketChoise, SetTicketChoise] = useState('fullPriceTicket');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
 
   const ticketChoiseChange = (e) => {
     SetTicketChoise(e.target.value);
@@ -79,23 +52,37 @@ export default function OrderPage() {
     console.log('ticketChoise:',ticketChoise)
   }, [ticketChoise]);
 
-  // const [data, setData] = useState('');
+  const [data, setData] = useState('');
 
-  // useEffect(() => {
-  //   request(`/events/queryEvent`,{
-  //     method: 'POST',
-  //     data: {
-  //       'eventName': window.localStorage.getItem('eventName'),
-  //       'hostName': window.localStorage.getItem('userName')
-  //     }
-  //   }).then((response) => {
-  //     // console.log(response);
-  //     setData(response);
-  //   })
-  // }, []);
+  useEffect(() => {
+    request(`/events/queryEvent`,{
+      method: 'POST',
+      data: {
+        'eventName': window.localStorage.getItem('queryEventName'),
+        'hostName': window.localStorage.getItem('queryHostName')
+      }
+    }).then((response) => {
+      // console.log(response);
+      setData(response);
+    })
+  }, []);
+
+  // payment method modal
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div>
+      <Modal title="Text Input" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <b>Choose Your Payment Method:</b>
+      </Modal>
       <TitleContainer>
         <h2>Order Page</h2>
       </TitleContainer>
@@ -120,12 +107,8 @@ export default function OrderPage() {
                   -
                   {moment(data.endTime).format("YYYY-MM-DD HH:mm:ss")}
                 </div>
-                <div>
-                  <b>Ticket Amount: </b>
-                  {data.ticketAmount}
-                </div>
               </div>
-              <div  className="icon-text-container">
+              <div className="icon-text-container">
                 <LocationCityIcon/>
                 <div>
                   <b>City: </b>
@@ -150,17 +133,32 @@ export default function OrderPage() {
               <div className="payment-container">
                 <h2><b>Tickets: </b></h2>
                 <Radio.Group value={ticketChoise} onChange={ticketChoiseChange}>
-                  <Radio.Button value="fullPriceTicket">FullPriceTicket</Radio.Button>
-                  <Radio.Button value="studentTicket">StudentTicket</Radio.Button>
-                  <Radio.Button value="infieldTicket">InfieldTicket</Radio.Button>
-                  <Radio.Button value="standTicket">StandTicket</Radio.Button>
-                  <Radio.Button value="earlyBirdTicket">EarlyBirdTicket</Radio.Button>
+                  {data.tickets && data.tickets.map((item) => {
+                    return (
+                      <Radio.Button value={item.ticketType}>{item.ticketType}</Radio.Button>
+                    )
+                  })}
                 </Radio.Group>
+                {data.tickets && data.tickets.map((item) => {
+                  return (
+                    <div className="details-row" key={item.ticketType}>
+                      <div>
+                        <b>{item.ticketType}:</b>
+                        <i>${item.ticketPrice}</i>
+                      </div>
+                      <div className="amount-container">
+                        <b>Amount:</b>
+                        {item.ticketAmount}
+                      </div>
+                    </div>
+                  )
+                })}
                 <div className='pay-button'>
                   <Button 
                     type="primary"
                     shape="round"
                     size="large"
+                    onClick={() => showModal()}
                   >
                     Place An Order
                   </Button>

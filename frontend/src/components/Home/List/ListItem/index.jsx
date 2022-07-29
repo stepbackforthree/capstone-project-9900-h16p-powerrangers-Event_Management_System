@@ -12,9 +12,11 @@ const eventTypeMap = {
   5: 'Tourism Exhibition'
 }
 
-export default function ListItem( {item:{image, eventName, eventType, location, description, ticketPrice, ticketAmount, startTime, endTime, starLevel}} ) {
+export default function ListItem( {item:{hostName, image, eventName, eventType, location, description, ticketPrice, ticketAmount, startTime, endTime, starLevel}} ) {
   const navigate = useNavigate();
-  const goToOrder = () => {
+  const goToOrder = (hostName, eventName) => {
+    window.localStorage.setItem('queryHostName', hostName);
+    window.localStorage.setItem('queryEventName', eventName);
     navigate('/event/eventOrder');
   }
 
@@ -44,7 +46,7 @@ export default function ListItem( {item:{image, eventName, eventType, location, 
         <div>
           <LocationOnIcon/>{location}
         </div>
-        <Button variant="contained" color="secondary" size="small" onClick={() => goToOrder()}>Join!</Button>
+        <Button variant="contained" color="secondary" size="small" onClick={() => goToOrder(hostName, eventName)}>Join!</Button>
       </div>
     </div>
   )

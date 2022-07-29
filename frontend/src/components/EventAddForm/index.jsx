@@ -45,11 +45,11 @@ const initalFValues = {
 const isDisplayed = [
   {
     value: true,
-    label: 'online',
+    label: 'Yes',
   },
   {
     value: false,
-    label: 'offline',
+    label: 'No',
   },
 ];
 
@@ -263,7 +263,7 @@ export default function EventAddForm(props) {
           </div>
           
           <div>
-            <h4>Event If Display:</h4>
+            <h4>Event Visibility:</h4>
             <TextField
               id="isDisplayed"
               name="isDisplayed"
