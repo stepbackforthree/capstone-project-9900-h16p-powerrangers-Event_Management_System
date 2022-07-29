@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface EventTicketMapper {
 
+    Integer getTicketTypeIdByTicketTypeName(String ticketType);
+
     void insertEventTicketType(TicketDTO ticketDTO);
 
     List<TicketDTO> getTicketType(TicketDTO ticketDTO);

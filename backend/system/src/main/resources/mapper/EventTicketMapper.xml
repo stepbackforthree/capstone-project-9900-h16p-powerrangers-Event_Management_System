@@ -5,10 +5,15 @@
 
 <mapper namespace="com.powerrangers.system.modules.EventManagement.dao.EventTicketMapper">
 
+    <select id="getTicketTypeIdByTicketTypeName" parameterType="string" resultType="integer">
+        select type_id from event_ticket_type where type_name = #{ticketType};
+    </select>
+
     <insert id="insertEventTicketType" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.TicketDTO">
 
         insert into event_ticket (event_id, ticket_type, ticket_amount, ticket_price)
-        values ((select event_id from sys_event where event_name = #{eventName}), #{ticketType}, #{ticketAmount}, #{ticketPrice});
+        values ((select event_id from sys_event where event_name = #{eventName}),
+                (select type_id from event_ticket_type where type_name = #{ticketType}), #{ticketAmount}, #{ticketPrice});
     </insert>
 
     <select id="getTicketType" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.TicketDTO"
