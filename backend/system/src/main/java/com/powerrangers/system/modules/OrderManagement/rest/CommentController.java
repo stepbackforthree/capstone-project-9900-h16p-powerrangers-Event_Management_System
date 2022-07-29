@@ -46,8 +46,8 @@ public class CommentController {
     }
 
     @ApiOperation(value = "get all comments for specific event")
-    @PostMapping("getComments")
-    public ResponseEntity<Object> getComments(@RequestHeader("Authorization") String token, @RequestBody CommentDTO commentDTO) {
+    @GetMapping("getComments")
+    public ResponseEntity<Object> getComments(@RequestHeader("Authorization") String token, @RequestParam String hostName, @RequestParam String eventName) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         Map<String, String> responseBody = new HashMap<>();
@@ -56,6 +56,10 @@ public class CommentController {
             responseBody.put("error", "token is invalid");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setEventName(eventName);
+        commentDTO.setHostName(hostName);
 
         return new ResponseEntity<>(commentService.getComments(commentDTO), HttpStatus.OK);
     }
