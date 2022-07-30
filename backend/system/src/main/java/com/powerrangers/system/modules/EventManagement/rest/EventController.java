@@ -102,7 +102,7 @@ public class EventController {
     @GetMapping(value = "searchEvents")
     @ApiParam(value = "keyWords")
     public ResponseEntity<Object> searchEvents(@RequestHeader("Authorization") String token, @RequestParam String keyWords) {
-        return eventService.searchEvents(keyWords);
+        return eventService.searchEvents(token, keyWords);
     }
 
     @ApiOperation(value = "check out one particular user's spending history")

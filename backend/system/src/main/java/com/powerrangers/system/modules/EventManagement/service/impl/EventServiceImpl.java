@@ -388,11 +388,20 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> searchEvents(String keyWords) {
+    public ResponseEntity<Object> searchEvents(String token, String keyWords) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
         if(keyWords != null && keyWords.length() != 0) {
             return new ResponseEntity<>(eventMapper.searchEvents(keyWords), HttpStatus.OK);
         }
-        Map<String, String> responseBody = new HashMap<>();
+
         responseBody.put("error","empty content to search");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }

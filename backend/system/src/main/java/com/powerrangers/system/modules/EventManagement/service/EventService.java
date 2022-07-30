@@ -35,7 +35,7 @@ public interface EventService {
 
     ResponseEntity<Object> getAllEvents(EventFilterDTO eventFilterDTO);
 
-    ResponseEntity<Object> searchEvents(String keyWords);
+    ResponseEntity<Object> searchEvents(String token, String keyWords);
 
     ResponseEntity<Object> checkSpendingHistory(String userName);
 
