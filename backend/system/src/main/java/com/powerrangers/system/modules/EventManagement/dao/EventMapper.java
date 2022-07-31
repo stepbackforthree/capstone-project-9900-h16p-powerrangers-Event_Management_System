@@ -45,4 +45,6 @@ public interface EventMapper {
     List<OrderDTO> getSpendingHistory(String userName);
 
     void updateStarLevel(EventDTO eventDTO);
+
+    List<EventDTO> getOneMonthEvents(EventFilterDTO eventFilterDTO);
 }

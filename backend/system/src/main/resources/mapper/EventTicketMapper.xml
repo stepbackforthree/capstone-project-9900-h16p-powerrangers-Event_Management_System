@@ -38,7 +38,7 @@
     </select>
 
     <update id="updateTicketAmount" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.TicketDTO">
-        update event_ticket t set t.ticket_amount = t.ticket_amount - #{ticketAmount}
+        update event_ticket t set t.ticket_amount = t.ticket_amount + #{ticketAmount}
         where t.event_id
                   = (select a.event_id from
                         (select e.event_id from sys_event e inner join sys_user u on e.host_id = u.id where u.username = #{hostName} and e.event_name = #{eventName}) as a)

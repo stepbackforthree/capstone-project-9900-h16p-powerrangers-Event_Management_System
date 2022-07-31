@@ -29,4 +29,11 @@
         customer_id = #{customerId}
         and event_id = (select event_id from sys_event where event_name = #{eventName} and host_id = (select id from sys_user where username = #{hostName}));
     </delete>
+
+    <select id="getCustomerComment" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.CommentDTO"
+                                        resultType="com.powerrangers.system.modules.OrderManagement.domain.Comment">
+        select * from event_comments where
+        event_id = (select event_id from sys_event where event_name = #{eventName} and host_id = (select id from sys_user where username = #{hostName}))
+        and customer_id = #{customerId};
+    </select>
 </mapper>

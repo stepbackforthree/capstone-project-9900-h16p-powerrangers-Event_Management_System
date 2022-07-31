@@ -111,4 +111,11 @@ public class EventController {
     public ResponseEntity<Object> checkSpendingHistory(@RequestHeader("Authorization") String token, @RequestParam String userName) {
         return eventService.checkSpendingHistory(token, userName);
     }
+
+    @ApiOperation(value = "get events within one month")
+    @GetMapping(value = "getOneMonthEvents")
+    public ResponseEntity<Object> getOneMonthEvents(@RequestBody EventFilterDTO eventFilterDTO) {
+        return eventService.getOneMonthEvents(eventFilterDTO);
+
+    }
 }

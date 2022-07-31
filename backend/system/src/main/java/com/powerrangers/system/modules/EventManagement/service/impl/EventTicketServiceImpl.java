@@ -99,14 +99,15 @@ public class EventTicketServiceImpl implements EventTicketService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        if (ticketDTO.getTicketAmount() > eventTicketMapper.getRemainTicketAmount(ticketDTO)) {
+        Integer ticketAmount = ticketDTO.getTicketAmount();
+        if (ticketAmount > 0 && ticketAmount > eventTicketMapper.getRemainTicketAmount(ticketDTO)) {
             responseBody.put("error", "buying beyond the remaining amount!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         eventTicketMapper.updateTicketAmount(ticketDTO);
 
-        responseBody.put("msg", "Buy ticket succeed!");
+        responseBody.put("msg", "update ticket amount succeed!");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 }

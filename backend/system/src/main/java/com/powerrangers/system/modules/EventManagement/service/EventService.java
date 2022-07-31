@@ -40,5 +40,7 @@ public interface EventService {
     ResponseEntity<Object> checkSpendingHistory(String token, String userName);
 
     void updateStarLevel(EventDTO eventDTO);
+
+    ResponseEntity<Object> getOneMonthEvents(EventFilterDTO eventFilterDTO);
 }
 

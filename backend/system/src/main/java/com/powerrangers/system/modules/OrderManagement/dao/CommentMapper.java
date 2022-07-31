@@ -16,4 +16,6 @@ public interface CommentMapper {
     void deleteComment(CommentDTO commentDTO);
 
     List<Comment> getComments(CommentDTO commentDTO);
+
+    List<Comment> getCustomerComment(CommentDTO commentDTO);
 }

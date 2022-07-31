@@ -431,4 +431,10 @@ public class EventServiceImpl implements EventService {
     public void updateStarLevel(EventDTO eventDTO) {
         eventMapper.updateStarLevel(eventDTO);
     }
+
+    @Override
+    public ResponseEntity<Object> getOneMonthEvents(EventFilterDTO eventFilterDTO) {
+
+        return new ResponseEntity<>(eventMapper.getOneMonthEvents(eventFilterDTO), HttpStatus.OK);
+    }
 }
