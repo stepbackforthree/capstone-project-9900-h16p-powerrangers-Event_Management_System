@@ -8,4 +8,8 @@ public interface OrderService {
     ResponseEntity<Object> insertOrder(String token, OrderDTO orderDTO);
 
     ResponseEntity<Object> refundOrder(String token, Integer orderId);
+
+    ResponseEntity<Object> queryEventOrdersByHost(String token, String hostName, String eventName);
+
+    ResponseEntity<Object> queryOrdersByCustomer(String token);
 }

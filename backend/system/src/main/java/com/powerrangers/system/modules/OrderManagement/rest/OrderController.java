@@ -29,4 +29,16 @@ public class OrderController {
         return orderService.refundOrder(token, orderId);
     }
 
+    @ApiOperation(value = "get orders for specific event")
+    @GetMapping("queryEventOrderByHost")
+    public ResponseEntity<Object> queryEventOrdersByHost(@RequestHeader("Authorization") String token, @RequestParam String hostName, @RequestParam String eventName) {
+        return orderService.queryEventOrdersByHost(token, hostName, eventName);
+    }
+
+    @ApiOperation(value = "get orders for specific customer")
+    @GetMapping("queryOrdersByCustomer")
+    public ResponseEntity<Object> queryOrdersByCustomer(@RequestHeader("Authorization") String token) {
+        return orderService.queryOrdersByCustomer(token);
+    }
+
 }

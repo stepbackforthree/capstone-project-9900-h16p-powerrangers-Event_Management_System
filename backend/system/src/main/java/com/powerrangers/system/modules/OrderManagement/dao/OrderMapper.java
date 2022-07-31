@@ -17,9 +17,9 @@ public interface OrderMapper {
 
     Order getOrder(OrderDTO orderDTO);
 
-    List<Order> queryOrdersByCustomer(OrderDTO orderDTO);
+    List<Order> queryOrdersByCustomer(Integer customerId);
 
-    List<Order> queryOrdersByHost(OrderDTO orderDTO);
+    List<Order> queryEventOrdersByHost(String hostName, String eventName);
 
     List<Order> getAllOrders(OrderDTO orderDTO);
 }

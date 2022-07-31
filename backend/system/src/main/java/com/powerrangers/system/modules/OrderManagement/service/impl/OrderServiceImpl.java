@@ -86,4 +86,35 @@ public class OrderServiceImpl implements OrderService {
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Object> queryEventOrdersByHost(String token, String hostName, String eventName) {
+
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(orderMapper.queryEventOrdersByHost(hostName, eventName), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> queryOrdersByCustomer(String token) {
+
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        responseBody.clear();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+
+        }
+
+        return new ResponseEntity<>(orderMapper.queryOrdersByCustomer(currUser.getId()), HttpStatus.OK);
+    }
 }
