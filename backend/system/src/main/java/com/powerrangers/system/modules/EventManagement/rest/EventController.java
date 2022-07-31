@@ -109,6 +109,6 @@ public class EventController {
     @GetMapping(value = "checkSpendingHistory")
     @ApiParam(value = "userName")
     public ResponseEntity<Object> checkSpendingHistory(@RequestHeader("Authorization") String token, @RequestParam String userName) {
-        return eventService.checkSpendingHistory(userName);
+        return eventService.checkSpendingHistory(token, userName);
     }
 }

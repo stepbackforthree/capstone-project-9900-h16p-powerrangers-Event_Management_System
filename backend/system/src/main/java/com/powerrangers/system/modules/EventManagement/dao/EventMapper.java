@@ -1,9 +1,6 @@
 package com.powerrangers.system.modules.EventManagement.dao;
 
-import com.powerrangers.system.modules.EventManagement.service.dto.EventDTO;
-import com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO;
-import com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO;
-import com.powerrangers.system.modules.EventManagement.service.dto.SmallEventDTO;
+import com.powerrangers.system.modules.EventManagement.service.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -45,7 +42,7 @@ public interface EventMapper {
 
     Integer checkSpendingHistory(String userName);
 
-    List<EventDTO> getSpendingHistory(String userName);
+    List<OrderDTO> getSpendingHistory(String userName);
 
     void updateStarLevel(EventDTO eventDTO);
 }

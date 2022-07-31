@@ -125,13 +125,19 @@
 
     <select id="checkSpendingHistory" parameterType="string"
             resultType="Integer">
-        select count(*) from event_customer where customer_id = (select id from sys_user where username = #{userName});
+        select count(*) from sys_order where customer_id = (select id from sys_user where username = #{userName});
     </select>
 
+
     <select id="getSpendingHistory" parameterType="string"
-            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
-        select * from sys_event where event_id  in (select event_id from event_customer
-        where customer_id = (select id from sys_user where username = #{userName}));
+    resultType="com.powerrangers.system.modules.EventManagement.service.dto.OrderDTO">
+        select sys_event.event_name as eventName, user1.username as customerName, user2.username as hostName,
+        order_payment_type.type_name as paymentType, sys_order.payment_amount as paymentAmount from
+        sys_order inner join sys_event on sys_event.event_id = sys_order.event_id inner join sys_user as user1
+        on sys_order.customer_id = user1.id inner join sys_user as user2 on sys_order.host_id = user2.id inner join
+        order_payment_type on sys_order.payment_type = order_payment_type.type_id where sys_order.customer_id =
+        (select id from sys_user where username = #{userName});
+
     </select>
 
     <update id="updateStarLevel" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">

@@ -37,7 +37,7 @@ public interface EventService {
 
     ResponseEntity<Object> searchEvents(String token, String keyWords);
 
-    ResponseEntity<Object> checkSpendingHistory(String userName);
+    ResponseEntity<Object> checkSpendingHistory(String token, String userName);
 
     void updateStarLevel(EventDTO eventDTO);
 }

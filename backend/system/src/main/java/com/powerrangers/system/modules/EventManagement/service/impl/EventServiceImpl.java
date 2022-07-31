@@ -407,8 +407,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> checkSpendingHistory(String userName) {
+    public ResponseEntity<Object> checkSpendingHistory(String token, String userName) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
         Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
         if(eventMapper.checkUserExist(userName)>0){
             if(eventMapper.checkSpendingHistory(userName)>0){
                 return new ResponseEntity<>(eventMapper.getSpendingHistory(userName), HttpStatus.BAD_REQUEST);
