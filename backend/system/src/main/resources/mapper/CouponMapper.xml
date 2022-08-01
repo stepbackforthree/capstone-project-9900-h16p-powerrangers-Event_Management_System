@@ -5,5 +5,40 @@
 
 <mapper namespace="com.powerrangers.system.modules.CouponManagement.dao.CouponMapper">
 
+    <select id="getCoupon" parameterType="string"
+                            resultType="com.powerrangers.system.modules.CouponManagement.domain.Coupon">
+        select c.*, r.threshold, r.money from sys_coupon c, coupon_rule r where c.coupon_id = r.coupon_id
+        and c.coupon_name = #{couponName};
+    </select>
+
+    <insert id="addCoupon" parameterType="com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO">
+        insert into sys_coupon (coupon_name, coupon_type, is_visible, event_id, amount, start_time, end_time)
+        values (#{couponName}, #{couponType}, #{isVisible}, #{eventId}, #{amount}, #{startTime}, #{endTime});
+    </insert>
+    
+    <insert id="addCouponRule" parameterType="com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO">
+        insert into sys_coupon (coupon_id, type_id, threshold, money)
+        values ((select coupon_id from sys_coupon where coupon_name = #{couponName}), #{couponType}, #{threshold}, #{money});
+    </insert>
+
+    <update id="changeVisibility" parameterType="string">
+        update sys_coupon set is_visible = 1 - is_visible where coupon_name = #{couponName};
+    </update>
+
+    <select id="getCoupons" parameterType="integer"
+                            resultType="com.powerrangers.system.modules.CouponManagement.domain.Coupon">
+        select c.*, r.threshold, r.money from sys_coupon c, coupon_rule r where c.coupon_id = r.coupon_id
+        and c.event_id = #{eventId};
+    </select>
+
+    <select id="getVisibleCoupons" parameterType="integer"
+                                    resultType="com.powerrangers.system.modules.CouponManagement.domain.Coupon">
+        select c.*, r.threshold, r.money from sys_coupon c, coupon_rule r where c.coupon_id = r.coupon_id
+        and c.event_id = #{eventId} and is_visible = 1;
+    </select>
+
+    <update id="updateCouponAmount" parameterType="com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO">
+        update sys_coupon set amount = amount - #{amount} where coupon_name = #{couponName};
+    </update>
 
 </mapper>

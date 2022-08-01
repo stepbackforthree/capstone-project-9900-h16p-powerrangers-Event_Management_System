@@ -1,24 +1,11 @@
 package com.powerrangers.system.modules.CouponManagement.service.dto;
 
-import com.powerrangers.common.base.BaseDTO;
+import com.powerrangers.system.modules.CouponManagement.domain.Coupon;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Data
-public class CouponDTO extends BaseDTO {
-
-    private String couponName;
-
-    private Integer couponType;
-
-    private BigDecimal threshold;
-
-    private BigDecimal couponMoney;
-
-    private Integer couponAmount;
-
-    private String hostName;
-
-    private String eventName;
+public class CouponDTO extends Coupon {
 }

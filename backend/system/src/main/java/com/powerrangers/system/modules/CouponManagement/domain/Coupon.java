@@ -3,10 +3,14 @@ package com.powerrangers.system.modules.CouponManagement.domain;
 import com.powerrangers.common.base.BaseEntity;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
-public class Coupon extends BaseEntity {
+public class Coupon extends BaseEntity implements Serializable {
+
+    private Integer couponId;
 
     private String couponName;
 
@@ -14,17 +18,15 @@ public class Coupon extends BaseEntity {
 
     private Integer eventId;
 
-    private Boolean isSpecified;
+    private Boolean isVisible;
 
-    private Integer assignAmount;
+    private Integer amount;
 
-    private Integer usedAmount;
+    private BigDecimal threshold;
 
-    private Timestamp receiveStartTime;
+    private BigDecimal money;
 
-    private Timestamp receiveEndTime;
+    private Timestamp startTime;
 
-    private Timestamp validStartTime;
-
-    private Timestamp validEndTime;
+    private Timestamp endTime;
 }
