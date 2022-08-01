@@ -238,7 +238,7 @@ export default function EventAddForm(props) {
               name="startTime"
               label="Start Time"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue="2022-08-01T10:30"
               // className={classes.textField}
               InputLabelProps={{
                 shrink: true,
@@ -253,7 +253,7 @@ export default function EventAddForm(props) {
               name="endTime"
               label="End Time"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue="2022-08-01T10:30"
               // className={classes.textField}
               InputLabelProps={{
                 shrink: true,
