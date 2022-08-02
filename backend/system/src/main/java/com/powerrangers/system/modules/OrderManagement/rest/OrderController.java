@@ -30,7 +30,7 @@ public class OrderController {
     }
 
     @ApiOperation(value = "get orders for specific event")
-    @GetMapping("queryEventOrderByHost")
+    @GetMapping("queryEventOrdersByHost")
     public ResponseEntity<Object> queryEventOrdersByHost(@RequestHeader("Authorization") String token, @RequestParam Integer eventId) {
         return orderService.queryEventOrdersByHost(token, eventId);
     }

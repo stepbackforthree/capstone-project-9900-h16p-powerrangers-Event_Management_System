@@ -16,6 +16,8 @@ public class Order extends BaseEntity {
 
     private Integer hostId;
 
+    private String ticketType;
+
     private Integer paymentType;
 
     private BigDecimal paymentAmount;
