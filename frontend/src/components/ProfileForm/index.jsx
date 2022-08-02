@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import MyDetails from './MyDetails';
 import BankDetails from './BankDetails';
 import ResetPassword from './ResetPassword';
+import Orders from './Orders';
+import styled from 'styled-components';
 
 
 function TabPanel(props) {
@@ -30,6 +32,16 @@ function TabPanel(props) {
     </div>
   );
 }
+
+const TitleContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 10px; */
+  border-bottom: 1px solid rgba(0,0,0,.26);
+  padding: 1.5rem 1rem;
+`;
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -72,9 +84,9 @@ export default function ProfileForm(props) {
 
   return (
     <div className='profile-page'>
-      <div className="title">
-        <h1>Profile</h1>
-      </div>
+      <TitleContainer>
+        <h2>Profile</h2>
+      </TitleContainer>
       <div className="profile-form">
         <div className={classes.root}>
           <Tabs
@@ -88,7 +100,7 @@ export default function ProfileForm(props) {
             <Tab label="My details" {...a11yProps(0)} />
             <Tab label="Bank Detail" {...a11yProps(1)} />
             <Tab label="Password" {...a11yProps(2)} />
-            <Tab label="Notification" {...a11yProps(3)} />
+            <Tab label="Orders" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0} className={classes.panel}>
             <MyDetails/>
@@ -100,8 +112,7 @@ export default function ProfileForm(props) {
             <ResetPassword/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.panel}>
-            {userDetail.userName}
-            {userDetail.password}
+            <Orders/>
           </TabPanel>
         </div>
       </div>

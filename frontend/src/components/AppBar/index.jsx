@@ -128,7 +128,7 @@ export default function SearchAppBar() {
             <Link to="/profile">profile</Link>
           </Typography> */}
 
-
+{/* 
           {localStorage.getItem('token') && 
           <>
             <Typography className={classes.title} variant="h6" noWrap>
@@ -137,7 +137,7 @@ export default function SearchAppBar() {
               </Button>
             </Typography>
           </>
-          }
+          } */}
           
 
           {localStorage.getItem('role') === 'host' && 

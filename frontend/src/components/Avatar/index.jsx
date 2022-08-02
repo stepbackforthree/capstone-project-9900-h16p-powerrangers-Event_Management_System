@@ -14,6 +14,7 @@ export default function SimpleMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [avatar, setAvatar] = useState('');
   const [userName, setUserName] = useState('');
+  const [balance, setBalance] = useState();
 
 
   const handleClick = (event) => {
@@ -36,6 +37,7 @@ export default function SimpleMenu() {
     request('/users/queryUser',{
       method: 'GET'
     }).then(data => {
+      setBalance(data.balance);
       setAvatar(data.avatar);
       setUserName(data.userName);
     })
@@ -43,10 +45,7 @@ export default function SimpleMenu() {
 
 
   const handleLogOut = () => {
-    console.log(window.localStorage.getItem('token'));
-    window.localStorage.removeItem('token');
-    window.localStorage.removeItem('userName');
-    window.localStorage.removeItem('role');
+    window.localStorage.clear();
     window.location.href = '/login';
   }
 
@@ -72,6 +71,9 @@ export default function SimpleMenu() {
         <MenuItem>
           <b>User:</b>
           <i>{userName}</i>
+        </MenuItem><MenuItem>
+          <b>Balance:</b>
+          <i>${balance}</i>
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
@@ -83,14 +85,13 @@ export default function SimpleMenu() {
           handleClose();
           naviToEventList()
         }}>
-          {/* <Button onClick={naviToAccount}> */}
           My Event List
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
           handleLogOut()
         }}>
-          Logout
+          <b style={{"color": "red"}}>Logout</b>
         </MenuItem>
       </Menu>
     </div>

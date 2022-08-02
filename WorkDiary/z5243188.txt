@@ -43,3 +43,5 @@ develop order page
 update event management page
 
 Week10
+add bankDetails in register page
+order page done

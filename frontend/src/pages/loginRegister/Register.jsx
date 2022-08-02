@@ -22,6 +22,7 @@ export default function Register() {
         .then(data => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('userName', values.userName);
+          localStorage.setItem('role', 'customer');
           // navigate('/dashboard');
           window.location.href = '/dashboard';
           message.success({content: ('log in successfully!'),  duration: 2500})

@@ -19,6 +19,7 @@ import ForgotPassword from './pages/loginRegister/ForgotPassword';
 import ProfilePage from './pages/profile/ProfilePage'
 import EventManagement from './pages/event_management/EventManagement';
 import EventList from './pages/eventList/EventList';
+import EventOrder from './pages/EventOrder/EventOrder';
 
 import OrderPage from './pages/payment/OrderPage';
 import PaymentPage from './pages/payment/PaymentPage';
@@ -66,6 +67,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/host/eventEdit" element={<EventManagement />} />
+          <Route path="/host/eventOrder" element={<EventOrder />} />
           <Route path="/host/eventAdd" element={<EventAdd />} />
           <Route path="/host/eventList" element={<EventList />} />
           <Route path="/event/eventPayment" element={<PaymentPage />} />

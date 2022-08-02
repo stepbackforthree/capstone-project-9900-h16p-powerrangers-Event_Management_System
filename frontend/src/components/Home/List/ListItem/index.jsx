@@ -15,9 +15,9 @@ const eventTypeMap = {
 export default function ListItem( {item:{hostName, image, eventName, eventType, location, description, ticketPrice, ticketAmount, startTime, endTime, starLevel}} ) {
   const navigate = useNavigate();
   const goToOrder = (hostName, eventName) => {
-    window.localStorage.setItem('queryHostName', hostName);
-    window.localStorage.setItem('queryEventName', eventName);
-    navigate('/event/eventOrder');
+    // window.localStorage.setItem('queryHostName', hostName);
+    // window.localStorage.setItem('queryEventName', eventName);
+    navigate(`/event/eventOrder?hostName=${hostName}&eventName=${eventName}`);
   }
 
   const showTime = (string) => {

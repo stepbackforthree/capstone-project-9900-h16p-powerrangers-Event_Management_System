@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect }  from 'react';
 import './styles.css';
 import Paper from '@material-ui/core/Paper';
-import { Image } from 'antd';
+import { Image, InputNumber  } from 'antd';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import GradeRoundedIcon from '@material-ui/icons/GradeRounded';
@@ -10,6 +10,7 @@ import { Radio, Button } from 'antd';
 import moment from 'moment';
 import request from '../../utils/request';
 import { Modal } from 'antd';
+import { useSearchParams } from 'react-router-dom';
 
 
 
@@ -40,30 +41,57 @@ const eventType = {
 }
 
 export default function OrderPage() {
+  const [search,setSearch] = useSearchParams();
+  const hostName = search.get("hostName");
+  const eventName = search.get("eventName");
   const [ticketChoise, SetTicketChoise] = useState('fullPriceTicket');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [ticketAmount, setTicketAmount] = useState(1);
+  const [ticketPrice, setTicketPrice] = useState(1);
+  const [balance, setBalance] = useState(1);
+
 
 
   const ticketChoiseChange = (e) => {
     SetTicketChoise(e.target.value);
+    setTicketPrice(e.target.price);
   };
 
   useEffect(() => {
-    console.log('ticketChoise:',ticketChoise)
-  }, [ticketChoise]);
+    console.log('ticketChoise:',ticketChoise);
+    console.log('ticketPrice:',ticketPrice);
+  }, [ticketChoise, ticketPrice]);
+
+  useEffect(() => {
+    request(`/users/queryUser`,{
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      console.log(response);
+      setBalance(response.balance);
+    })
+  }, []);
 
   const [data, setData] = useState('');
+
+  const onTicketAmountChange = (value) => {
+    console.log('ticketAmount changed', value);
+    setTicketAmount(value);
+  };
 
   useEffect(() => {
     request(`/events/queryEvent`,{
       method: 'POST',
       data: {
-        'eventName': window.localStorage.getItem('queryEventName'),
-        'hostName': window.localStorage.getItem('queryHostName')
+        // 'eventName': window.localStorage.getItem('queryEventName'),
+        'eventName': eventName,
+        // 'hostName': window.localStorage.getItem('queryHostName'),
+        'hostName': hostName
       }
     }).then((response) => {
       // console.log(response);
       setData(response);
+
     })
   }, []);
 
@@ -72,16 +100,57 @@ export default function OrderPage() {
     setIsModalVisible(true);
   };
   const handleOk = () => {
-    setIsModalVisible(false);
+    const insertOrderData = {
+      "eventName": eventName,
+      "hostName": hostName,
+      "paymentType": 1,
+      "ticketAmount": ticketAmount,
+      "ticketPrice": ticketPrice
+    }
+    const updateTicketAmountData = {
+      "eventName": eventName,
+      "hostName": hostName,
+      "ticketAmount": ticketAmount,
+      "ticketType": ticketChoise
+    }
+    console.log('insertOrderData:', insertOrderData);
+    console.log('updateTicketAmountData:', updateTicketAmountData);
+    // setIsModalVisible(false);
+    request('/tickets/updateTicketAmount', {
+      method: 'POST',
+      data: updateTicketAmountData
+    }).then((res) => {
+      console.log(res);
+    })
+    
+    request('/order/insertOrder', {
+      method: 'POST',
+      data: insertOrderData
+    }).then((res) => {
+      console.log(res);
+    })
+    
   };
+
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
+
   return (
     <div>
       <Modal title="Text Input" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p><b>Ticket you choose:</b>{ticketChoise}</p> 
+        <p><b>Your Balance:</b>{balance}</p> 
+        <p><b>Ticket Price:</b>{ticketPrice}</p> 
+        <p>
+          <b>Ticket Amount:</b>
+          <InputNumber min={1} max={10} value={ticketAmount} onChange={onTicketAmountChange} />
+        </p>
+        <p>[One Account Only Can Order 10 tickets Once at most]</p>
         <b>Choose Your Payment Method:</b>
+        
       </Modal>
       <TitleContainer>
         <h2>Order Page</h2>
@@ -135,23 +204,25 @@ export default function OrderPage() {
                 <Radio.Group value={ticketChoise} onChange={ticketChoiseChange}>
                   {data.tickets && data.tickets.map((item) => {
                     return (
-                      <Radio.Button value={item.ticketType}>{item.ticketType}</Radio.Button>
+                      <Radio.Button value={item.ticketType} price={item.ticketPrice}>{item.ticketType}</Radio.Button>
                     )
                   })}
                 </Radio.Group>
                 {data.tickets && data.tickets.map((item) => {
-                  return (
-                    <div className="details-row" key={item.ticketType}>
-                      <div>
-                        <b>{item.ticketType}:</b>
-                        <i>${item.ticketPrice}</i>
+                  if (item.ticketType === ticketChoise) {
+                    return (
+                      <div className="details-row" key={item.ticketType}>
+                        <div>
+                          <b>{item.ticketType} Price:</b>
+                          <i>${item.ticketPrice}</i>
+                        </div>
+                        <div className="amount-container">
+                          <b>Remaining Amount:</b>
+                          {item.ticketAmount}
+                        </div>
                       </div>
-                      <div className="amount-container">
-                        <b>Amount:</b>
-                        {item.ticketAmount}
-                      </div>
-                    </div>
-                  )
+                    )
+                  }
                 })}
                 <div className='pay-button'>
                   <Button 

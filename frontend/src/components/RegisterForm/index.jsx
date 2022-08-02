@@ -36,7 +36,9 @@ const initalFValues = {
   email: '',
   verifyCode: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  bankInformation: '',
+  bankCardNumber: ''
 }
 
 const initalFError = {
@@ -44,7 +46,9 @@ const initalFError = {
   email: '',
   verifyCode: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  bankInformation: '',
+  bankCardNumber: ''
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -161,6 +165,18 @@ export default function RegisterForm(props) {
             stateObj[name] = "Password and Confirm Password does not match.";
           }
           break;
+
+        case "bankInformation":
+          if (!value) {
+            stateObj[name] = "Please enter bank information.";
+          }
+          break;
+
+        case "bankCardNumber":
+          if (!value) {
+            stateObj[name] = "Please enter bank card number.";
+          }
+          break;
  
         default:
           break;
@@ -253,7 +269,7 @@ export default function RegisterForm(props) {
                 onChange = {handleInputChange}
                 onBlur={validateInput}
               />
-              <p style={{fontSize: '12px', color: '#666'}}>Password must contain lowercase letters, numbers, and symbols.</p>
+              <p style={{fontSize: '12px', color: '#666'}}>Password must contain lowercase/uppercase letters, numbers, and symbols.</p>
               {error.password && <span className='err'>{error.password}</span>}
             </Grid>
             <Grid item xs={12}>
@@ -271,6 +287,35 @@ export default function RegisterForm(props) {
                 onBlur={validateInput}
               />
               {error.confirmPassword && <span className='err'>{error.confirmPassword}</span>}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="bankInformation"
+                variant="outlined"
+                required
+                fullWidth
+                id="bankInformation"
+                label="Bank Information"
+                value = {values.bankInformation}
+                onChange = {handleInputChange}
+                onBlur={validateInput}
+              />
+              {error.bankInformation && <span className='err'>{error.bankInformation}</span>}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="bankCardNumber"
+                label="bankCardNumber"
+                type="number"
+                id="bankCardNumber"
+                value = {values.bankCardNumber}
+                onChange = {handleInputChange}
+                onBlur={validateInput}
+              />
+              {error.bankCardNumber && <span className='err'>{error.bankCardNumber}</span>}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

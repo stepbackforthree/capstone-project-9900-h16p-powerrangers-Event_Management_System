@@ -99,6 +99,10 @@ export default function EventList() {
     navigate('/host/eventEdit');
   }
 
+  const goToOrders = (eventId) => {
+    navigate(`/host/eventOrder?eventId=${eventId}`);
+  }
+
   return (
     <div>
       <TitleContainer>
@@ -140,8 +144,11 @@ export default function EventList() {
                 // avatar={<Avatar src={item.avatar} />}
                 title={
                   <>
-                    <b style={{fontSize: '25px'}}>{item.eventName}</b>
-                    <Button type="link" onClick={()=>goToEdit(item.eventName)}>Edit</Button>
+                    <p>
+                      <b style={{fontSize: '25px'}}>{item.eventName}</b>
+                    </p>
+                    <Button type="link" onClick={()=>goToEdit(item.eventName)}>Edit</Button>|
+                    <Button type="link" onClick={()=>goToOrders(item.eventId)}>Orders</Button>
                   </>
                 }
                 description={item.description}
