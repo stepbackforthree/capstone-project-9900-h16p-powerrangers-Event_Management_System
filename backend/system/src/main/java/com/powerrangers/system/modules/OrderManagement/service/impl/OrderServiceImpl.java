@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<Object> queryEventOrdersByHost(String token, String hostName, String eventName) {
+    public ResponseEntity<Object> queryEventOrdersByHost(String token, Integer eventId) {
 
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
@@ -99,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(orderMapper.queryEventOrdersByHost(hostName, eventName), HttpStatus.OK);
+        return new ResponseEntity<>(orderMapper.queryEventOrdersByHost(currUser.getId(), eventId), HttpStatus.OK);
     }
 
     @Override

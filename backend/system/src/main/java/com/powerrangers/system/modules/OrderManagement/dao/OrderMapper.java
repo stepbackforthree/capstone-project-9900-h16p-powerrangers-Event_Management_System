@@ -19,7 +19,7 @@ public interface OrderMapper {
 
     List<Order> queryOrdersByCustomer(Integer customerId);
 
-    List<Order> queryEventOrdersByHost(String hostName, String eventName);
+    List<Order> queryEventOrdersByHost(Integer hostId, Integer eventId);
 
     List<Order> getAllOrders(OrderDTO orderDTO);
 }

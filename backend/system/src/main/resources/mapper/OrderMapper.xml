@@ -36,18 +36,18 @@
 
     <select id="queryOrdersByCustomer" parameterType="integer"
                                         resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
-        <include refid="select all"/>
+        select o.*, e.event_name, u.username from
+        sys_order o left join sys_event e on o.event_id = e.event_id left join sys_user u on e.host_id = u.id
         where
             customer_id = #{customerId} order by create_time, update_time desc;
     </select>
 
-    <select id="queryEventOrdersByHost" parameterType="string"
+    <select id="queryEventOrdersByHost" parameterType="integer"
                                     resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
         <include refid="select all"/>
         where
-            host_id = (select id from sys_user where username = #{hostName})
-            and event_id = (select event_id from sys_event where event_name = #{eventName}
-            and host_id = (select id from sys_user where username = #{hostName}))
+            host_id = #{hostId}
+            and event_id = #{eventId}
             order by start_time, update_time desc;
     </select>
 

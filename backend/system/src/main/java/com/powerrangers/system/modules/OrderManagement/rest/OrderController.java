@@ -31,8 +31,8 @@ public class OrderController {
 
     @ApiOperation(value = "get orders for specific event")
     @GetMapping("queryEventOrderByHost")
-    public ResponseEntity<Object> queryEventOrdersByHost(@RequestHeader("Authorization") String token, @RequestParam String hostName, @RequestParam String eventName) {
-        return orderService.queryEventOrdersByHost(token, hostName, eventName);
+    public ResponseEntity<Object> queryEventOrdersByHost(@RequestHeader("Authorization") String token, @RequestParam Integer eventId) {
+        return orderService.queryEventOrdersByHost(token, eventId);
     }
 
     @ApiOperation(value = "get orders for specific customer")

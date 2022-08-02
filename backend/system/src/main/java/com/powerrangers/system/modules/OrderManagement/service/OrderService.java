@@ -9,7 +9,7 @@ public interface OrderService {
 
     ResponseEntity<Object> refundOrder(String token, Integer orderId);
 
-    ResponseEntity<Object> queryEventOrdersByHost(String token, String hostName, String eventName);
+    ResponseEntity<Object> queryEventOrdersByHost(String token, Integer eventId);
 
     ResponseEntity<Object> queryOrdersByCustomer(String token);
 }
