@@ -132,10 +132,11 @@
 
     <select id="getSpendingHistory" parameterType="string"
     resultType="com.powerrangers.system.modules.EventManagement.service.dto.OrderDTO">
-        select sys_event.event_name as eventName, user1.username as customerName, user2.username as hostName,
+        select sys_order.event_id as eventId, sys_event.event_name as eventName, event_type.type_name as eventType,
+        user1.username as customerName, user2.username as hostName, sys_event.description as description,
         order_payment_type.type_name as paymentType, sys_order.payment_amount as paymentAmount from
-        sys_order inner join sys_event on sys_event.event_id = sys_order.event_id inner join sys_user as user1
-        on sys_order.customer_id = user1.id inner join sys_user as user2 on sys_order.host_id = user2.id inner join
+        sys_order inner join sys_event on sys_event.event_id = sys_order.event_id inner join event_type on sys_event.event_type = event_type.type_id
+        inner join sys_user as user1 on sys_order.customer_id = user1.id inner join sys_user as user2 on sys_order.host_id = user2.id inner join
         order_payment_type on sys_order.payment_type = order_payment_type.type_id where sys_order.customer_id =
         (select id from sys_user where username = #{userName});
 
@@ -174,5 +175,15 @@
             and start_time <![CDATA[ >= ]]> now()
         </where>
         order by start_time desc;
+    </select>
+
+    <select id="randomRecommendation"
+            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
+        select  *  from  sys_event where is_displayed = 1 order by rand() limit 10;
+    </select>
+
+    <select id="getEventsByType" parameterType="String"
+            resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
+        select  *  from  sys_event where is_displayed = 1 and event_type = (select type_id from event_type where type_name = #{typeName});
     </select>
 </mapper>

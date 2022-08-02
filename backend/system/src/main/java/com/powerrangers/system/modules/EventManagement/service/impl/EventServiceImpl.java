@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -436,5 +438,52 @@ public class EventServiceImpl implements EventService {
     public ResponseEntity<Object> getOneMonthEvents(EventFilterDTO eventFilterDTO) {
 
         return new ResponseEntity<>(eventMapper.getOneMonthEvents(eventFilterDTO), HttpStatus.OK);
+    }
+    @Override
+    public ResponseEntity<Object> getRecommendation(String token) {
+
+        Map<String, String> responseBody = new HashMap<>();
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
+        if (eventMapper.checkSpendingHistory(currUser.getUserName()) == 0) {
+            return new ResponseEntity<>(eventMapper.randomRecommendation(), HttpStatus.OK);
+        }
+
+        if (eventMapper.checkSpendingHistory(currUser.getUserName()) > 0) {
+            List<OrderDTO> spendingHistory = eventMapper.getSpendingHistory(currUser.getUserName());
+            HashMap<String,StringBuffer> eventsInfo = new HashMap<>();
+            HashMap<String,List<EventDTO>> recallRes = new HashMap<>();
+            HashMap<EventDTO,Double> orderedRes = new HashMap<>();
+            System.out.println(spendingHistory);
+            for (OrderDTO e: spendingHistory){
+                if(eventsInfo.get(e.getEventType()) == null){
+
+                    eventsInfo.put(e.getEventType(),new StringBuffer(e.getDescription()));
+                }
+                else{
+
+                    eventsInfo.put(e.getEventType(),eventsInfo.get(e.getEventType()).append(e.getDescription()));
+                }
+            }
+            System.out.println(eventsInfo);
+            for(String e:eventsInfo.keySet()){
+                List<EventDTO> res = eventMapper.getEventsByType(e);
+                for( EventDTO i : res){
+//                    i.setImage("123");
+                    orderedRes.put(i,1.0);
+//                    System.out.println(orderedRes);
+                }
+                recallRes.put(e,res);
+            }
+            return new ResponseEntity<>(orderedRes.keySet(), HttpStatus.OK);
+
+        }
+        responseBody.put("error","cannot recommend");
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 }

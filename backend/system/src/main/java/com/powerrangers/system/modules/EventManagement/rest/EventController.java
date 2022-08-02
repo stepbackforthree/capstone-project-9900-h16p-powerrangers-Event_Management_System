@@ -118,4 +118,8 @@ public class EventController {
         return eventService.getOneMonthEvents(eventFilterDTO);
 
     }
+    @GetMapping(value = "getRecommendation")
+    public ResponseEntity<Object> getRecommendation(@RequestHeader("Authorization") String token) {
+        return eventService.getRecommendation(token);
+    }
 }

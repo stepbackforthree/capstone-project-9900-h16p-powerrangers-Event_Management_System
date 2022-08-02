@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserMapper userMapper;
 
+
     @Autowired
     private StringRedisTemplate redisTemplate;
 
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
             map.put("expiration", expiration);
             map.put("msg", "login succeed!");
 
-            redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
 
             return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
 
@@ -153,23 +154,23 @@ public class UserServiceImpl implements UserService {
         String userName;
         String eventName;
 
-        if(state == 0){
+        if (state == 0) {
             subject = "Verification code";
             code = (int) ((Math.random() * 9 + 1) * 1000);
             html = "Here you are, the verification code is: " + code;
-        }else if(state == 1){
+        } else if (state == 1) {
             userName = emailDTO.getUserName();
             eventName = emailDTO.getEventName();
             subject = "Refund letter";
             html = "Sorry " + userName + ", the host has cancelled the event \"" + eventName +
                     "\", the money will refund back to your account.";
-        }else{
+        } else {
             userName = emailDTO.getUserName();
             eventName = emailDTO.getEventName();
             EventInfoDTO eventInfoDTO = userMapper.queryEvent(emailDTO);
             subject = "Reservation letter";
-            html = "Dear "+userName+", you have successfully booked the ticket of \""+eventName+ "\", the event will hold on "
-                    +eventInfoDTO.getStartTime()+ ", in "+eventInfoDTO.getLocation()+" "+eventInfoDTO.getSiteDescription()+"." ;
+            html = "Dear " + userName + ", you have successfully booked the ticket of \"" + eventName + "\", the event will hold on "
+                    + eventInfoDTO.getStartTime() + ", in " + eventInfoDTO.getLocation() + " " + eventInfoDTO.getSiteDescription() + ".";
         }
 
         HttpPost httpPost = new HttpPost(url);
@@ -193,18 +194,17 @@ public class UserServiceImpl implements UserService {
         if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
             // Return correctly, parse the returned data
             System.out.println(EntityUtils.toString(response.getEntity()));
-            if(state == 0) {
-                responseBody.put("msg","The email has been sent successfully, the code is " + code);
+            if (state == 0) {
+                responseBody.put("msg", "The email has been sent successfully, the code is " + code);
                 result = new ResponseEntity<>(responseBody, HttpStatus.OK);
-            }
-            else {
-                responseBody.put("msg","The email has been sent successfully");
+            } else {
+                responseBody.put("msg", "The email has been sent successfully");
                 result = new ResponseEntity<>(responseBody, HttpStatus.OK);
             }
         } else {
             System.err.println("error");
-            responseBody.put("msg","Failed to send the email");
-            result =  new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+            responseBody.put("msg", "Failed to send the email");
+            result = new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         httpPost.releaseConnection();
         return result;
@@ -242,4 +242,6 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok().headers(headers)
                 .body(JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class));
     }
+
+
 }

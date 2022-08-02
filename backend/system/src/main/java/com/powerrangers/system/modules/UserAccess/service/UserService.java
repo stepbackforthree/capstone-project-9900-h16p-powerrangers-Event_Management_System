@@ -24,4 +24,6 @@ public interface UserService {
     ResponseEntity<Object> resetPassword(SmallUserDTO smallUserDTO);
 
     ResponseEntity<Object> queryUser(String token);
+
+
 }

@@ -78,4 +78,5 @@ public class UserController {
     public ResponseEntity<Object> queryUser(@RequestHeader("Authorization") String token) {
         return userService.queryUser(token);
     }
+
 }
