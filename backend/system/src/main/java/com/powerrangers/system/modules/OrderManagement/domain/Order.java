@@ -25,4 +25,8 @@ public class Order extends BaseEntity {
     private Boolean isPaid;
 
     private Boolean isRefund;
+
+    private String eventName;
+
+    private String hostName;
 }
