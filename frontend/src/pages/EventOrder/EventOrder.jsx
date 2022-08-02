@@ -8,7 +8,7 @@ export default function EventOrder() {
   const eventId = search.get("eventId");
 
   useEffect(() => {
-    request(`/order/queryEventOrderByHost?eventId=${eventId}`,{
+    request(`/order/queryEventOrdersByHost?eventId=${eventId}`,{
       method: 'GET',
     }).then((response) => {
       console.log(response);

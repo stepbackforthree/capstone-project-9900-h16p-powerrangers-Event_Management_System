@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './styles.css';
 import Button from '@material-ui/core/Button';
@@ -21,7 +21,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Mydetails() {
   const [baseImage, setBaseImage] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
   const classes = useStyles();
+
+
+  useEffect(() => {
+    request(`/users/queryUser`,{
+      method: 'GET'
+    }).then((response) => {
+      console.log(response);
+      setBaseImage(response.avatar);
+      setPhoneNumber(response.phoneNumber);
+      setEmail(response.email);
+      setDescription(response.description);
+    })
+  },[])
+
 
   // upload img
   const uploadIamge = async (e) => {
@@ -80,6 +97,7 @@ export default function Mydetails() {
         </Button>
 
         <h4>Phone Number:</h4>
+        <i>{phoneNumber}</i>
         <TextField
           variant="outlined"
           margin="normal"
@@ -105,6 +123,7 @@ export default function Mydetails() {
         </Button>
 
         <h4>Email:</h4>
+        <i>{email}</i>
         <TextField
           variant="outlined"
           margin="normal"
@@ -130,6 +149,7 @@ export default function Mydetails() {
         </Button>
 
         <h4>Description:</h4>
+        <i>{description}</i>
         <TextField
           variant="outlined"
           margin="normal"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,6 +49,15 @@ export default function BankDetails() {
   const [bankDetails, setBankDetails] = React.useState('');
 
   const { values, setValues, handleInputChange } = useForm(initalFValues);
+
+  useEffect(() => {
+    request(`/users/queryUser`,{
+      method: 'GET'
+    }).then((response) => {
+      console.log(response);
+    })
+  },[])
+
 
   const handleSubmit = () => {
     console.log('submit success');

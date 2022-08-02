@@ -105,7 +105,8 @@ export default function OrderPage() {
       "hostName": hostName,
       "paymentType": 1,
       "ticketAmount": ticketAmount,
-      "ticketPrice": ticketPrice
+      "ticketPrice": ticketPrice,
+      "ticketType": ticketChoise
     }
     const updateTicketAmountData = {
       "eventName": eventName,
@@ -129,6 +130,8 @@ export default function OrderPage() {
     }).then((res) => {
       console.log(res);
     })
+
+    window.location.reload();
     
   };
 

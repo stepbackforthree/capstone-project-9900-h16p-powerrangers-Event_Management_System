@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import EditLocationIcon from '@material-ui/icons/EditLocation';
 import './styles.css';
 import moment from 'moment';
-import { Button, Modal, Select,Image } from 'antd';
+import { Button, Modal, Select,Image, message } from 'antd';
 import request from '../../utils/request';
 
 
@@ -241,8 +241,12 @@ export default function EventManagementForm(props) {
       console.log('data:', data);
     })
     setIsModalTypeVisible(false);
-    window.location.href = '/host/eventList';
-    // setIsModalAddTicketVisible(false);
+    message.success('Add Successfully!');
+    setIsModalAddTicketVisible(false);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000)
+    // window.location.href = '/host/eventList';
   };
   const handleCancelAddTicket = () => {
     setIsModalAddTicketVisible(false);
