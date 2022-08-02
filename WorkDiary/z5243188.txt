@@ -45,3 +45,6 @@ update event management page
 Week10
 add bankDetails in register page
 order page done
+fix event management page
+fix profile page
+event order page
