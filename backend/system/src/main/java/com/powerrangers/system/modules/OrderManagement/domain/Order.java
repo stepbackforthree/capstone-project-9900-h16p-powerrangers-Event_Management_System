@@ -14,6 +14,8 @@ public class Order extends BaseEntity {
 
     private Integer customerId;
 
+    private String customerName;
+
     private Integer hostId;
 
     private String ticketType;

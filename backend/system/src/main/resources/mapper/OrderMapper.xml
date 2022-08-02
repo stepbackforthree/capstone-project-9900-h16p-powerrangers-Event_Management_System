@@ -44,12 +44,14 @@
 
     <select id="queryEventOrdersByHost" parameterType="integer"
                                     resultType="com.powerrangers.system.modules.OrderManagement.domain.Order">
-        select o.*, e.event_name, u.username as hostName, o.ticket_type from
-        sys_order o left join sys_event e on o.event_id = e.event_id left join sys_user u on e.host_id = u.id
+        select t1.*, t2.username as customerName from (select o.*, e.event_name, u.username as hostName
+        from sys_order o left join sys_event e on o.event_id = e.event_id
+            left join sys_user u on e.host_id = u.id
         where
             o.host_id = #{hostId}
             and e.event_id = #{eventId}
-            order by start_time, update_time desc;
+            order by create_time, update_time desc) t1, (select id, username from sys_user) t2
+        where t1.customer_id = t2.id;
     </select>
 
     <select id="getAllOrders" parameterType="com.powerrangers.system.modules.OrderManagement.service.dto.OrderDTO"
