@@ -17,7 +17,7 @@
     </insert>
     
     <insert id="addCouponRule" parameterType="com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO">
-        insert into sys_coupon (coupon_id, type_id, threshold, money)
+        insert into coupon_rule (coupon_id, type_id, threshold, money)
         values ((select coupon_id from sys_coupon where coupon_name = #{couponName}), #{couponType}, #{threshold}, #{money});
     </insert>
 
