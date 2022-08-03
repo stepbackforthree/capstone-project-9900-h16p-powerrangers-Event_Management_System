@@ -84,6 +84,11 @@ public class CommentServiceImpl implements CommentService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        if (commentMapper.getCustomerComment(commentDTO).size() > 0) {
+            responseBody.put("error", "customer has already add a comment!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+
         commentDTO.setCustomerId(currUser.getId());
         commentMapper.addComment(commentDTO);
 
@@ -124,8 +129,8 @@ public class CommentServiceImpl implements CommentService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        if (commentMapper.getCustomerComment(commentDTO).size() > 0) {
-            responseBody.put("error", "customer has already left a comment!");
+        if (commentMapper.getCustomerComment(commentDTO).size() == 0) {
+            responseBody.put("error", "customer has not left a comment yet!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 

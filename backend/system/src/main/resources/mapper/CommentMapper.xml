@@ -17,7 +17,7 @@
         (select * from event_comments where
         event_id = (select event_id from sys_event where event_name = #{eventName} and host_id = (select id from sys_user where username = #{hostName}))
         order by create_time, update_time desc) t1,
-        (select id, username from sys_user) t2
+        (select id, username, avatar from sys_user) t2
         where t1.customer_id = t2.id;
     </select>
 
