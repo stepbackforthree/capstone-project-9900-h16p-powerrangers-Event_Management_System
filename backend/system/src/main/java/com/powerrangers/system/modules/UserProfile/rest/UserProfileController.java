@@ -2,10 +2,12 @@ package com.powerrangers.system.modules.UserProfile.rest;
 
 import com.powerrangers.system.modules.UserProfile.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
@@ -14,7 +16,8 @@ import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserProfileController {
 
-    private final UserProfileService userProfileService;
+    @Autowired
+    private UserProfileService userProfileService;
 
     @PostMapping(value = "updateNickname")
     public ResponseEntity<Object> updateNickname(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
@@ -54,5 +57,10 @@ public class UserProfileController {
     @PostMapping(value = "updatePassword")
     public ResponseEntity<Object> updatePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         return new ResponseEntity<>(userProfileService.updatePassword(token, request.get("password")), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "updateBalance")
+    public ResponseEntity<Object> updateBalance(@RequestHeader("Authorization") String token, BigDecimal balance) {
+        return userProfileService.updateBalance(token, balance);
     }
 }

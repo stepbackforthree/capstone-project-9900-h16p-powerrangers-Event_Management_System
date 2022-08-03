@@ -8,6 +8,8 @@ import com.powerrangers.system.modules.UserProfile.service.dto.UserProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -244,20 +246,19 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public Map<String, String> updateBalance(String token, BigDecimal balance) {
+    public ResponseEntity<Object> updateBalance(String token, BigDecimal balance) {
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         responseBody.clear();
 
-
         if (currUser == null || currUser.getBalance() == null) {
             responseBody.put("error", "token is invalid!");
-            return responseBody;
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
         UserProfileDTO userProfileDTO = new UserProfileDTO();
         userProfileDTO.setUserName(currUser.getUserName());
-        userProfileDTO.setBalance(balance);
+        userProfileDTO.setBalance(balance.add(currUser.getBalance()));
 
         userProfileMapper.updateBalance(userProfileDTO);
 
@@ -267,12 +268,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         responseBody.put("msg", "update balance succeed!");
 
-        return responseBody;
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @Override
     public Map<String, String> updatePassword(String token, String password) {
-        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         responseBody.clear();
 
@@ -293,8 +294,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileMapper.updatePassword(userProfileDTO);
 
         currUser.setPassword(password);
-        redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
-                redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(currUser),
+                redisTemplate.getExpire("token_" + token), TimeUnit.SECONDS);
 
         responseBody.put("msg", "update password success!");
         return responseBody;
