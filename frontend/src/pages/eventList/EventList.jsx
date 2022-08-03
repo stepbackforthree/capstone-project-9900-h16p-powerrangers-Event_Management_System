@@ -54,23 +54,23 @@ const eventType = {
   5: 'Tourism Exhibition'
 }
 
-const data = Array.from({
-  length: 15,
-}).map((_, i) => ({
-  eventName: `Event part ${i+1}`,
-  eventType: 3,
-  location: 'Sydney',
-  description:
-    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-  startTime: '2022-07-07T10:00:00',
-  endTime: '2022-07-08T10:00:00',
-  isDisplayed: true,
-  starLevel: 3,
-  image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
-  isCancelled: false,
-  ticketPrice: 100,
-  ticketAmount: 500
-}));
+// const data = Array.from({
+//   length: 15,
+// }).map((_, i) => ({
+//   eventName: `Event part ${i+1}`,
+//   eventType: 3,
+//   location: 'Sydney',
+//   description:
+//     'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+//   startTime: '2022-07-07T10:00:00',
+//   endTime: '2022-07-08T10:00:00',
+//   isDisplayed: true,
+//   starLevel: 3,
+//   image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
+//   isCancelled: false,
+//   ticketPrice: 100,
+//   ticketAmount: 500
+// }));
 
 
 export default function EventList() {
@@ -86,17 +86,15 @@ export default function EventList() {
     })
   }, []);
 
-  
-
   const showTime = (string) => {
     const time = string.split('.')[0];
     const timeStr = time.split('T')[0] + ' ' + time.split('T')[1];
     return timeStr;
   }
 
-  const goToEdit = (eventName) => {
+  const goToEdit = (eventName,eventId) => {
     window.localStorage.setItem('eventName', eventName);
-    navigate('/host/eventEdit');
+    navigate(`/host/eventEdit?eventName=${eventName}&eventId=${eventId}`);
   }
 
   const goToOrders = (eventId) => {
@@ -147,7 +145,7 @@ export default function EventList() {
                     <p>
                       <b style={{fontSize: '25px'}}>{item.eventName}</b>
                     </p>
-                    <Button type="link" onClick={()=>goToEdit(item.eventName)}>Edit</Button>|
+                    <Button type="link" onClick={()=>goToEdit(item.eventName,item.eventId)}>Edit</Button>|
                     <Button type="link" onClick={()=>goToOrders(item.eventId)}>Orders</Button>
                   </>
                 }

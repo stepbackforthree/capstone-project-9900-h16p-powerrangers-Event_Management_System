@@ -17,11 +17,16 @@ import Paper from '@material-ui/core/Paper';
 import EditLocationIcon from '@material-ui/icons/EditLocation';
 import './styles.css';
 import moment from 'moment';
-import { Button, Modal, Select,Image, message } from 'antd';
+import { Button, Modal, Select,Image, message, Card, Input, Switch, DatePicker  } from 'antd';
 import request from '../../utils/request';
+import { useSearchParams } from 'react-router-dom';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+
 
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 
 function Copyright() {
   return (
@@ -90,6 +95,11 @@ const eventType = [
   },
 ];
 
+const couponTypeList = [
+  "vouchar",
+  "full discount coupon"
+]
+
 const location = [
   {
     value: 'Sydney',
@@ -127,6 +137,7 @@ export default function EventManagementForm(props) {
   const [isModal2Visible, setIsModal2Visible] = useState(false);
   const [isModalTypeVisible, setIsModalTypeVisible] = useState(false);
   const [isModalAddTicketVisible, setIsModalAddTicketVisible] = useState(false);
+  const [isModalAddCouponVisible, setIsModalAddCouponVisible] = useState(false);
   const [editUrl, setEditUrl] = useState('');
   const [inputType, setInputType] = useState('text');
   const [inputKey, setInputKey] = useState('');
@@ -137,7 +148,11 @@ export default function EventManagementForm(props) {
   const [ticketPriceValue, setTicketPriceValue] = useState('');
   const [ticketAmountValue, setTicketAmountValue] = useState('');
 
-  const eventName = window.localStorage.getItem('eventName');
+  const [search,setSearch] = useSearchParams();
+  const eventId = search.get("eventId");
+  const eventName = search.get("eventName");
+  const [couponList, setCouponList] = useState();
+  
 
   // text input modal
   const showModal1 = () => {
@@ -330,12 +345,90 @@ export default function EventManagementForm(props) {
   }
 
 
+  // coupon
+  useEffect(() => {
+    request(`/coupon/getCoupons?eventId=${eventId}`, {
+      method: 'GET'
+    }).then((response) => {
+      console.log(response);
+      setCouponList(response);
+    })
+  }, [])
+
+  const showTime = (string) => {
+    const time = string.split('.')[0];
+    const timeStr = time.split('T')[0] + ' ' + time.split('T')[1];
+    return timeStr;
+  }
+
+  // text input modal
+  const showModalAddCoupon = () => {
+    setIsModalAddCouponVisible(true);
+  };
+  const handleOkAddCoupon = () => {
+    if (couponTypeValue === "1") {
+      setCouponTypeValue(1);
+      setCouponsTresholdValue(0);
+    }
+    if (couponTypeValue === "2") {
+      setCouponTypeValue(2);
+    }
+    const data = {
+      "couponType": couponTypeValue,
+      "couponName": couponCodeValue,
+      "amount": couponsAmountValue,
+      "threshold": couponsTresholdValue,
+      "isVisible": isCouponVisible,
+      "money": couponsMoneyValue,
+      "startTime": couponStartTime,
+      "endTime": couponEndTime,
+      "eventId": eventId
+    }
+    console.log(data);
+    request('/coupon/addCoupon', {
+      method: 'POST',
+      data: data
+    }).then((response) => {
+      console.log(response);
+    })
+    setIsModalAddCouponVisible(false);
+    // window.location.reload();
+  };
+  const handleCancelAddCoupon = () => {
+    setIsModalAddCouponVisible(false);
+  };
+
+  const [couponTypeValue, setCouponTypeValue] = useState();
+  const [couponCodeValue, setCouponCodeValue] = useState('');
+  const [couponsAmountValue, setCouponsAmountValue] = useState();
+  const [couponsTresholdValue, setCouponsTresholdValue] = useState();
+  const [couponsMoneyValue, setCouponsMoneyValue] = useState();
+  const [isCouponVisible, setIsCouponVisible] = useState(false);
+  const [couponStartTime, setCouponStartTime] = useState('');
+  const [couponEndTime, setCouponEndTime] = useState('');
+
+
+  const onTimeChange = (value, dateString) => {
+    console.log('Selected Time: ', value);
+    console.log('Formatted Selected Time: ', dateString);
+    const startTime = dateString[0].split(' ')[0] + 'T' + dateString[0].split(' ')[1];
+    const endTime = dateString[1].split(' ')[0] + 'T' + dateString[1].split(' ')[1];
+    setCouponStartTime(startTime);
+    setCouponEndTime(endTime);
+  };
+
+  const onTimeOk = (value) => {
+    console.log('onOk: ', value);
+  };
+
+
   return (
     <>
       <Modal title="Text Input" visible={isModal1Visible} onOk={handleOk1} onCancel={handleCancel1}>
         <b>{editUrl}:</b>
         <input type={inputType} value={inputValue} onChange={handleInputChange}/>
       </Modal>
+
       <Modal title="Location Update" visible={isModal2Visible} onOk={handleOk2} onCancel={handleCancel2}>
         <b>{editUrl}:</b>
         <Select
@@ -393,6 +486,63 @@ export default function EventManagementForm(props) {
           <b>Choose Ticket Amount:</b>
           <input type='number' value={ticketAmountValue} onChange={handleTicketAmountChange}/>
         </div>
+      </Modal>
+
+      <Modal title="Add Coupon" visible={isModalAddCouponVisible} onOk={handleOkAddCoupon} onCancel={handleCancelAddCoupon}>
+        <div className="add-ticket-type-modal">
+          <b>Choose Coupon Type:</b>
+          <Select
+            value={couponTypeValue}
+            style={{
+              width: 180,
+            }}
+            onChange={setCouponTypeValue}
+          >
+            <Option value="1">vouchar</Option>
+            <Option value="2">full discount coupon</Option>
+          </Select>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Set Coupon Code:</b>
+          <Input value={couponCodeValue} onChange={(e) => {setCouponCodeValue(e.target.value)}}/>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Set Number of Coupons:</b>
+          <Input type='number' value={couponsAmountValue} onChange={(e)=>{setCouponsAmountValue(e.target.value)}}/>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Set Treshold of Coupons:</b>
+          <Input prefix="$" type='number' value={couponsTresholdValue} onChange={(e)=>{setCouponsTresholdValue(e.target.value)}}/>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Set Discount of Coupons:</b>
+          <Input prefix="$" type='number' value={couponsMoneyValue} onChange={(e)=>{setCouponsMoneyValue(e.target.value)}}/>
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Visiblity(whether customer can see or not):</b>    
+          <Switch
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            checked={isCouponVisible}
+            onChange={(value) => {setIsCouponVisible(value)}}
+          />
+        </div>
+        <div className="add-ticket-type-modal">
+          <b>Period of Validity :</b>    
+          <RangePicker
+            showTime={{
+              format: 'HH:mm:ss',
+            }}
+            format="YYYY-MM-DD HH:mm:ss"
+            onChange={onTimeChange}
+            onOk={onTimeOk}
+          />
+        </div>
+
+
+
+
+
       </Modal>
 
 
@@ -496,11 +646,11 @@ export default function EventManagementForm(props) {
             </div>
             <div className="details-one">
               <b>If Display this Event:</b>
-              {event.isDisplayed}
+              {event.isDisplayed ? <>Yes</> : <>No</>}
             </div>
             <div className="details-one">
               <b>Event Cancelled:</b>
-              {event.isCancelled}
+              {event.isCancelled ? <>Yes</> : <>No</>}
             </div>
             <div className="details-one">
               <span><b>Tickets Detail:</b></span>
@@ -521,9 +671,38 @@ export default function EventManagementForm(props) {
               )
             })}
 
-            
+            <div className="details-one">
+              <span><b>Coupon Detail:</b></span>
+              <Button 
+                type="primary" 
+                size="small" 
+                onClick={() => {
+                showModalAddCoupon();
+              }}>
+                add Coupon
+              </Button>
+            </div>
 
-            
+            {couponList && couponList.map((item) => {
+              return (
+                <Card
+                  key={item.couponId}
+                  size="small"
+                  title={<><b>Type:</b>{couponTypeList[item.couponType-1]}</>}
+                  extra={<a href="#">Edit</a>}
+                  // style={{
+                  //   width: 300,
+                  // }}
+                >
+                  <div><b>Coupon Code: </b>{item.couponName}</div>
+                  <div><b>Credit Amount: </b>{item.money}</div>
+                  <div><b>Minimum Requirement: </b>{item.threshold}</div>
+                  <div><b>Valid Time Period: </b></div>
+                  <div>{showTime(item.startTime)} - {showTime(item.endTime)}</div>
+                </Card>
+              )
+            })}
+
           </Paper>
         </div>
         <Box mt={8}>
@@ -533,3 +712,18 @@ export default function EventManagementForm(props) {
     </>
   )
 }
+
+
+// {
+//   "amount": 0,
+//   "couponName": "string",
+//   "couponType": 1,
+//   "threshold": 0,
+//   "eventId": 0,
+//   "isVisible": true,
+//   "money": 0,
+//   "startTime": {
+//   },
+//   "endTime": {
+//   }
+// }
