@@ -3,10 +3,11 @@ package com.powerrangers.system.modules.CouponManagement.rest;
 import com.powerrangers.system.modules.CouponManagement.service.CouponService;
 import com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/coupon")
@@ -29,9 +30,9 @@ public class CouponController {
     }
 
     @ApiOperation("change visibility of a coupon")
-    @PostMapping("changeVisibility")
-    public ResponseEntity<Object> changeVisibility(@RequestHeader("Authorization") String token, @RequestParam String couponName) {
-        return couponService.changeVisibility(token, couponName);
+    @PutMapping("changeVisibility")
+    public ResponseEntity<Object> changeVisibility(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+        return couponService.changeVisibility(token, request.get("couponName"));
     }
 
     @ApiOperation("get coupon list for specific event")
