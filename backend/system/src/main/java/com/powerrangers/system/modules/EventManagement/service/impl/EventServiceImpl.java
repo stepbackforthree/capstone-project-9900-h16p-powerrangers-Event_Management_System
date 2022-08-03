@@ -16,10 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -439,6 +436,62 @@ public class EventServiceImpl implements EventService {
 
         return new ResponseEntity<>(eventMapper.getOneMonthEvents(eventFilterDTO), HttpStatus.OK);
     }
+
+    public List filterMethod(String[] a , HashSet filterWords){
+        List<String> res = new ArrayList<>();
+
+        for(String w: a){
+            if(!filterWords.contains(w.trim()) && !"".equals(w) && !" ".equals(w)){
+                res.add(w.trim());
+            }
+        }
+
+        return res;
+    }
+
+    public Double cal(List<String> history , List<String> event){
+
+        HashMap<String,Integer> totalWords = new HashMap<>();
+        int count = 0;
+        for (int i = 0; i < history.size(); i++) {
+            if(totalWords.get(history.get(i)) == null){
+                totalWords.put(history.get(i),count);
+                count++;
+            }
+        }
+        for (int i = 0; i < event.size(); i++) {
+            if(totalWords.get(event.get(i)) == null){
+                totalWords.put(event.get(i),count);
+                count++;
+            }
+        }
+
+        List<Integer> his = new ArrayList<>(count);
+        List<Integer> eve = new ArrayList<>(count);
+        for(int i = 0; i<count; i++){
+            his.add(0);
+        }
+
+        for(int i = 0; i<count; i++){
+            eve.add(0);
+        }
+
+        for (String e: history){
+            his.set(totalWords.get(e), his.get(totalWords.get(e)) + 1);}
+        for (String e: event){
+            eve.set(totalWords.get(e), eve.get(totalWords.get(e)) + 1);
+        }
+        double sumHis = 0.0;
+        double sumeve = 0.0;
+        double sum = 0;
+        for(int i = 0; i< history.size(); i++){
+            sum += his.get(i)*eve.get(i);
+            sumHis += Math.pow(his.get(i),2);
+            sumeve += Math.pow(eve.get(i),2);
+        }
+        return sum/(Math.pow(sumHis,0.5)+Math.pow(sumeve,0.5));
+    }
+
     @Override
     public ResponseEntity<Object> getRecommendation(String token) {
 
@@ -452,36 +505,64 @@ public class EventServiceImpl implements EventService {
 
         if (eventMapper.checkSpendingHistory(currUser.getUserName()) == 0) {
             return new ResponseEntity<>(eventMapper.randomRecommendation(), HttpStatus.OK);
+
         }
 
         if (eventMapper.checkSpendingHistory(currUser.getUserName()) > 0) {
             List<OrderDTO> spendingHistory = eventMapper.getSpendingHistory(currUser.getUserName());
-            HashMap<String,StringBuffer> eventsInfo = new HashMap<>();
-            HashMap<String,List<EventDTO>> recallRes = new HashMap<>();
+            List<String> eventsDecrip = new ArrayList<>();
+            HashSet<String> eventType = new HashSet<>();
             HashMap<EventDTO,Double> orderedRes = new HashMap<>();
-            System.out.println(spendingHistory);
+            HashSet<Integer> eventId = new HashSet<>();
+
             for (OrderDTO e: spendingHistory){
-                if(eventsInfo.get(e.getEventType()) == null){
-
-                    eventsInfo.put(e.getEventType(),new StringBuffer(e.getDescription()));
-                }
-                else{
-
-                    eventsInfo.put(e.getEventType(),eventsInfo.get(e.getEventType()).append(e.getDescription()));
-                }
+                eventsDecrip.add(e.getDescription().replaceAll( "[\\pP+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]" , "").trim());
+                eventType.add(e.getEventType());
+                eventId.add(e.getEventId());
             }
-            System.out.println(eventsInfo);
-            for(String e:eventsInfo.keySet()){
+            String t = String.join(" ",eventsDecrip);
+            String[] historywords = t.split(" ");
+            HashSet<String> filterWords = new HashSet<>();
+            filterWords.add("This");
+            filterWords.add("is");
+            filterWords.add("a");
+            filterWords.add("an");
+            filterWords.add("the");
+            filterWords.add("we");
+            filterWords.add("you");
+            filterWords.add("can");
+
+
+            for(String e:eventType){
                 List<EventDTO> res = eventMapper.getEventsByType(e);
                 for( EventDTO i : res){
-//                    i.setImage("123");
-                    orderedRes.put(i,1.0);
-//                    System.out.println(orderedRes);
+                    if(!eventId.contains(i.getEventId())){
+                        orderedRes.put(i,1.0);
+                    }
                 }
-                recallRes.put(e,res);
-            }
-            return new ResponseEntity<>(orderedRes.keySet(), HttpStatus.OK);
 
+            }
+            List<String> history = filterMethod(historywords,filterWords);
+            for(EventDTO e : orderedRes.keySet()){
+
+                orderedRes.put(e,cal(history,filterMethod(e.getDescription().replaceAll( "[\\pP+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]" , "").trim().split(" "),filterWords)));
+            }
+
+            List<Map.Entry<EventDTO, Double>>lst=new ArrayList(orderedRes.entrySet());
+
+
+            Collections.sort(lst, new Comparator<Map.Entry<EventDTO, Double>>() {
+                @Override
+                public int compare(Map.Entry<EventDTO, Double> o1, Map.Entry<EventDTO, Double> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            List res = new ArrayList();
+            for(Map.Entry<EventDTO, Double> entry : lst){
+               res.add(entry.getKey());
+            }
+
+            return new ResponseEntity<>(res, HttpStatus.OK);
         }
         responseBody.put("error","cannot recommend");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
