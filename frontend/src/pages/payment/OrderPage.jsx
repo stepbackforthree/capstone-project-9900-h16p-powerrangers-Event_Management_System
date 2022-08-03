@@ -91,9 +91,19 @@ export default function OrderPage() {
     }).then((response) => {
       // console.log(response);
       setData(response);
-
     })
   }, []);
+
+  useEffect(() => {
+    request(`/comment/getComments?hostName=${hostName}&eventName=${eventName}`,{
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      console.log(response);
+    })
+  }, []);
+  
+
 
   // payment method modal
   const showModal = () => {
