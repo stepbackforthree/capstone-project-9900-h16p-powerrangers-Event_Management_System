@@ -44,16 +44,22 @@ const ContentContainer = styled.div`
 export default function PaymentPage() {
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [rechargeAmount, setRechargeAmount] = useState(0);
+  const [rechargeAmount, setRechargeAmount] = useState(10);
 
   const next = () => {
     if (current === 1) {
       setTimeout(() => {
-      setCurrent(current + 1);
-      const data = {
-        "rechargeAmount": rechargeAmount
-      }
-      console.log(data);
+        const data = {
+          "balance": parseInt(rechargeAmount)
+        }
+        console.log(data);
+        request('/profile/updateBalance', {
+          method: 'POST',
+          data: data
+        }).then((response) => {
+          console.log(response);
+          setCurrent(current + 1);
+        })
       }, 5000);
     } else {
       setCurrent(current + 1);
@@ -93,11 +99,13 @@ export default function PaymentPage() {
                 <Radio value={3}>Paypal</Radio>
                 <Radio value={4}>Bpay</Radio>
               </Radio.Group>
-              <h2>Input the amount to recharge:</h2>
+              <p><h2>Input the amount to recharge:</h2>($10-$1000)</p>
               <Input 
                 allowClear
                 prefix="$" 
                 type="number" 
+                max="1000" 
+                min="10"
                 suffix="Dollars" 
                 value={rechargeAmount}
                 onChange={(e) => setRechargeAmount(e.target.value)}
