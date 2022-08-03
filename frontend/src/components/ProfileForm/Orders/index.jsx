@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Skeleton, message, Divider, Popconfirm   } from 'antd';
+import { Avatar, Button, List, Skeleton, message, Divider, Popconfirm, Modal,Rate,Input   } from 'antd';
 import React, { useEffect, useState } from 'react';
 import request from '../../../utils/request';
 import './styles.css';
@@ -8,6 +8,15 @@ import { useNavigate } from 'react-router-dom';
 export default function Orders() {
   const navigate = useNavigate();
   const [data, setData] = useState();
+  const [starLevel, setStarLevel] = useState(2.5);
+  const [comment, setComment] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { TextArea } = Input;
+  const [customerId, setCustomerId] = useState();
+  const [eventName, setEventName] = useState();
+  const [hostName, setHostName] = useState();
+
+
 
   useEffect(() => {
     request('/order/queryOrdersByCustomer', {
@@ -49,7 +58,64 @@ export default function Orders() {
   }
 
 
+  const showCommentModal = (customerId,eventName,hostName) => {
+    console.log('show comment modal');
+    console.log(customerId,eventName,hostName);
+    setCustomerId(customerId);
+    setEventName(eventName);
+    setHostName(hostName);
+    setIsModalVisible(true);
+  };
+
+  const handleSubmitComment = () => {
+    const addCommentData = {
+      'customerId': customerId,
+      'hostName': hostName,
+      'eventName': eventName,
+      'starLevel': starLevel,
+      'comment': comment
+    }
+    console.log('addCommentData:',addCommentData);
+    request('/comment/addComment', {
+      method: 'POST',
+      data: addCommentData
+    }).then((response) => {
+      console.log(response);
+      message.success(response.msg, 5);
+    })
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+
   return (
+    <>
+    
+    <Modal 
+      title="Comment Submission" 
+      visible={isModalVisible} 
+      onOk={()=>handleSubmitComment()} 
+      onCancel={handleCancel}
+      okText="submit comment"
+    >
+      <div><b>Star:</b></div>
+      <Rate 
+        allowHalf 
+        value={starLevel}
+        onChange={(value)=>{setStarLevel(value)}}
+      />
+      <div><b>Comment Description:</b></div>
+      <TextArea 
+        rows={4}
+        value={comment}
+        onChange = {(e)=>{
+          setComment(e.target.value)}
+        }
+      />
+    </Modal>
     <List
       itemLayout="horizontal"
       dataSource={data}
@@ -58,11 +124,18 @@ export default function Orders() {
           key={item.orderId}
           actions={[
             <Button 
-              key="list-loadmore-edit" 
+              key="list-details" 
               type="link"
               onClick={()=>gotoDetails(item.hostName,item.eventName)}
             >
-              Details
+              details
+            </Button>,
+            <Button
+              key="list-comment" 
+              type="link"
+              onClick={()=>showCommentModal(item.customerId,item.eventName,item.hostName)}
+            >
+              comment
             </Button>
           ]}
           extra={
@@ -102,5 +175,6 @@ export default function Orders() {
         </List.Item>
       )}
     />
+    </>
   )
 }
