@@ -71,7 +71,10 @@ export default function SimpleMenu() {
         <MenuItem>
           <b>User:</b>
           <i>{userName}</i>
-        </MenuItem><MenuItem>
+        </MenuItem>
+        <MenuItem onClick={() => {
+          window.location.href = '/profile/accountRecharge';
+        }}>
           <b>Balance:</b>
           <i>${balance}</i>
         </MenuItem>

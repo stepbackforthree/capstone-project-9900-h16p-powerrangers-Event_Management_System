@@ -392,7 +392,10 @@ export default function EventManagementForm(props) {
       console.log(response);
     })
     setIsModalAddCouponVisible(false);
-    // window.location.reload();
+    message.success('Add Successfully!');
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000)
   };
   const handleCancelAddCoupon = () => {
     setIsModalAddCouponVisible(false);

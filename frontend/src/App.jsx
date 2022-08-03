@@ -70,7 +70,7 @@ function App() {
           <Route path="/host/eventOrder" element={<EventOrder />} />
           <Route path="/host/eventAdd" element={<EventAdd />} />
           <Route path="/host/eventList" element={<EventList />} />
-          <Route path="/event/eventPayment" element={<PaymentPage />} />
+          <Route path="/profile/accountRecharge" element={<PaymentPage />} />
           <Route path="/event/eventOrder" element={<OrderPage />} />
         </Routes>
       </AppContainer>

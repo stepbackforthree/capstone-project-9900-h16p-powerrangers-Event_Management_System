@@ -176,15 +176,15 @@ export default function OrderPage() {
   return (
     <div>
       <Modal title="Text Input" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p><b>Ticket you choose:</b>{ticketChoise}</p> 
-        <p><b>Your Balance:</b>{balance}</p> 
-        <p><b>Ticket Price:</b>{ticketPrice}</p> 
+        <p><b>Ticket you choose: </b>{ticketChoise}</p> 
+        <p><b>Your Balance: </b>${balance}</p> 
+        <p><b>Ticket Price: </b>${ticketPrice}</p> 
         <p>
           <b>Ticket Amount:</b>
           <InputNumber min={1} max={10} value={ticketAmount} onChange={onTicketAmountChange} />
         </p>
         <p>[One Account Only Can Order 10 tickets Once at most]</p>
-        <b>Choose Your Payment Method:</b>
+        {/* <b>Choose Your Payment Method:</b> */}
         
       </Modal>
       <TitleContainer>
