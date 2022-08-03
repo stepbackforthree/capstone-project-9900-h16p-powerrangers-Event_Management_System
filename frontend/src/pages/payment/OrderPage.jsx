@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import React, { useState, useEffect }  from 'react';
 import './styles.css';
 import Paper from '@material-ui/core/Paper';
-import { Image, InputNumber  } from 'antd';
+import { Image, InputNumber, Divider, Avatar, List, Space, Radio, Button  } from 'antd';
+import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import GradeRoundedIcon from '@material-ui/icons/GradeRounded';
-import { Radio, Button } from 'antd';
 import moment from 'moment';
 import request from '../../utils/request';
 import { Modal } from 'antd';
@@ -44,13 +44,15 @@ export default function OrderPage() {
   const [search,setSearch] = useSearchParams();
   const hostName = search.get("hostName");
   const eventName = search.get("eventName");
+  const userName = window.localStorage.getItem('userName');
+  const [data, setData] = useState('');
   const [ticketChoise, SetTicketChoise] = useState('fullPriceTicket');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ticketAmount, setTicketAmount] = useState(1);
   const [ticketPrice, setTicketPrice] = useState(1);
   const [balance, setBalance] = useState(1);
-
-
+  const [commentsList, setCommentsList] = useState();
+  
 
   const ticketChoiseChange = (e) => {
     SetTicketChoise(e.target.value);
@@ -72,8 +74,6 @@ export default function OrderPage() {
     })
   }, []);
 
-  const [data, setData] = useState('');
-
   const onTicketAmountChange = (value) => {
     console.log('ticketAmount changed', value);
     setTicketAmount(value);
@@ -91,9 +91,22 @@ export default function OrderPage() {
     }).then((response) => {
       // console.log(response);
       setData(response);
-
     })
   }, []);
+
+  useEffect(() => {
+    request(`/comment/getComments?hostName=${hostName}&eventName=${eventName}`,{
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      console.log(response);
+      setCommentsList(response);
+    })
+  }, []);
+
+  const deleteComment = () => {
+    console.log('deleteComment');
+  }
 
   // payment method modal
   const showModal = () => {
@@ -139,6 +152,13 @@ export default function OrderPage() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  const IconText = ({ icon, text }) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
 
 
   return (
@@ -240,6 +260,53 @@ export default function OrderPage() {
               </div>
             </div>
           </div>
+          <Divider orientation="left">Comments</Divider>
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 3,
+            }}
+            dataSource={commentsList}
+            footer={
+              <div>
+                <b>9900-H16P-PowerRangers</b>
+              </div>
+            }
+            renderItem={(item) => (
+              <List.Item
+                key={item.customerId}
+                actions={[
+                  <IconText icon={LikeOutlined} text="106" key="list-vertical-like-o" />,
+                  <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src='https://joeschmoe.io/api/v1/random'/>}
+                  title={<b>{item.customerName}</b>}
+                  description={`⭐${item.starLevel}`}
+                />
+                <div className="flex-space-between">
+                  {item.comment}
+                  {item.customerName.toLowerCase() === userName ? 
+                    <Button 
+                      type="primary" 
+                      danger 
+                      size="small"
+                      onClick={deleteComment}
+                    >
+                      Delete
+                    </Button> : 
+                    null
+                  }
+                </div>
+                
+              </List.Item>
+            )}
+          />
         </Paper>
       </ContentContainer>
 
