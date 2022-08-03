@@ -27,7 +27,7 @@ export default function SliderProton({ value, changedPrice}) {
         value={value}
         onChange={changedPrice}
         valueLabelDisplay='on'
-        min={100}
+        min={0}
         max={1000}
         classes={
           {

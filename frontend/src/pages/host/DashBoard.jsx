@@ -84,12 +84,18 @@ export default function DashBoard() {
     setSelectedPrice(value);
   }
 
-  const handleSearchContent = () => {
-    const citiesList = cities.map((item) => {
-      if (item.checked === true) {
-        return item.label
+  const createCitiesList = (cities) => {
+    let res = [];
+    for (var i=0; i<cities.length; i++) {
+      if (cities[i].checked === true) {
+        res.push(cities[i].label);
       }
-    })
+    }
+    return res;
+  }
+
+  const handleSearchContent = () => {
+    const citiesList = createCitiesList(cities);
     const data = {
       "location": citiesList,
       "maxPrice": selectedPrice[1],
@@ -98,12 +104,12 @@ export default function DashBoard() {
       "starLevel": selectedRating
     }
     console.log(data);
-    request('/events/getAllEvents', {
-      method: 'POST',
-      data: data
-    }).then((response) => {
-      console.log(response);
-    })
+    // request('/events/getAllEvents', {
+    //   method: 'POST',
+    //   data: data
+    // }).then((response) => {
+    //   console.log(response);
+    // })
   }
 
   const changeSearchInput = (e) => {
