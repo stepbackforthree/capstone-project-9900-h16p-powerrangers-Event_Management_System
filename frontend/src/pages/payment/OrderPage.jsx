@@ -104,8 +104,20 @@ export default function OrderPage() {
     })
   }, []);
 
-  const deleteComment = () => {
+  const deleteComment = (customerId) => {
     console.log('deleteComment');
+    // costomerId hostName eventName
+    request(`/comment/deleteComment`, {
+      method: 'POST',
+      data: {
+        "customerId": customerId,
+        "hostName": hostName,
+        "eventName": eventName
+      }
+    }).then((response) => {
+      console.log(response);
+      window.location.reload();
+    })
   }
 
   // payment method modal
@@ -285,7 +297,7 @@ export default function OrderPage() {
                 ]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar src='https://joeschmoe.io/api/v1/random'/>}
+                  avatar={<Avatar src={item.avatar}/>}
                   title={<b>{item.customerName}</b>}
                   description={`⭐${item.starLevel}`}
                 />
@@ -296,14 +308,13 @@ export default function OrderPage() {
                       type="primary" 
                       danger 
                       size="small"
-                      onClick={deleteComment}
+                      onClick={()=>deleteComment(item.customerId)}
                     >
                       Delete
                     </Button> : 
                     null
                   }
                 </div>
-                
               </List.Item>
             )}
           />

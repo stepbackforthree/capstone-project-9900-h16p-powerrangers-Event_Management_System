@@ -81,7 +81,6 @@ export default function Orders() {
       data: addCommentData
     }).then((response) => {
       console.log(response);
-      message.success(response.msg, 5);
     })
     setIsModalVisible(false);
   };
