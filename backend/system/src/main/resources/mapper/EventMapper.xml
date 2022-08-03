@@ -90,8 +90,13 @@
                 from sys_event e, event_ticket t
         <where>
             e.event_id = t.event_id and t.ticket_type = 1
-            <if test="location != null and location.length() != 0 and location != ''">
-                and location = #{location}
+            <if test="location != null and location.size() > 0">
+                and location in
+                <foreach collection="location" item="loc" separator="," open="(" close=")">
+                    <if test="loc != null">
+                        #{loc}
+                    </if>
+                </foreach>
             </if>
             <if test="starLevel != null and starLevel != 0 and starLevel lte 5">
                 and star_level <![CDATA[ >= ]]> #{starLevel}
