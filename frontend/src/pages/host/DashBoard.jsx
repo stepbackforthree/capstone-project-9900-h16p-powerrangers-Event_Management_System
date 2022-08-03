@@ -98,6 +98,12 @@ export default function DashBoard() {
       "starLevel": selectedRating
     }
     console.log(data);
+    request('/events/getAllEvents', {
+      method: 'POST',
+      data: data
+    }).then((response) => {
+      console.log(response);
+    })
   }
 
   const changeSearchInput = (e) => {
