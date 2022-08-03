@@ -14,7 +14,7 @@ export default function DashBoard() {
   const [chooseCategory, setChooseCategory] = useState();
   const [searchValue,setSearchValue] = useState();
   const [selectedRating, setSelectedRating] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState([100,1000]);
+  const [selectedPrice, setSelectedPrice] = useState([0,1000]);
   const [cities, setCities] = useState([
     {
       id:1,
@@ -56,13 +56,13 @@ export default function DashBoard() {
 
   const handleSelectCategory = (event, value) => {
     console.log('choose:', value);
-    const chioce = eventTypeMap[value.toLowerCase()];
-    console.log('chioce:', chioce);
     if (!value) {
       // console.log(event, value);
       setSelectedCategory(null);
       setChooseCategory(null);
     } else {
+      const chioce = eventTypeMap[value.toLowerCase()];
+      console.log('chioce:', chioce);
       setSelectedCategory(value);
       setChooseCategory(chioce);
     }
@@ -104,12 +104,13 @@ export default function DashBoard() {
       "starLevel": selectedRating
     }
     console.log(data);
-    // request('/events/getAllEvents', {
-    //   method: 'POST',
-    //   data: data
-    // }).then((response) => {
-    //   console.log(response);
-    // })
+    request('/events/getAllEvents', {
+      method: 'POST',
+      data: data
+    }).then((response) => {
+      console.log(response);
+      setList(response);
+    })
   }
 
   const changeSearchInput = (e) => {
