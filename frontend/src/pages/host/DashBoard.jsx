@@ -11,6 +11,8 @@ import request from '../../utils/request';
 export default function DashBoard() {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [chooseCategory, setChooseCategory] = useState();
+  const [searchValue,setSearchValue] = useState();
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([100,1000]);
   const [cities, setCities] = useState([
@@ -31,28 +33,38 @@ export default function DashBoard() {
     },
   ]);
 
+  const eventTypeMap = {
+    'concert': 1,
+    'sports': 2,
+    'comic and animation': 3,
+    'parents-child campaign': 4,
+    'tourism exhibition': 5
+  }
+
   const [list, setList] = useState([]);
 
   useEffect(() => {
     request('/events/getAllEvents',{
       method: 'POST',
-      data: {
-
-      }
+      data: {}
     }).then((data) => {
-      console.log(data);
-      setList(data)
+      // console.log(data);
+      setList(data);
     })
   }, []);
 
 
   const handleSelectCategory = (event, value) => {
-    console.log(event, value);
+    console.log('choose:', value);
+    const chioce = eventTypeMap[value.toLowerCase()];
+    console.log('chioce:', chioce);
     if (!value) {
       // console.log(event, value);
       setSelectedCategory(null);
+      setChooseCategory(null);
     } else {
       setSelectedCategory(value);
+      setChooseCategory(chioce);
     }
   };
 
@@ -73,16 +85,43 @@ export default function DashBoard() {
   }
 
   const handleSearchContent = () => {
-    console.log(selectedCategory);
-    console.log(selectedRating);
-    console.log(selectedPrice);
-    console.log(cities);
+    const citiesList = cities.map((item) => {
+      if (item.checked === true) {
+        return item.label
+      }
+    })
+    const data = {
+      "location": citiesList,
+      "maxPrice": selectedPrice[1],
+      "minPrice": selectedPrice[0],
+      "eventType": chooseCategory,
+      "starLevel": selectedRating
+    }
+    console.log(data);
+  }
+
+  const changeSearchInput = (e) => {
+    setSearchValue(e.target.value);
+  }
+  
+  const searchEvents = () => {
+    request(`/events/searchEvents?keyWords=${searchValue}`, {
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      // console.log(response);
+      setList(response);
+    })
   }
 
   return (
     <div className='home'>
       {/* slide */}
-      <SearchBar />
+      <SearchBar 
+        searchValue={searchValue}
+        changeSearchInput={changeSearchInput}
+        searchEvents={searchEvents}
+      />
 
       <div className="home_panelList-wrap">
         <div className="home_panel-wrap">

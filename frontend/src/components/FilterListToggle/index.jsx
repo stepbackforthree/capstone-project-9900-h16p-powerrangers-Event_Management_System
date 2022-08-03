@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   toggle: {
     fontSize: '.8rem',

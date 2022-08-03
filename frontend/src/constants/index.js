@@ -1,13 +1,28 @@
 export const categoryList = [
   {
     id: 1,
-    value: 'on-line',
-    label: '🚩 on-line',
+    value: 'concert',
+    label: '🚩 concert',
   },
   {
     id: 2,
-    value: 'offline',
-    label: '🚩 offline',
+    value: 'sports',
+    label: '🚩 sports',
+  },
+  {
+    id: 3,
+    value: 'Comic and Animation',
+    label: '🚩 Comic and Animation',
+  },
+  {
+    id: 4,
+    value: 'parents-child campaign',
+    label: '🚩 parents-child campaign',
+  },
+  {
+    id: 5,
+    value: 'Tourism Exhibition',
+    label: '🚩 Tourism Exhibition',
   },
 ];
 
