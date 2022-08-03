@@ -13,6 +13,8 @@ public class Comment extends BaseEntity {
 
     private String customerName;
 
+    private String avatar;
+
     private String comment;
 
     private Float starLevel;
