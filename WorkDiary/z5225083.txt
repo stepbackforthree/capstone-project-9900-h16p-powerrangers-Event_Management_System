@@ -24,3 +24,9 @@ Week8
 Retro b meeting.
 Change the email interface to improve the reusability.
 Develop the functions in eventManagement part like fuzzy searching the keywords etc.
+
+Week 9
+Finish the functions in eventManagement part, fix bugs to interact with frontend.
+
+Week 10
+Build up the recommendation system, fix bugs, check the proposal user story.
