@@ -96,9 +96,9 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
 
         } else {
-            map.put("msg", "user not exists!");
+            map.put("error", "user not exists!");
 
-            return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 
