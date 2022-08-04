@@ -43,6 +43,7 @@ const eventType = {
 export default function OrderPage() {
   const [search,setSearch] = useSearchParams();
   const hostName = search.get("hostName");
+  const [eventId, setEventId] = useState(0);
   const eventName = search.get("eventName");
   const userName = window.localStorage.getItem('userName');
   const [data, setData] = useState('');
@@ -52,6 +53,7 @@ export default function OrderPage() {
   const [ticketPrice, setTicketPrice] = useState(1);
   const [balance, setBalance] = useState(1);
   const [commentsList, setCommentsList] = useState();
+  const [couponsList, setCouponsList] = useState();
   
 
   const ticketChoiseChange = (e) => {
@@ -91,6 +93,7 @@ export default function OrderPage() {
     }).then((response) => {
       // console.log(response);
       setData(response);
+      setEventId(response.eventId);
     })
   }, []);
 
@@ -103,6 +106,16 @@ export default function OrderPage() {
       setCommentsList(response);
     })
   }, []);
+
+  useEffect(() => {
+    request(`/coupon/getCoupons?eventId=${eventId}`,{
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      console.log(response);
+      setCouponsList(response);
+    })
+  }, [eventId])
 
   const deleteComment = (customerId) => {
     console.log('deleteComment');
@@ -171,6 +184,12 @@ export default function OrderPage() {
       {text}
     </Space>
   );
+
+  const showTime = (string) => {
+    const time = string.split('.')[0];
+    const timeStr = time.split('T')[0] + ' ' + time.split('T')[1];
+    return timeStr;
+  }
 
 
   return (
@@ -272,6 +291,37 @@ export default function OrderPage() {
               </div>
             </div>
           </div>
+          <Divider orientation="left">Coupons</Divider>
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 2,
+            }}
+            dataSource={couponsList}
+            renderItem={(item) => (
+              <List.Item
+                key={item.couponId}
+                // actions={[
+                //   <IconText icon={LikeOutlined} text="10" key="list-vertical-like-o" />,
+                //   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                // ]}
+              >
+                <List.Item.Meta
+                  // avatar={<Avatar src={item.avatar}/>}
+                  title={<h4><b>Coupon Code: </b>{item.couponName}</h4>}
+                  description={`Amount:${item.amount}`}
+                />
+                <div>
+                  <b>Valid Time: </b>  
+                  <i>{showTime(item.startTime)} <b style={{"margin": "0 10px"}}>to</b> {showTime(item.endTime)}</i>
+                </div>
+              </List.Item>
+            )}
+          />
           <Divider orientation="left">Comments</Divider>
           <List
             itemLayout="vertical"

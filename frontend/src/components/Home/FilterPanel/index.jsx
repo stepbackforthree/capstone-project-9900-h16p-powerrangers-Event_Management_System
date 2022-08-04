@@ -8,6 +8,8 @@ import './styles.css';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 
 const ColorButton = withStyles((theme) => ({
@@ -31,7 +33,9 @@ export default function FilterPanel({
   changeChecked,
   selectedPrice,
   changePrice,
-  handleSearchContent
+  handleSearchContent,
+  handleRecommendationSearch,
+  handleOneMonthSearch
 }) {
   return (
     <div>
@@ -73,8 +77,11 @@ export default function FilterPanel({
       </div>
       <div className="search-box">
         <ColorButton variant="contained" onClick={handleSearchContent}>Search</ColorButton>
+        <br />
+        <Button variant="contained" color="secondary" onClick={handleRecommendationSearch}><FavoriteIcon style={{"margin-right":"10px"}}/>Guess You Like</Button>
+        <br />
+        <Button variant="contained" color="primary" onClick={handleOneMonthSearch}><AccessTimeIcon style={{"margin-right":"10px"}}/>Coming Soon Event</Button>
       </div>
-      
     </div>
   )
 }
