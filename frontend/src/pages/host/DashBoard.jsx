@@ -127,6 +127,24 @@ export default function DashBoard() {
     })
   }
 
+  const handleRecommendationSearch = () => {
+    request(`/events/getRecommendation`, {
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      setList(response);
+    })
+  }
+
+  const handleOneMonthSearch = () => {
+    request(`/events/getOneMonthEvents`, {
+      method: 'GET',
+      data: {}
+    }).then((response) => {
+      setList(response);
+    })
+  }
+
   return (
     <div className='home'>
       {/* slide */}
@@ -149,6 +167,8 @@ export default function DashBoard() {
             selectedPrice={selectedPrice}
             changePrice={handleChangePrice}
             handleSearchContent={handleSearchContent}
+            handleRecommendationSearch={handleRecommendationSearch}
+            handleOneMonthSearch={handleOneMonthSearch}
           />
         </div>
         <div className="home_list-wrap">
