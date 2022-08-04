@@ -118,8 +118,10 @@
 
     <select id="searchEvents" parameterType="string"
             resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
-        select s.* , e.ticket_type, e.ticket_amount, e.ticket_price
-        from sys_event s inner join event_ticket e on s.event_id = e.event_id where e.ticket_type = 1 and
+        select s.* , e.ticket_type, e.ticket_amount, e.ticket_price, u.username as hostName
+        from sys_event s inner join event_ticket e on s.event_id = e.event_id
+        inner join sys_user u on s.host_id = u.id
+        where e.ticket_type = 1 and
         (s.event_name LIKE CONCAT('%',#{keyWords},'%') or s.event_tag LIKE CONCAT('%',#{keyWords},'%')
         or s.event_type in (select type_id from event_type where type_name LIKE CONCAT('%',#{keyWords},'%'))
         or s.host_id in (select id from sys_user where username LIKE CONCAT('%',#{keyWords},'%'))
