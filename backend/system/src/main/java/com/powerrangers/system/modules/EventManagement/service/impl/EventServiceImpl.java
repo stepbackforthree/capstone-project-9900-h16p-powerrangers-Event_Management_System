@@ -384,6 +384,7 @@ public class EventServiceImpl implements EventService {
     public Double cal(List<String> history , List<String> event){
 
         HashMap<String,Integer> totalWords = new HashMap<>();
+
         int count = 0;
         for (int i = 0; i < history.size(); i++) {
             if(totalWords.get(history.get(i)) == null){
@@ -413,10 +414,11 @@ public class EventServiceImpl implements EventService {
         for (String e: event){
             eve.set(totalWords.get(e), eve.get(totalWords.get(e)) + 1);
         }
+
         double sumHis = 0.0;
         double sumeve = 0.0;
         double sum = 0;
-        for(int i = 0; i< history.size(); i++){
+        for(int i = 0; i< totalWords.size(); i++){
             sum += his.get(i)*eve.get(i);
             sumHis += Math.pow(his.get(i),2);
             sumeve += Math.pow(eve.get(i),2);
@@ -481,7 +483,6 @@ public class EventServiceImpl implements EventService {
 
                 orderedRes.put(e,cal(history,filterMethod(e.getDescription().replaceAll( "[\\pP+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]" , "").trim().split(" "),filterWords)));
             }
-
             List<Map.Entry<EventDTO, Double>>lst=new ArrayList(orderedRes.entrySet());
 
 
