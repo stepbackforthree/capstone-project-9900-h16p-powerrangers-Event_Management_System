@@ -11,6 +11,7 @@ import moment from 'moment';
 import request from '../../utils/request';
 import { Modal } from 'antd';
 import { useSearchParams } from 'react-router-dom';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 
 
 
@@ -232,6 +233,13 @@ export default function OrderPage() {
                 </div>
               </div>
               <div className="icon-text-container">
+                <RecordVoiceOverIcon/>
+                <div>
+                  <b>Host Name: </b>
+                  {data.hostName}
+                </div>
+              </div>
+              <div className="icon-text-container">
                 <LocationCityIcon/>
                 <div>
                   <b>City: </b>
@@ -370,7 +378,6 @@ export default function OrderPage() {
           />
         </Paper>
       </ContentContainer>
-
     </div>
   )
 }
