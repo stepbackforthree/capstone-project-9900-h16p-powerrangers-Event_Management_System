@@ -60,7 +60,7 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "updateBalance")
-    public ResponseEntity<Object> updateBalance(@RequestHeader("Authorization") String token, BigDecimal balance) {
-        return userProfileService.updateBalance(token, balance);
+    public ResponseEntity<Object> updateBalance(@RequestHeader("Authorization") String token, @RequestBody Map<String, BigDecimal> request) {
+        return userProfileService.updateBalance(token, request.get("balance"));
     }
 }
