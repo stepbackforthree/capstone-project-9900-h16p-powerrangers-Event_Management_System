@@ -71,8 +71,8 @@
 
     <select id="queryEvent" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO"
                             resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
-        select * from sys_event
-        <include refid="event_name"/>
+        select e.*, u.username as hostName from sys_event e, sys_user u
+        where host_id = #{hostId} and event_name = #{eventName} and e.host_id = u.id
         order by start_time desc;
     </select>
 
@@ -156,29 +156,12 @@
         host_id = #{hostId} and event_name = #{eventName};
     </update>
 
-    <select id="getOneMonthEvents" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventFilterDTO"
-                                    resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
+    <select id="getOneMonthEvents" resultType="com.powerrangers.system.modules.EventManagement.service.dto.EventDTO">
         select e.*, t.ticket_type, t.ticket_amount, t.ticket_price,
         (select username from sys_user where id = e.host_id) as hostName
         from sys_event e, event_ticket t
         <where>
             e.event_id = t.event_id and t.ticket_type = 1
-            <if test="location != null and location.length() != 0 and location != ''">
-                and location = #{location}
-            </if>
-            <if test="starLevel != null and starLevel != 0 and starLevel lte 5">
-                and star_level <![CDATA[ >= ]]> #{starLevel}
-            </if>
-            <if test="minPrice != null and maxPrice != null and minPrice lte maxPrice">
-                and t.ticket_price <![CDATA[ >= ]]> #{minPrice}
-                and t.ticket_price <![CDATA[ <= ]]> #{maxPrice}
-            </if>
-            <if test="online != null">
-                and online = #{online}
-            </if>
-            <if test="eventType != null and eventType != 0">
-                and event_type = #{eventType}
-            </if>
             and is_displayed = 1
             and start_time <![CDATA[ <= ]]> DATE_ADD(now(), INTERVAL 1 MONTH)
             and start_time <![CDATA[ >= ]]> now()

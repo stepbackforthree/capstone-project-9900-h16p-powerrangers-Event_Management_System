@@ -46,7 +46,7 @@ public interface EventMapper {
 
     void updateStarLevel(EventDTO eventDTO);
 
-    List<EventDTO> getOneMonthEvents(EventFilterDTO eventFilterDTO);
+    List<EventDTO> getOneMonthEvents();
 
     List<EventDTO> randomRecommendation();
 

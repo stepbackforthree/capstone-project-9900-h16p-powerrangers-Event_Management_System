@@ -41,7 +41,7 @@ public interface EventService {
 
     void updateStarLevel(EventDTO eventDTO);
 
-    ResponseEntity<Object> getOneMonthEvents(EventFilterDTO eventFilterDTO);
+    ResponseEntity<Object> getOneMonthEvents();
 
     ResponseEntity<Object> getRecommendation(String token);
 }

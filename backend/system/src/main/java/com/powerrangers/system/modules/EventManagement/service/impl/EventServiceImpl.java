@@ -364,9 +364,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<Object> getOneMonthEvents(EventFilterDTO eventFilterDTO) {
+    public ResponseEntity<Object> getOneMonthEvents() {
 
-        return new ResponseEntity<>(eventMapper.getOneMonthEvents(eventFilterDTO), HttpStatus.OK);
+        return new ResponseEntity<>(eventMapper.getOneMonthEvents(), HttpStatus.OK);
     }
 
     public List filterMethod(String[] a , HashSet filterWords){

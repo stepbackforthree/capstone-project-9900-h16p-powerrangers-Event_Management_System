@@ -114,8 +114,8 @@ public class EventController {
 
     @ApiOperation(value = "get events within one month")
     @GetMapping(value = "getOneMonthEvents")
-    public ResponseEntity<Object> getOneMonthEvents(@RequestBody EventFilterDTO eventFilterDTO) {
-        return eventService.getOneMonthEvents(eventFilterDTO);
+    public ResponseEntity<Object> getOneMonthEvents() {
+        return eventService.getOneMonthEvents();
 
     }
     @GetMapping(value = "getRecommendation")
