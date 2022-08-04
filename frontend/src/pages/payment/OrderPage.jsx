@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect }  from 'react';
 import './styles.css';
 import Paper from '@material-ui/core/Paper';
-import { Image, InputNumber, Divider, Avatar, List, Space, Radio, Button  } from 'antd';
+import { Image, InputNumber, Divider, Avatar, List, Space, Radio, Button, Input  } from 'antd';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
@@ -55,6 +55,9 @@ export default function OrderPage() {
   const [balance, setBalance] = useState(1);
   const [commentsList, setCommentsList] = useState();
   const [couponsList, setCouponsList] = useState();
+  const [couponCode, setCouponCode] = useState('');
+  const [couponMoney, setCouponMoney] = useState(0);
+  const [couponThreshold, setCouponThreshold] = useState(0);
   
 
   const ticketChoiseChange = (e) => {
@@ -173,11 +176,12 @@ export default function OrderPage() {
     window.location.reload();
     
   };
-
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+
+
 
   const IconText = ({ icon, text }) => (
     <Space>
@@ -192,21 +196,45 @@ export default function OrderPage() {
     return timeStr;
   }
 
+  const useCoupon = () => {
+    console.log('using coupon');
+    request(`/coupon/getCoupon?couponName=${couponCode}`, {
+      method: 'GET',
+    }).then((response) => {
+      console.log(response);
+      setCouponMoney(response.money);
+      setCouponThreshold(response.threshold);
+    })
+  }
+
 
   return (
     <div>
       <Modal title="Text Input" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <p><b>Ticket you choose: </b>{ticketChoise}</p> 
         <p><b>Your Balance: </b>${balance}</p> 
-        <p><b>Ticket Price: </b>${ticketPrice}</p> 
+        <p><b>Ticket Price: </b>${ticketPrice}</p>
+        
         <p>
           <b>Ticket Amount:</b>
           <InputNumber min={1} max={10} value={ticketAmount} onChange={onTicketAmountChange} />
         </p>
         <p>[One Account Only Can Order 10 tickets Once at most]</p>
+        <p><b>Total Price: </b>${ticketPrice*ticketAmount}</p>
+        <p><b>Discount Price:</b></p> 
+        {ticketPrice*ticketAmount >= couponThreshold ?
+          <>${ticketPrice*ticketAmount-couponMoney}</>    :
+          <>${ticketPrice*ticketAmount}</>
+        }
+        <p>
+          <b>Input Coupon:</b>
+          <Button type="link" onClick={() => {useCoupon()}}>Use</Button>
+          <Input value={couponCode} onChange={(e)=> {setCouponCode(e.target.value)}} />
+        </p>
         {/* <b>Choose Your Payment Method:</b> */}
         
       </Modal>
+      
       <TitleContainer>
         <h2>Order Page</h2>
       </TitleContainer>
