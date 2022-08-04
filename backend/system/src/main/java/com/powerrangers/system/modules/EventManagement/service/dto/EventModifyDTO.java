@@ -26,5 +26,4 @@ public class EventModifyDTO implements Serializable {
 
     private Boolean newBoolean;
 
-    private String newImage;
 }

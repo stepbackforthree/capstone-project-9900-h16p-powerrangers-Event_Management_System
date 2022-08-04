@@ -122,4 +122,9 @@ public class EventController {
     public ResponseEntity<Object> getRecommendation(@RequestHeader("Authorization") String token) {
         return eventService.getRecommendation(token);
     }
+    @PostMapping(value = "/updateImage")
+    public ResponseEntity<Object> updateImage(@RequestHeader("Authorization") String token,
+                                                 @RequestBody EventModifyDTO eventModifyDTO) {
+        return eventService.updateImage(token, eventModifyDTO);
+    }
 }

@@ -51,4 +51,6 @@ public interface EventMapper {
     List<EventDTO> randomRecommendation();
 
     List<EventDTO> getEventsByType(String typeName);
+
+    void updateImage(EventModifyDTO eventModifyDTO);
 }

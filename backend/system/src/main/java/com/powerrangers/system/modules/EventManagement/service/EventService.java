@@ -44,5 +44,7 @@ public interface EventService {
     ResponseEntity<Object> getOneMonthEvents();
 
     ResponseEntity<Object> getRecommendation(String token);
+
+    ResponseEntity<Object> updateImage(String token, EventModifyDTO eventModifyDTO);
 }
 

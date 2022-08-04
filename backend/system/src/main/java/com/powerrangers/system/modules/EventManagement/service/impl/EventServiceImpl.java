@@ -501,4 +501,26 @@ public class EventServiceImpl implements EventService {
         responseBody.put("error","cannot recommend");
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public ResponseEntity<Object> updateImage(String token, EventModifyDTO eventModifyDTO) {
+        User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
+
+        Map<String, String> responseBody = new HashMap<>();
+
+        if (currUser == null) {
+            responseBody.put("error", "token is invalid!");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+        eventModifyDTO.setHostId(currUser.getId());
+
+        if (checkExist(eventModifyDTO)){
+            eventMapper.updateImage(eventModifyDTO);
+            responseBody.put("msg","Update image succeed!");
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        }else{
+            responseBody.put("error","The event you want to modify did not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

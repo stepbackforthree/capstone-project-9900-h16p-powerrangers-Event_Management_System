@@ -180,4 +180,9 @@
         select  s.*, e.ticket_type, e.ticket_amount, e.ticket_price  from sys_event s ,event_ticket e
         where s.event_id = e.event_id and e.ticket_type = 1 and  s.is_displayed = 1 and s.event_type = (select type_id from event_type where type_name = #{typeName});
     </select>
+
+    <select id="updateImage" parameterType="com.powerrangers.system.modules.EventManagement.service.dto.EventModifyDTO">
+        update sys_event set image = #{newString}
+        <include refid="event_name"/>;
+    </select>
 </mapper>
