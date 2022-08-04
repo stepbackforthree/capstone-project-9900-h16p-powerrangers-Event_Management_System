@@ -46,11 +46,13 @@ public class EventTicketServiceImpl implements EventTicketService {
             eventModifyDTO.setEventName(ticketDTO.getEventName());
             ticketDTO.setHostName(currUser.getUserName());
 
+            // check current event that is ready to add ticket type exists or not
             if (eventMapper.queryEvent(eventModifyDTO) == null) {
                 responseBody.put("error", "host and event is not match!");
                 return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
             }
 
+            // check current ticket type exists or not
             if (eventTicketMapper.checkExist(ticketDTO) > 0) {
                 responseBody.put("error", "ticket type has already existed!");
                 return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
@@ -78,6 +80,7 @@ public class EventTicketServiceImpl implements EventTicketService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // get ticket type list for current event
         List<TicketDTO> ticketList = eventTicketMapper.getTicketType(ticketDTO);
 
         if (ticketList == null || ticketList.size() == 0) {
@@ -99,6 +102,7 @@ public class EventTicketServiceImpl implements EventTicketService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // check ticket amount when placing order is beyond the remaining amount or not
         Integer ticketAmount = ticketDTO.getTicketAmount();
         if (ticketAmount > 0 && ticketAmount > eventTicketMapper.getRemainTicketAmount(ticketDTO)) {
             responseBody.put("error", "buying beyond the remaining amount!");

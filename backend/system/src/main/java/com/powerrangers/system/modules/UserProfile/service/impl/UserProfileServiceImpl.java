@@ -34,14 +34,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         responseBody.clear();
 
+        // get current user information through parsing token
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
+        // check token exists or not
         if (currUser == null) {
             responseBody.put("error", "token is invalid!");
             return responseBody;
         }
-
-
 
         if (currUser.getNickName().equals(nickName)) {
             responseBody.put("error", "duplicated nickname!");
@@ -55,6 +55,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileMapper.updateNickname(userProfileDTO);
 
         currUser.setNickName(nickName);
+
+        //update token value information
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 

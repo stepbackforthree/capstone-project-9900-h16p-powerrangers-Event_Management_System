@@ -54,6 +54,7 @@ public class EventServiceImpl implements EventService {
         eventModifyDTO.setHostId(currUser.getId());
         smallEventDTO.setHostId(currUser.getId());
 
+        // if new event have no specific image, then replace default image for better display
         if (smallEventDTO.getImage().equals("") || smallEventDTO.getImage().length() == 0) {
             smallEventDTO.setImage(defaultEventImage);
         }
@@ -64,12 +65,14 @@ public class EventServiceImpl implements EventService {
         }
 
         eventMapper.createEvent(smallEventDTO);
+        // full price ticket is compulsory when creating a new event
         eventMapper.createEventInsertFullPriceTicket(smallEventDTO);
 
         responseBody.put("msg", "Create event succeed!");
         return new ResponseEntity<>(responseBody ,HttpStatus.OK);
     }
 
+    // check request event exists or not
     @Override
     public Boolean checkExist(EventModifyDTO eventModifyDTO) {
         return eventMapper.checkExist(eventModifyDTO) > 0;

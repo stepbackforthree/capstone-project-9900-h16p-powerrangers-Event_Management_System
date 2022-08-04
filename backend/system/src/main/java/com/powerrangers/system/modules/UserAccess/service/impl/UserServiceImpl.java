@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, String> responseBody = new HashMap<>();
 
+    // check user exists or not
     @Override
     public Boolean checkExist(SmallUserDTO smallUserDTO) {
         return userMapper.checkExist(smallUserDTO) > 0;
@@ -70,6 +71,7 @@ public class UserServiceImpl implements UserService {
     public Boolean createUser(SmallUserDTO smallUserDTO) {
 
         if (!checkExist(smallUserDTO)) {
+            // set a default avatar for better display when create a user
             smallUserDTO.setAvatar(defaultUserAvatar);
             userMapper.addUser(smallUserDTO);
             return true;
@@ -91,6 +93,8 @@ public class UserServiceImpl implements UserService {
             map.put("expiration", expiration);
             map.put("msg", "login succeed!");
 
+            // after login successfully, store the user information into redis and set token as key
+            // then service can easily identify the identity of request
             redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(userDTO), Integer.parseInt(expiration), TimeUnit.MILLISECONDS);
 
             return new ResponseEntity<>(JSON.toJSONString(map), HttpStatus.OK);
@@ -104,6 +108,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Object> logout(String token) {
+        // delete token in redis
         redisTemplate.delete("token_" + token);
 
         Map<String, String> map = new HashMap<>();
@@ -239,6 +244,7 @@ public class UserServiceImpl implements UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-type", "application/json");
 
+        // return user information via parse token
         return ResponseEntity.ok().headers(headers)
                 .body(JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class));
     }

@@ -45,6 +45,8 @@ public class CommentServiceImpl implements CommentService {
 
     Map<String, String> responseBody = new HashMap<>();
 
+    // set three person all give three star as default star level for every event
+    // based on this, average value is utilized to calculate the star level when a new comment with star level coming in
     public void updateStarLevel(CommentDTO commentDTO) {
         List<Comment> comments = getComments(commentDTO);
 
@@ -84,6 +86,7 @@ public class CommentServiceImpl implements CommentService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // check current user has already left a comment for this event or not
         if (commentMapper.getCustomerComment(commentDTO).size() > 0) {
             responseBody.put("error", "customer has already add a comment!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
@@ -112,6 +115,7 @@ public class CommentServiceImpl implements CommentService {
         commentDTO.setCustomerId(currUser.getId());
         commentMapper.editComment(commentDTO);
 
+        // after edit a comment, the star level of an event must be updated
         updateStarLevel(commentDTO);
 
         responseBody.put("msg", "edit comment succeed!");
@@ -137,6 +141,7 @@ public class CommentServiceImpl implements CommentService {
         commentDTO.setCustomerId(currUser.getId());
         commentMapper.deleteComment(commentDTO);
 
+        // after delete a comment, the star level of an event must be updated
         updateStarLevel(commentDTO);
 
         responseBody.put("msg", "delete comment succeed!");

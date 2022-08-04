@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // check user has enough balance to place order or not
         if (currUser.getBalance().compareTo(orderDTO.getTicketPrice().multiply(BigDecimal.valueOf(orderDTO.getTicketAmount()))) < 0) {
             responseBody.put("error", "insufficient balance, insert order fail!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
@@ -57,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setCustomerId(currUser.getId());
         orderMapper.insertOrder(orderDTO);
 
+        // also update balance for current user
         userProfileService.updateBalance(token, currUser.getBalance().subtract(orderDTO.getTicketPrice().multiply(BigDecimal.valueOf(orderDTO.getTicketAmount()))));
 
         responseBody.put("msg", "insert order succeed!");
@@ -76,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // set current order isRefund flag to true
         orderMapper.refundOrder(orderId);
 
         Order currOrder = orderMapper.queryOrderById(orderId);

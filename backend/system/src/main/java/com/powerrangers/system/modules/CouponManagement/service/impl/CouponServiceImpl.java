@@ -40,6 +40,7 @@ public class CouponServiceImpl implements CouponService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // check coupon name exists or not, coupon name is recognized as the unique key for every coupon
         if (couponMapper.getCoupon(couponDTO.getCouponName()).size() > 0) {
             responseBody.put("error", "coupon code is duplicated!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
@@ -64,6 +65,7 @@ public class CouponServiceImpl implements CouponService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // get coupon details for price discount calculation
         List<Coupon> coupon = couponMapper.getCoupon(couponName);
 
         if (coupon.size() == 0) {
@@ -91,6 +93,7 @@ public class CouponServiceImpl implements CouponService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        // set a coupon is visible for public or not
         couponMapper.changeVisibility(couponName);
 
         responseBody.put("msg", "change visibility succeed!");
