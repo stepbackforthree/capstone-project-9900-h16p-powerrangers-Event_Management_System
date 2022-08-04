@@ -262,7 +262,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         userProfileMapper.updateBalance(userProfileDTO);
 
-        currUser.setBalance(balance);
+        currUser.setBalance(userProfileDTO.getBalance());
         redisTemplate.opsForValue().set("token_"+token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_"+token), TimeUnit.SECONDS);
 
