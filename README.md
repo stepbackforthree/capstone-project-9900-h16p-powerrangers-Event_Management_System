@@ -39,6 +39,7 @@ and unzip and extract the content in the current directory, then you can move th
 <center>or</center>
 <center><b>yarn start</b></center>
 Then you will see the information likes below figure if everything goes well.
+
 ![3](images/3.png)
 
 ### 5. Turn on a browser and visit our website via:
@@ -58,10 +59,11 @@ Now the front-end project is running on the port 3000.
 
 <center><b> java -jar backend.jar</b></center>
 Then you should see information likes below figure:
+
 ![4](images/4.png)
+
 Now the back-end service is running on the port 8081.
 
 ### 4. If everything goes well till now, the project has completely deployed and worked, enjoy! By the way, if you want to see the interfaces information of this project, you can open a browser and visit:
 
 <center><b>http://localhost:8081/swagger-ui/index.html</b></center>
-
