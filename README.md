@@ -1,5 +1,15 @@
 # capstone-project-9900-h16p-powerrangers
 
+This is the capstone project of UNSW IT 22T2 COMP9900 Info Tech Project. This is a web application with separation of front-end and back-end, establishing an event management system for host and customer interaction likes creating event, managing event and booking tickets.
+
+Powerrangers Team members list:
+
+ - Yanfeng Chen (Scrum Master and Front-end developer)
+ - Zexuan He (Front-end developer)
+ - Haoyu Wang (Back-end developer)
+ - Yu Jia (Back-end developer)
+ - Zhaoyang Wang (Project manager)
+
 ## Below list should be installed on local environment.
 
 1. Node.js
