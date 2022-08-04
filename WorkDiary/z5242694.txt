@@ -31,3 +31,5 @@ Week 9
 Finish interfaces of insert order and refund order, continue to develop order comments related interfaces.
 
 Week 10
+Finish final sprint for backend development and also finish final demo. Pack the final version of source code and then submit.
+We finally get there and, enjoy.
