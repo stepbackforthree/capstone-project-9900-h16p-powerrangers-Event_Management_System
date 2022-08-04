@@ -472,7 +472,9 @@ public class EventServiceImpl implements EventService {
                         orderedRes.put(i,1.0);
                     }
                 }
-
+            }
+            if(orderedRes.isEmpty()){
+                return new ResponseEntity<>(eventMapper.randomRecommendation(), HttpStatus.OK);
             }
             List<String> history = filterMethod(historywords,filterWords);
             for(EventDTO e : orderedRes.keySet()){
