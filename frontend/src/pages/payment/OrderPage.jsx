@@ -86,6 +86,9 @@ export default function OrderPage() {
   const onTicketAmountChange = (value) => {
     console.log('ticketAmount changed', value);
     setTicketAmount(value);
+  };
+
+  useEffect(() => {
     if (ticketPrice*ticketAmount >= couponThreshold) {
       if (ticketPrice*ticketAmount-couponMoney < 0) {
         setPayMoney(0);
@@ -95,7 +98,8 @@ export default function OrderPage() {
     } else {
       setPayMoney(ticketPrice*ticketAmount);
     }
-  };
+  }, [ticketAmount])
+
 
   useEffect(() => {
     request(`/events/queryEvent`,{
@@ -185,7 +189,7 @@ export default function OrderPage() {
       console.log(res);
     })
 
-    window.location.reload();
+    // window.location.reload();
     
   };
   const handleCancel = () => {
