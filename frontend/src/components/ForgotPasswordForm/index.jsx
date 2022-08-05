@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -16,8 +14,6 @@ import EmailIcon from '@material-ui/icons/Email';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { useForm, Form } from '../useForm';
-
-import request from '../../utils/request';
 
 function Copyright() {
   return (
@@ -180,22 +176,6 @@ export default function RegisterForm(props) {
         </Typography>
         <Form>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="userName"
-                variant="outlined"
-                required
-                fullWidth
-                id="userName"
-                label="User Name"
-                autoFocus
-                value = {values.userName}
-                onChange = {handleInputChange}
-                onBlur={validateInput}
-              />
-              {error.userName && <span className='err'>{error.userName}</span>}
-            </Grid> */}
             <Grid item xs={8}>
               <TextField
                 variant="outlined"

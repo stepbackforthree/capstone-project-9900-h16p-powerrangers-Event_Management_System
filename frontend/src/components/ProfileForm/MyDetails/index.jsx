@@ -71,9 +71,21 @@ export default function Mydetails() {
       }
     }).then(data => {
       console.log(data)
-      
+      window.location.reload();
     })
   }
+
+  // const submitPhoneNumber = () => {
+  //   request('/profile/updateAvatar',{
+  //     method: 'POST',
+  //     data: {
+  //       'avatar': baseImage
+  //     }
+  //   }).then(data => {
+  //     console.log(data)
+  //     window.location.reload();
+  //   })
+  // }
 
   return (
     <>
@@ -117,6 +129,7 @@ export default function Mydetails() {
           color="default"
           className={classes.button}
           startIcon={<CloudUploadIcon />}
+          // onClick={submitPhoneNumber}
           // className={classes.submit}
           // onClick={handleSubmitHost}
         >

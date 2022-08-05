@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, message, Steps, Result, Image, Radio, Spin,Input  } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import QRcode from '../../img/paymentQRcode.png';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import request from '../../utils/request';

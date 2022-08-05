@@ -58,11 +58,14 @@ export default function OrderPage() {
   const [couponCode, setCouponCode] = useState('');
   const [couponMoney, setCouponMoney] = useState(0);
   const [couponThreshold, setCouponThreshold] = useState(0);
-  
+  const [ticketMax, setTicketMax] = useState(0);
+  const [payMoney, setPayMoney] = useState(0);
+
 
   const ticketChoiseChange = (e) => {
     SetTicketChoise(e.target.value);
     setTicketPrice(e.target.price);
+    setTicketMax(e.target.count);
   };
 
   useEffect(() => {
@@ -83,6 +86,15 @@ export default function OrderPage() {
   const onTicketAmountChange = (value) => {
     console.log('ticketAmount changed', value);
     setTicketAmount(value);
+    if (ticketPrice*ticketAmount >= couponThreshold) {
+      if (ticketPrice*ticketAmount-couponMoney < 0) {
+        setPayMoney(0);
+      } else {
+        setPayMoney(ticketPrice*ticketAmount-couponMoney);
+      }
+    } else {
+      setPayMoney(ticketPrice*ticketAmount);
+    }
   };
 
   useEffect(() => {
@@ -95,7 +107,7 @@ export default function OrderPage() {
         'hostName': hostName
       }
     }).then((response) => {
-      // console.log(response);
+      console.log(response);
       setData(response);
       setEventId(response.eventId);
     })
@@ -147,7 +159,7 @@ export default function OrderPage() {
       "hostName": hostName,
       "paymentType": 1,
       "ticketAmount": ticketAmount,
-      "ticketPrice": ticketPrice,
+      "ticketPrice": payMoney/ticketAmount,
       "ticketType": ticketChoise
     }
     const updateTicketAmountData = {
@@ -217,15 +229,11 @@ export default function OrderPage() {
         
         <p>
           <b>Ticket Amount:</b>
-          <InputNumber min={1} max={10} value={ticketAmount} onChange={onTicketAmountChange} />
+          <InputNumber min={1} max={ticketMax} value={ticketAmount} onChange={onTicketAmountChange} />
         </p>
         <p>[One Account Only Can Order 10 tickets Once at most]</p>
         <p><b>Total Price: </b>${ticketPrice*ticketAmount}</p>
-        <p><b>Discount Price:</b></p> 
-        {ticketPrice*ticketAmount >= couponThreshold ?
-          <>${ticketPrice*ticketAmount-couponMoney}</>    :
-          <>${ticketPrice*ticketAmount}</>
-        }
+        <p><b>Discount Price:</b>${payMoney}</p> 
         <p>
           <b>Input Coupon:</b>
           <Button type="link" onClick={() => {useCoupon()}}>Use</Button>
@@ -294,7 +302,7 @@ export default function OrderPage() {
                 <Radio.Group value={ticketChoise} onChange={ticketChoiseChange}>
                   {data.tickets && data.tickets.map((item) => {
                     return (
-                      <Radio.Button value={item.ticketType} price={item.ticketPrice}>{item.ticketType}</Radio.Button>
+                      <Radio.Button value={item.ticketType} price={item.ticketPrice} count={item.ticketAmount}>{item.ticketType}</Radio.Button>
                     )
                   })}
                 </Radio.Group>
@@ -349,12 +357,17 @@ export default function OrderPage() {
                 <List.Item.Meta
                   // avatar={<Avatar src={item.avatar}/>}
                   title={<h4><b>Coupon Code: </b>{item.couponName}</h4>}
-                  description={`Amount:${item.amount}`}
+                  description={`Amount:${item.amount}  Discount:$${item.money}`}
                 />
                 <div>
+                  {item.couponType === 1 ?
+                    <p><b>No Threshold</b></p>  :
+                    <p><b>Threshold:</b>{item.threshold}</p>
+                  }
                   <b>Valid Time: </b>  
                   <i>{showTime(item.startTime)} <b style={{"margin": "0 10px"}}>to</b> {showTime(item.endTime)}</i>
                 </div>
+                
               </List.Item>
             )}
           />

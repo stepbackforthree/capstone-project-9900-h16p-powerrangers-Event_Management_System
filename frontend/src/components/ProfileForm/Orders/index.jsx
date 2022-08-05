@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Skeleton, message, Divider, Popconfirm, Modal,Rate,Input   } from 'antd';
+import { Button, List, message, Divider, Popconfirm, Modal,Rate,Input   } from 'antd';
 import React, { useEffect, useState } from 'react';
 import request from '../../../utils/request';
 import './styles.css';
