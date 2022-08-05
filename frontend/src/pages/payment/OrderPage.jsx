@@ -201,8 +201,6 @@ export default function OrderPage() {
   };
 
 
-
-
   const IconText = ({ icon, text }) => (
     <Space>
       {React.createElement(icon)}
