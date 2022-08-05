@@ -55,7 +55,7 @@ export default function OrderPage() {
   const [balance, setBalance] = useState(1);
   const [commentsList, setCommentsList] = useState();
   const [couponsList, setCouponsList] = useState();
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState();
   const [couponMoney, setCouponMoney] = useState(0);
   const [couponThreshold, setCouponThreshold] = useState(0);
   const [ticketMax, setTicketMax] = useState(0);
@@ -98,7 +98,7 @@ export default function OrderPage() {
     } else {
       setPayMoney(ticketPrice*ticketAmount);
     }
-  }, [ticketAmount])
+  }, [ticketAmount, ticketPrice])
 
 
   useEffect(() => {
@@ -189,7 +189,7 @@ export default function OrderPage() {
       console.log(res);
     })
 
-    // window.location.reload();
+    window.location.reload();
     
   };
   const handleCancel = () => {
@@ -213,14 +213,22 @@ export default function OrderPage() {
   }
 
   const useCoupon = () => {
-    console.log('using coupon');
-    request(`/coupon/getCoupon?couponName=${couponCode}`, {
-      method: 'GET',
-    }).then((response) => {
-      console.log(response);
-      setCouponMoney(response.money);
-      setCouponThreshold(response.threshold);
-    })
+    console.log('using coupon', couponCode);
+    if (couponCode !== undefined) {
+      request(`/coupon/getCoupon?couponName=${couponCode}`, {
+        method: 'GET',
+      }).then((response) => {
+        if (response) {
+          console.log(response);
+          setCouponMoney(response.money);
+          setCouponThreshold(response.threshold);
+        }
+      })
+    }
+  }
+
+  const updateCouponAmount = () => {
+    console.log('');
   }
 
 
