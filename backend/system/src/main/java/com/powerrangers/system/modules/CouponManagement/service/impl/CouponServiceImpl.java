@@ -153,7 +153,7 @@ public class CouponServiceImpl implements CouponService {
         }
 
         // check coupon code amount is enough for use or not
-        if (coupon.get(0).getAmount() < couponDTO.getAmount()) {
+        if (coupon.get(0).getAmount() < 1) {
             responseBody.put("error", "coupon code is out of stock!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
