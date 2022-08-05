@@ -98,7 +98,7 @@ export default function OrderPage() {
     } else {
       setPayMoney(ticketPrice*ticketAmount);
     }
-  }, [ticketAmount, ticketPrice])
+  }, [ticketAmount, ticketPrice, couponMoney])
 
 
   useEffect(() => {
@@ -189,7 +189,11 @@ export default function OrderPage() {
       console.log(res);
     })
 
-    window.location.reload();
+    if (couponMoney !== 0) {
+      updateCouponAmount();
+    }
+
+    // window.location.reload();
     
   };
   const handleCancel = () => {
@@ -229,6 +233,14 @@ export default function OrderPage() {
 
   const updateCouponAmount = () => {
     console.log('');
+    request('/coupon/updateCouponAmount', {
+      method: 'POST',
+      data: {
+        "couponName": couponCode
+      }
+    }).then((response) => {
+      console.log(response);
+    })
   }
 
 
