@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.insertOrder(orderDTO);
 
         // also update balance for current user
-        userProfileService.updateBalance(token, currUser.getBalance().subtract(orderDTO.getTicketPrice().multiply(BigDecimal.valueOf(orderDTO.getTicketAmount()))));
+        userProfileService.updateBalance(token, orderDTO.getTicketPrice().multiply(BigDecimal.valueOf(orderDTO.getTicketAmount())).negate());
 
         responseBody.put("msg", "insert order succeed!");
 

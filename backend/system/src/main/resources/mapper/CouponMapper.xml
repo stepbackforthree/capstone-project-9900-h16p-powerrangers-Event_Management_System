@@ -38,7 +38,7 @@
     </select>
 
     <update id="updateCouponAmount" parameterType="com.powerrangers.system.modules.CouponManagement.service.dto.CouponDTO">
-        update sys_coupon set amount = amount - #{amount} where coupon_name = #{couponName};
+        update sys_coupon set amount = amount - 1 where coupon_name = #{couponName};
     </update>
 
 </mapper>
