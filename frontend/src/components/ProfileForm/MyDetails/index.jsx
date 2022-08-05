@@ -71,6 +71,7 @@ export default function Mydetails() {
       }
     }).then(data => {
       console.log(data)
+      
     })
   }
 

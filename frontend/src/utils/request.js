@@ -1,4 +1,4 @@
-import message from './message.js';
+import { message } from 'antd';
 import { API_HOST } from './apiHost';
 
 /**
@@ -14,38 +14,29 @@ export default async function apiCall (url, opt = {}) {
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      // Accept: 'application/json',
       Authorization: `${token || localStorage.getItem('token')}`,
     },
-    // cache: 'no-cache',
     body: method !== 'GET' ? JSON.stringify(data) : undefined,
-    // body: method !== 'GET' ? data : undefined,
   }
 
-  // console.log(init);
-  // console.log(`${API_HOST}${url}`);
 
   const res = await fetch(`${API_HOST}${url}`, init);
   console.log(res);
-  // console.log(typeof(res));
-  // console.log(res.text());
 
   const dataJson = await res.json();
   console.log('dataJson:', dataJson);
-  // const dataJson = await JSON.parse(res);
-  // const dataJson = await fetch(`${API_HOST}${url}`, init);
+
 
   if (dataJson.error) {
     if (dataJson.error.includes('token is invalid')) {
+      console.log(dataJson.error);
       message.error('token expired, please login', 3, () => {
         window.location.href = '/login';
       });
     } else {
-      console.log(dataJson.error)
-      message.error({content: (dataJson.error),  duration: 2500})
+      message.error(dataJson.error, 3)
     }
     return;
   }
-  // console.log('dataJson:', dataJson);
   return dataJson;
 }

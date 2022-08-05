@@ -1,5 +1,6 @@
 import './styles.css';
 import React from 'react';
+import request from '../../../../utils/request';
 import Button from '@material-ui/core/Button';
 import { useNavigate } from 'react-router-dom';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -17,7 +18,19 @@ export default function ListItem( {item:{hostName, image, eventName, eventType, 
   const goToOrder = (hostName, eventName) => {
     // window.localStorage.setItem('queryHostName', hostName);
     // window.localStorage.setItem('queryEventName', eventName);
-    navigate(`/event/eventOrder?hostName=${hostName}&eventName=${eventName}`);
+    request(`/events/queryEvent`,{
+      method: 'POST',
+      data: {
+        // 'eventName': window.localStorage.getItem('queryEventName'),
+        'eventName': eventName,
+        // 'hostName': window.localStorage.getItem('queryHostName'),
+        'hostName': hostName
+      }
+    }).then((response) => {
+      if (response !== undefined) {
+        navigate(`/event/eventOrder?hostName=${hostName}&eventName=${eventName}`);
+      }
+    })
   }
 
   const showTime = (string) => {

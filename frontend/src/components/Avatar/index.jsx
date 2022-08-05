@@ -26,11 +26,15 @@ export default function SimpleMenu() {
   };
 
   const naviToProfile = () => {
-    navigate('/profile');
+    navigate('/profile/info');
   }
 
   const naviToEventList = () => {
     navigate('/host/eventList');
+  }
+
+  const naviToMyOrders = () => {
+    navigate('/orders/myOrders');
   }
 
   useEffect(() => {
@@ -86,9 +90,15 @@ export default function SimpleMenu() {
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();
-          naviToEventList()
+          naviToEventList();
         }}>
           My Event List
+        </MenuItem>
+        <MenuItem onClick={() => { 
+          handleClose();
+          naviToMyOrders();
+        }}>
+          My Orders
         </MenuItem>
         <MenuItem onClick={() => { 
           handleClose();

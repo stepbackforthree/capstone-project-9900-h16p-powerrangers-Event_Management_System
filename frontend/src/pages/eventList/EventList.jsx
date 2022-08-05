@@ -54,24 +54,6 @@ const eventType = {
   5: 'Tourism Exhibition'
 }
 
-// const data = Array.from({
-//   length: 15,
-// }).map((_, i) => ({
-//   eventName: `Event part ${i+1}`,
-//   eventType: 3,
-//   location: 'Sydney',
-//   description:
-//     'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//   startTime: '2022-07-07T10:00:00',
-//   endTime: '2022-07-08T10:00:00',
-//   isDisplayed: true,
-//   starLevel: 3,
-//   image: "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png",
-//   isCancelled: false,
-//   ticketPrice: 100,
-//   ticketAmount: 500
-// }));
-
 
 export default function EventList() {
   const navigate = useNavigate();

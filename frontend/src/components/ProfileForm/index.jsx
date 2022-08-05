@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import MyDetails from './MyDetails';
 import BankDetails from './BankDetails';
 import ResetPassword from './ResetPassword';
-import Orders from './Orders';
 import styled from 'styled-components';
 
 
@@ -97,21 +96,17 @@ export default function ProfileForm(props) {
             aria-label="Vertical tabs example"
             className={classes.tabs}
           >
-            <Tab label="Orders" {...a11yProps(0)} />
-            <Tab label="My details" {...a11yProps(1)} />
-            <Tab label="Bank Detail" {...a11yProps(2)} />
-            <Tab label="Password" {...a11yProps(3)} />
+            <Tab label="My details" {...a11yProps(0)} />
+            <Tab label="Bank Detail" {...a11yProps(1)} />
+            <Tab label="Password" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0} className={classes.panel}>
-            <Orders/>
-          </TabPanel>
-          <TabPanel value={value} index={1} className={classes.panel}>
             <MyDetails/>
           </TabPanel>
-          <TabPanel value={value} index={2} className={classes.panel}>
+          <TabPanel value={value} index={1} className={classes.panel}>
             <BankDetails/>
           </TabPanel>
-          <TabPanel value={value} index={3} className={classes.panel}>
+          <TabPanel value={value} index={2} className={classes.panel}>
             <ResetPassword/>
           </TabPanel>
 

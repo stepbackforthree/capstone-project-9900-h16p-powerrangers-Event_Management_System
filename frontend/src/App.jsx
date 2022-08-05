@@ -20,7 +20,7 @@ import ProfilePage from './pages/profile/ProfilePage'
 import EventManagement from './pages/event_management/EventManagement';
 import EventList from './pages/eventList/EventList';
 import EventOrder from './pages/EventOrder/EventOrder';
-
+import MyOrders from './pages/MyOrders/MyOrders';
 import OrderPage from './pages/payment/OrderPage';
 import PaymentPage from './pages/payment/PaymentPage';
 import message from './utils/message';
@@ -56,22 +56,19 @@ function App() {
     // <ThemeProvider theme={THEME}>
       <AppContainer >
         <AppBar />
-        {/* <Link to="/register">register</Link>
-        <Link to="/login">login</Link>
-        <Link to="/dashboard">DashBoard</Link>
-        <Link to="/profile">profile</Link> */}
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/info" element={<ProfilePage />} />
           <Route path="/host/eventEdit" element={<EventManagement />} />
           <Route path="/host/eventOrder" element={<EventOrder />} />
           <Route path="/host/eventAdd" element={<EventAdd />} />
           <Route path="/host/eventList" element={<EventList />} />
           <Route path="/profile/accountRecharge" element={<PaymentPage />} />
           <Route path="/event/eventOrder" element={<OrderPage />} />
+          <Route path="/orders/MyOrders" element={<MyOrders />} />
         </Routes>
       </AppContainer>
     // </ThemeProvider>  

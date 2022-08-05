@@ -118,13 +118,23 @@ export default function DashBoard() {
   }
   
   const searchEvents = () => {
-    request(`/events/searchEvents?keyWords=${searchValue}`, {
-      method: 'GET',
-      data: {}
-    }).then((response) => {
-      // console.log(response);
-      setList(response);
-    })
+    if (searchValue !== undefined) {
+      request(`/events/searchEvents?keyWords=${searchValue}`, {
+        method: 'GET',
+        data: {}
+      }).then((response) => {
+        // console.log(response);
+        setList(response);
+      })
+    } else {
+      request('/events/getAllEvents', {
+        method: 'POST',
+        data: {}
+      }).then((response) => {
+        console.log(response);
+        setList(response);
+      })
+    }
   }
 
   const handleRecommendationSearch = () => {

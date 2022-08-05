@@ -13,11 +13,12 @@ import MailIcon from '@material-ui/icons/Mail';
 // import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Logo from '../../img/Logo.png';
+import { HomeOutlined, UnorderedListOutlined, OrderedListOutlined, WalletOutlined, ProfileOutlined } from '@ant-design/icons';
 
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
+    width: 200,
   },
   fullList: {
     width: 'auto',
@@ -44,6 +45,37 @@ export default function TemporaryDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const eventRelative = [
+    {
+      'icon': <HomeOutlined />,
+      'name': 'Dashboard',
+      'link': '/dashboard'
+    },
+    {
+      'icon': <UnorderedListOutlined />,
+      'name': 'My Orders',
+      'link': '/orders/myOrders'
+    },
+    {
+      'icon': <OrderedListOutlined />,
+      'name': 'My Event List',
+      'link': '/host/eventList'
+    }
+  ]
+
+  const userRelative = [
+    {
+      'icon': <WalletOutlined />,
+      'name': 'My Wallet',
+      'link': '/profile/accountRecharge'
+    },
+    {
+      'icon': <ProfileOutlined />,
+      'name': 'My Profile',
+      'link': '/profile/info'
+    }
+  ]
+
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -54,19 +86,23 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {eventRelative.map((item) => (
+          <ListItem button key={item.name}>
+            <ListItemIcon>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.name} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {userRelative.map((item) => (
+          <ListItem button key={item.name}>
+            <ListItemIcon>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.name} />
           </ListItem>
         ))}
       </List>
