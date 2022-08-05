@@ -15,12 +15,14 @@ export default function Login() {
           method: 'POST',
           data: values
         }).then(data => {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('userName', values.userName);
-          localStorage.setItem('role', values.role);
-          navigate('/dashboard');
-          // window.location.href = '/dashboard';
-          message.success({content: ('log in successfully!'),  duration: 2500})
+          if (data !== undefined) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userName', values.userName);
+            localStorage.setItem('role', values.role);
+            navigate('/dashboard');
+            // window.location.href = '/dashboard';
+            message.success({content: ('log in successfully!'),  duration: 2500})
+          }
         })
       }}/>
     </div>
