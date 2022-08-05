@@ -275,6 +275,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public Map<String, String> updatePassword(String token, String password) {
+        // get the user with token in redis
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_" + token), User.class);
 
         responseBody.clear();
@@ -283,7 +284,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             responseBody.put("error", "token is invalid!");
             return responseBody;
         }
-
+        // duplicated password
         if (currUser.getPassword() != null && currUser.getPassword().equals(password)) {
             responseBody.put("error", "duplicated password!");
             return responseBody;
@@ -292,9 +293,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfileDTO userProfileDTO = new UserProfileDTO();
         userProfileDTO.setUserName(currUser.getUserName());
         userProfileDTO.setPassword(password);
-
+        //update password
         userProfileMapper.updatePassword(userProfileDTO);
 
+        // update new info in redis
         currUser.setPassword(password);
         redisTemplate.opsForValue().set("token_" + token, JSON.toJSONString(currUser),
                 redisTemplate.getExpire("token_" + token), TimeUnit.SECONDS);

@@ -150,33 +150,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<Object> sendEmail(EmailDTO emailDTO) throws IOException {
-
+        // get the email address and which kind of email to send
         String email = emailDTO.getEmailAddress();
         Integer state = emailDTO.getState();
+
+        // verification code
         int code = 0;
         String subject;
         String html;
         String userName;
         String eventName;
 
-        if (state == 0) {
+        if (state == 0) {    // the first condition to send the verification email
             subject = "Verification code";
             code = (int) ((Math.random() * 9 + 1) * 1000);
-            html = "Here you are, the verification code is: " + code;
-        } else if (state == 1) {
+            html = "Here you are, the verification code is: " + code;  //  verification email content
+        } else if (state == 1) {  // the second condition to send the refund letter
             userName = emailDTO.getUserName();
             eventName = emailDTO.getEventName();
             subject = "Refund letter";
             html = "Sorry " + userName + ", the host has cancelled the event \"" + eventName +
-                    "\", the money will refund back to your account.";
-        } else {
+                    "\", the money will refund back to your account.";          // refund letter content
+        } else {        // the third condition to send the  reservation letter
             userName = emailDTO.getUserName();
             eventName = emailDTO.getEventName();
             EventInfoDTO eventInfoDTO = userMapper.queryEvent(emailDTO);
             subject = "Reservation letter";
             html = "Dear " + userName + ", you have successfully booked the ticket of \"" + eventName + "\", the event will hold on "
                     + eventInfoDTO.getStartTime() + ", in " + eventInfoDTO.getLocation() + " " + eventInfoDTO.getSiteDescription() + ".";
-        }
+        }                               // reservation letter content
 
         HttpPost httpPost = new HttpPost(url);
         HttpClient httpClient = new DefaultHttpClient();
@@ -199,7 +201,7 @@ public class UserServiceImpl implements UserService {
         if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
             // Return correctly, parse the returned data
             System.out.println(EntityUtils.toString(response.getEntity()));
-            if (state == 0) {
+            if (state == 0) {   // return the verification code to the frontend
                 responseBody.put("msg", "The email has been sent successfully, the code is " + code);
                 result = new ResponseEntity<>(responseBody, HttpStatus.OK);
             } else {

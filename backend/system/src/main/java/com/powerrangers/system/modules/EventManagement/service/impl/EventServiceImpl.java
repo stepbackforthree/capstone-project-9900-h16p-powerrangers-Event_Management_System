@@ -80,22 +80,24 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public ResponseEntity<Object> updateEventName(String token, EventModifyDTO eventModifyDTO){
-
+        // get the user information through redis
         User currUser = JSON.parseObject(redisTemplate.opsForValue().get("token_"+token), User.class);
 
         Map<String, String> responseBody = new HashMap<>();
 
+        // check if the token was valid
         if (currUser == null) {
             responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
         eventModifyDTO.setHostId(currUser.getId());
 
+        // if event exists
         if (checkExist(eventModifyDTO)){
             String eventName = eventModifyDTO.getEventName();
-            eventModifyDTO.setEventName(eventModifyDTO.getNewString());
+            eventModifyDTO.setEventName(eventModifyDTO.getNewString());  // reset the event info
             if (checkExist(eventModifyDTO)){
-                responseBody.put("error", "The new event name has existed");
+                responseBody.put("error", "The new event name has existed");  // check the new event info was duplicated with other existed events
                 return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
             }else{
                 eventModifyDTO.setEventName(eventName);
@@ -104,7 +106,7 @@ public class EventServiceImpl implements EventService {
                 return new ResponseEntity<>(responseBody, HttpStatus.OK);
             }
 
-        }else{
+        }else{  // event did not exist
             responseBody.put("error", "The event you want to modify did not exist");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
@@ -123,13 +125,13 @@ public class EventServiceImpl implements EventService {
         }
         eventModifyDTO.setHostId(currUser.getId());
 
-        if (checkExist(eventModifyDTO)){
+        if (checkExist(eventModifyDTO)){   // if event exist, update info directly, because only the event name should be unique
             eventMapper.updateEventTime(eventModifyDTO);
 
             responseBody.put("msg", "Update event time succeed!");
 
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
-        }else{
+        }else{  // if event did not exist
 
             responseBody.put("error", "The event you want to modify did not exist");
 
@@ -350,14 +352,14 @@ public class EventServiceImpl implements EventService {
             responseBody.put("error", "token is invalid!");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
-        if(eventMapper.checkUserExist(userName)>0){
-            if(eventMapper.checkSpendingHistory(userName)>0){
+        if(eventMapper.checkUserExist(userName)>0){  // if user exist
+            if(eventMapper.checkSpendingHistory(userName)>0){  // if user has spending history
                 return new ResponseEntity<>(eventMapper.getSpendingHistory(userName), HttpStatus.BAD_REQUEST);
             }
-            responseBody.put("error", "the user did not spend anything");
+            responseBody.put("error", "the user did not spend anything");  // user has no spending history
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
-        responseBody.put("error", "the user did not exist");
+        responseBody.put("error", "the user did not exist");  // user did not exist
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
@@ -371,19 +373,18 @@ public class EventServiceImpl implements EventService {
 
         return new ResponseEntity<>(eventMapper.getOneMonthEvents(), HttpStatus.OK);
     }
-
+    // filter the words that commonly appears in the sentence
     public List filterMethod(String[] a , HashSet filterWords){
         List<String> res = new ArrayList<>();
-
         for(String w: a){
             if(!filterWords.contains(w.trim()) && !"".equals(w) && !" ".equals(w)){
                 res.add(w.trim());
             }
         }
-
         return res;
     }
 
+    // calculate the cosine similarity of the events vector
     public Double cal(List<String> history , List<String> event){
 
         HashMap<String,Integer> totalWords = new HashMap<>();
@@ -401,17 +402,14 @@ public class EventServiceImpl implements EventService {
                 count++;
             }
         }
-
         List<Integer> his = new ArrayList<>(count);
         List<Integer> eve = new ArrayList<>(count);
         for(int i = 0; i<count; i++){
             his.add(0);
         }
-
         for(int i = 0; i<count; i++){
             eve.add(0);
         }
-
         for (String e: history){
             his.set(totalWords.get(e), his.get(totalWords.get(e)) + 1);}
         for (String e: event){
@@ -440,12 +438,13 @@ public class EventServiceImpl implements EventService {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
+        //if user has no spending history, then randomly recommend 10 events to the user
         if (eventMapper.checkSpendingHistory(currUser.getUserName()) == 0) {
             return new ResponseEntity<>(eventMapper.randomRecommendation(), HttpStatus.OK);
-
         }
-
+        // if user has spending history, then recommend events based on their history
         if (eventMapper.checkSpendingHistory(currUser.getUserName()) > 0) {
+            // get their spending history events
             List<OrderDTO> spendingHistory = eventMapper.getSpendingHistory(currUser.getUserName());
             List<String> eventsDecrip = new ArrayList<>();
             HashSet<String> eventType = new HashSet<>();
@@ -453,12 +452,15 @@ public class EventServiceImpl implements EventService {
             HashSet<Integer> eventId = new HashSet<>();
 
             for (OrderDTO e: spendingHistory){
+                // record all the events' description
                 eventsDecrip.add(e.getDescription().replaceAll( "[\\pP+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]" , "").trim());
                 eventType.add(e.getEventType());
                 eventId.add(e.getEventId());
             }
             String t = String.join(" ",eventsDecrip);
             String[] historywords = t.split(" ");
+
+            // build some filter words
             HashSet<String> filterWords = new HashSet<>();
             filterWords.add("This");
             filterWords.add("is");
@@ -469,11 +471,12 @@ public class EventServiceImpl implements EventService {
             filterWords.add("you");
             filterWords.add("can");
 
-
             for(String e:eventType){
+                // get all the events that has the same event type of the spending history events
                 List<EventDTO> res = eventMapper.getEventsByType(e);
                 for( EventDTO i : res){
                     if(!eventId.contains(i.getEventId())){
+                        // build the events_similarity map
                         orderedRes.put(i,1.0);
                     }
                 }
@@ -481,14 +484,15 @@ public class EventServiceImpl implements EventService {
             if(orderedRes.isEmpty()){
                 return new ResponseEntity<>(eventMapper.randomRecommendation(), HttpStatus.OK);
             }
+            // filter the words
             List<String> history = filterMethod(historywords,filterWords);
-            for(EventDTO e : orderedRes.keySet()){
 
+            for(EventDTO e : orderedRes.keySet()){
+                // calculate every recall events with the spending history events
                 orderedRes.put(e,cal(history,filterMethod(e.getDescription().replaceAll( "[\\pP+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]" , "").trim().split(" "),filterWords)));
             }
             List<Map.Entry<EventDTO, Double>>lst=new ArrayList(orderedRes.entrySet());
-
-
+            // sort the res with the similarity
             Collections.sort(lst, new Comparator<Map.Entry<EventDTO, Double>>() {
                 @Override
                 public int compare(Map.Entry<EventDTO, Double> o1, Map.Entry<EventDTO, Double> o2) {

@@ -24,54 +24,63 @@ public class EventController {
     @Autowired
     private final EventService eventService;
 
+    @ApiOperation(value = "create a new event")
     @PostMapping(value = "createEvent")
     public ResponseEntity<Object> createEvent(@RequestHeader("Authorization") String token,
                                               @RequestBody SmallEventDTO smallEventDTO) {
         return eventService.createEvent(token, smallEventDTO);
     }
 
+    @ApiOperation(value = "update the event name")
     @PostMapping(value = "/updateEventName")
     public ResponseEntity<Object> updateEventName(@RequestBody EventModifyDTO eventModifyDTO,
                                                   @RequestHeader("Authorization") String token) {
         return eventService.updateEventName(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event time")
     @PostMapping(value = "/updateEventTime")
     public ResponseEntity<Object> updateEventTime(@RequestHeader("Authorization") String token,
                                                   @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.updateEventTime(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event description")
     @PostMapping(value = "/updateEventDescription")
     public ResponseEntity<Object> updateEventDescription(@RequestHeader("Authorization") String token,
                                                   @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.updateEventDescription(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event position")
     @PostMapping(value = "/updateEventAddress")
     public ResponseEntity<Object> updateEventAddress(@RequestHeader("Authorization") String token,
                                                          @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.updateEventAddress(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "change the event type")
     @PostMapping(value = "/updateEventType")
     public ResponseEntity<Object> updateEventType(@RequestHeader("Authorization") String token,
                                                      @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.updateEventType(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event whether the event is cancelled")
     @PostMapping(value = "/updateEventCancelState")
     public ResponseEntity<Object> changeEventCancelState(@RequestHeader("Authorization") String token,
                                                   @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.changeEventCancelState(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event state of whether show to the public")
     @PostMapping(value = "/updateEventDisplayState")
     public ResponseEntity<Object> changeEventDisplayState(@RequestHeader("Authorization") String token,
                                                          @RequestBody EventModifyDTO eventModifyDTO) {
         return eventService.changeEventDisplayState(token, eventModifyDTO);
     }
 
+    @ApiOperation(value = "update the event tag")
     @PostMapping(value = "/updateEventTag")
     public ResponseEntity<Object> changeEventTag(@RequestHeader("Authorization") String token,
                                                           @RequestBody EventModifyDTO eventModifyDTO) {
@@ -117,10 +126,14 @@ public class EventController {
         return eventService.getOneMonthEvents();
 
     }
+
+    @ApiOperation(value = "get the events that may be interested by the customer")
     @GetMapping(value = "getRecommendation")
     public ResponseEntity<Object> getRecommendation(@RequestHeader("Authorization") String token) {
         return eventService.getRecommendation(token);
     }
+
+    @ApiOperation(value = "update the event image")
     @PostMapping(value = "/updateImage")
     public ResponseEntity<Object> updateImage(@RequestHeader("Authorization") String token,
                                                  @RequestBody EventModifyDTO eventModifyDTO) {

@@ -27,6 +27,7 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
+    @ApiOperation(value = "backend server send email interface")
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<Object> sendEmail(@RequestBody EmailDTO emailDTO) {
         try {
