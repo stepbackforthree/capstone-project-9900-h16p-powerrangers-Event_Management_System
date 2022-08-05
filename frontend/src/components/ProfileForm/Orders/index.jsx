@@ -140,7 +140,7 @@ export default function Orders() {
           extra={
             <div>
               <div>
-                <b>Number of tickets:</b>{item.paymentAmount}
+                <b>Payment Price:</b>{item.paymentAmount}
               </div>
               <Divider style={{"margin": "10px 0"}}/>
               <div>

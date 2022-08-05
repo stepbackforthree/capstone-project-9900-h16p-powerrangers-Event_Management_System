@@ -162,8 +162,9 @@ export default function OrderPage() {
       "eventName": eventName,
       "hostName": hostName,
       "paymentType": 1,
-      "ticketAmount": ticketAmount,
-      "ticketPrice": payMoney/ticketAmount,
+      // "ticketAmount": ticketAmount,
+      "paymentAmount": payMoney,
+      // "ticketPrice": payMoney/ticketAmount,
       "ticketType": ticketChoise
     }
     const updateTicketAmountData = {
@@ -193,7 +194,7 @@ export default function OrderPage() {
       updateCouponAmount();
     }
 
-    // window.location.reload();
+    window.location.reload();
     
   };
   const handleCancel = () => {
