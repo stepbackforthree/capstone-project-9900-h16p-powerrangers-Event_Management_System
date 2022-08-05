@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     Integer checkExist(SmallUserDTO smallUserDTO);
 
+    Integer checkExistLoginUser(SmallUserDTO smallUserDTO);
+
     void addUser(SmallUserDTO smallUserDTO);
 
     UserDTO queryUser(SmallUserDTO smallUserDTO);

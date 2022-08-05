@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
         Map<String, String> map = new HashMap<>();
 
-        if (checkExist(smallUserDTO)) {
+        if (userMapper.checkExistLoginUser(smallUserDTO) > 0) {
             UserDTO userDTO = userMapper.queryUser(smallUserDTO);
 
             String token = JWTUtils.createToken(userDTO.getId());
