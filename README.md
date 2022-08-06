@@ -40,7 +40,7 @@ It may take several minutes to complete and present information likes below figu
 ![2](images/2.png)
 
 Note that if there is any unexpected error occur, which makes you cannot install some dependencies successfully, then you can also download the pre-installed dependencies called “node_modules” referring to the link:
-\_\_\_ ,
+https://drive.google.com/file/d/1Igd-qxeP9UnCZpY44c-NrYKnFPp5CN8r/view?usp=sharing ,
 and unzip and extract the content in the current directory, then you can move the next step.
 
 ### 4. In the current directory, run the frontend project with:
